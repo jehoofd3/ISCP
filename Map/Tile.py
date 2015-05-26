@@ -1,20 +1,15 @@
-from Map.ColliderType import *
 from Helpers.Artist import *
+
 
 class Tile():
     x = 0
     y = 0
-    imagePath = " "
-    cType = ColliderType
+    image = " "
 
-
-    def __init__(self, x, y, imagePath):
+    def __init__(self, x, y, image):
         self.x = x
         self.y = y
-        self.imagePath = imagePath
+        self.image = image
 
     def draw(self):
-        drawTextures(self.imagePath, self.x, self.y, 64, 64)
-
-    def setcType(self, cType):
-        self.cType = cType
+        Artist.draw_textures(self.image, self.x, self.y)

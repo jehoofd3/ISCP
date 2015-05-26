@@ -1,22 +1,22 @@
 import os
 import pygame
 
-gameDisplay = pygame.display.set_mode((960, 768))
 
-#HALLO
-def beginSession():
-    pygame.init()
-    pygame.display.set_caption("2d Game")
+class Artist:
 
-    # Zonder parameters wordt het hele scherm elke frame opnieuw getekend
-    pygame.display.update()
+    global gameDisplay
+    gameDisplay = pygame.display.set_mode((4000, 768))
+
+    @staticmethod
+    def begin_session():
+        pygame.init()
+        pygame.display.set_caption("2d Game")
+
+    @staticmethod
+    def draw_textures(image, x, y):
+        gameDisplay.blit(image, (x, y))
+
+    def clear_screen(self):
+        gameDisplay.fill((255, 255, 255))
 
 
-def drawTextures(path, x, y, width, height):
-    image = pygame.image.load(os.path.join(path))
-    image.convert()
-
-    gameDisplay.blit(image, [x, y])
-
-def clearScreen():
-    pass
