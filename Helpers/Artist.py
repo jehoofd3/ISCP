@@ -3,7 +3,7 @@ import pygame
 
 gameDisplay = pygame.display.set_mode((960, 768))
 
-
+#HALLO
 def beginSession():
     pygame.init()
     pygame.display.set_caption("2d Game")
