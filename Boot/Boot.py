@@ -1,27 +1,28 @@
 import pygame
 from Helpers.Artist import *
 from Map.TileGrid import *
+from GameStateManager.GameStateManager import *
 
 class Boot:
 
-    artist = Artist()
-    artist.begin_session()
+    Artist.begin_session()
 
     clock = pygame.time.Clock()
 
     gameExit = False
 
-    grid = TileGrid("ProjectEen.txt")
+    gsm = GameStateManager()
 
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameExit = True
 
-        artist.clear_screen()
+        Artist.clear_screen()
 
-        grid.draw()
-        print(clock.get_fps())
+        gsm.update()
+        gsm.draw()
+
         pygame.display.update()
         clock.tick(60)
 

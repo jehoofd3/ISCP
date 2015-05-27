@@ -1,53 +1,36 @@
 import pygame
 from Helpers.Artist import *
+from PlayerNormalState import *
 
 
 class Player (object):
+    states = []
 
-    width = 0
-    height = 0
-    x = 0
-    y = 0
-    xSpeed = 0
-    ySpeed = 0
-    jumpsRemaining = 2
-    jumpWasPressed = False
-    jumpPressed = False
-    imagePath = "Test.png"
+    def __init__(self, x, y, imagePath):
+        self.states = [PlayerNormalState(self)]
 
-    def __init__(self, width, height, x, y, imagePath):
+        self.image = pygame.image.load(imagePath).convert_alpha()
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
-        self.imagePath = imagePath
-
-    def update(self):
-
-        self.x += self.xSpeed
-        self.y -= self.ySpeed
 
         self.xSpeed = 0
+        self.ySpeed = 0
+        self.jumpsRemaining = 2
+        self.jumpWasPressed = False
+        self.jumpPressed = False
 
-        self.ySpeed -= 0.4
+    def run(self):
+        self.states[0].run()
 
-        if(self.y >= 786 - 100):
-            self.ySpeed = 0
-            self.jumpsRemaining = 2
-
-        if(pygame.key.get_pressed() [pygame.K_LEFT] != 0):
-            self.xSpeed -= 5
-
-        if(pygame.key.get_pressed() [pygame.K_RIGHT] != 0):
-            self.xSpeed += 5
-
-        for event in pygame.event.get():
-            if event.type == pygame.K_UP:
-                self.jump()
+    def update(self):
+        self.states[0].update()
 
     def draw(self):
-        drawTextures(self.imagePath, self.x, self.y, self.width, self.height)
+        self.states[0].draw()
 
     def jump(self):
         self.ySpeed += 10
         self.jumpsRemaining -= 1
+
+    def gravity(self):
+        pass

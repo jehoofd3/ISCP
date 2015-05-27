@@ -5,7 +5,7 @@ import pygame
 class Artist:
 
     global gameDisplay
-    gameDisplay = pygame.display.set_mode((4000, 768))
+    gameDisplay = pygame.display.set_mode((960, 768))
 
     @staticmethod
     def begin_session():
@@ -14,9 +14,8 @@ class Artist:
 
     @staticmethod
     def draw_textures(image, x, y):
-        gameDisplay.blit(image, (x, y))
+        gameDisplay.blit(image, [x, y])
 
-    def clear_screen(self):
-        gameDisplay.fill((255, 255, 255))
-
-
+    @staticmethod
+    def clear_screen():
+        gameDisplay.fill((0, 0, 0))
