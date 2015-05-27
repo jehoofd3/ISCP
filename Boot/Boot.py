@@ -25,7 +25,6 @@ class Boot:
 
         pygame.display.update()
         clock.tick(60)
-        print clock.get_fps()
 
 if __name__ == '__main__':
     Boot()

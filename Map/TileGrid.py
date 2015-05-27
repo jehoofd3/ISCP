@@ -36,8 +36,8 @@ from Helpers.Artist import *
 
 class TileGrid():
     map = [[x for x in range(12)] for y in range(60)]
-    rows = 60 #len(map)
-    collums = 12 #len(map[0])
+    rows = len(map)
+    collums = len(map[0])
 
     def __init__(self, levelPath):
 

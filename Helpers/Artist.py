@@ -18,4 +18,4 @@ class Artist:
 
     @staticmethod
     def clear_screen():
-        gameDisplay.fill((255, 255, 255))
+        gameDisplay.fill((0, 0, 0))
