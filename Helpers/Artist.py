@@ -5,7 +5,7 @@ import pygame
 class Artist:
 
     global gameDisplay
-    gameDisplay = pygame.display.set_mode((4000, 768))
+    gameDisplay = pygame.display.set_mode((960, 768))
 
     @staticmethod
     def begin_session():
