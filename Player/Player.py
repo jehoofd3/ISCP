@@ -13,14 +13,13 @@ class Player (object):
     jumpsRemaining = 2
     jumpWasPressed = False
     jumpPressed = False
-    imagePath = "Test.png"
 
     def __init__(self, x, y, imagePath):
         self.states = [PlayerNormalState(self)]
 
+        self.image = pygame.image.load(imagePath).convert_alpha()
         self.x = x
         self.y = y
-        self.imagePath = imagePath
 
     def run(self):
         self.states[0].run()

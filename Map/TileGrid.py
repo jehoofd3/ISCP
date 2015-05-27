@@ -1,3 +1,4 @@
+'''
 from Map.Tile import *
 from Helpers.Artist import *
 
@@ -28,14 +29,24 @@ class TileGrid():
          for count in range(0, 720):
             if self.image_location[count] != "Image/Empty.png":
                 self.map[count].draw()
+'''
 
+from Map.Tile import *
+from Helpers.Artist import *
 
+class TileGrid():
+    map = [[x for x in range(12)] for y in range(60)]
+    rows = 60 #len(map)
+    collums = 12 #len(map[0])
 
+    def __init__(self, levelPath):
 
+        file = open(levelPath)
+        for i in range (self.collums):
+            for j in range (self.rows):
+                self.map[j][i] = Tile(j * 64, i * 64, "../" + file.next()[:-1])
 
-
-
-
-
-
-
+    def draw(self):
+        for i in range (self.collums):
+            for j in range (self.rows):
+                self.map[j][i].draw()

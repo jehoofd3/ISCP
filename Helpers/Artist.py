@@ -14,9 +14,8 @@ class Artist:
 
     @staticmethod
     def draw_textures(image, x, y):
-        gameDisplay.blit(image, (x, y))
+        gameDisplay.blit(image, [x, y])
 
-    def clear_screen(self):
+    @staticmethod
+    def clear_screen():
         gameDisplay.fill((255, 255, 255))
-
-

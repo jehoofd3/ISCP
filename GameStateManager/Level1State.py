@@ -1,15 +1,13 @@
 from Player.Player import *
 from Map.TileGrid import *
 from GameState import *
-from Player import *
-import socket
 __metaclass__ = type
 
 
 class Level1State(GameState):
 
-    map = TileGrid("ProjectEen.txt")
-    player = Player(10, 10, "Image/Player/Loop/8.png")
+    map = TileGrid("../Levels/ProjectEen.txt")
+    player = Player(10, 10, "../Images/Player/Loop/8.png")
 
     def __init__(self, gsm):
         super(Level1State, self).__init__(gsm)

@@ -5,8 +5,7 @@ from GameStateManager.GameStateManager import *
 
 class Boot:
 
-    artist = Artist()
-    artist.begin_session()
+    Artist.begin_session()
 
     clock = pygame.time.Clock()
 
@@ -19,13 +18,14 @@ class Boot:
             if event.type == pygame.QUIT:
                 gameExit = True
 
-        artist.clear_screen()
+        Artist.clear_screen()
 
         gsm.update()
         gsm.draw()
 
         pygame.display.update()
         clock.tick(60)
+        print clock.get_fps()
 
 if __name__ == '__main__':
     Boot()

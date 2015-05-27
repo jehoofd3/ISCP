@@ -34,4 +34,4 @@ class PlayerNormalState (PlayerState):
                 self.player.jump()
 
     def draw(self):
-        Artist.draw_textures(self.player.imagePath, self.player.x, self.player.y, self.player.width, self.player.height)
+        Artist.draw_textures(self.player.image, self.player.x, self.player.y)
