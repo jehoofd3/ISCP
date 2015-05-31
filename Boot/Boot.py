@@ -22,6 +22,7 @@ class Boot:
 
         gsm.update()
         gsm.draw()
+        gsm.run()
 
         pygame.display.update()
         clock.tick(60)
