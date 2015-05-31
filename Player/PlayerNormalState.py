@@ -12,16 +12,19 @@ class PlayerNormalState (PlayerState):
         pass
 
     def update(self):
-        self.player.x += self.player.xSpeed
-        self.player.y -= self.player.ySpeed
+        self.player.rect.x += self.player.xSpeed
+        self.player.rect.y -= self.player.ySpeed
 
         self.player.xSpeed = 0
 
         self.player.ySpeed -= 0.4
 
-        if(self.player.y >= 786 - 100):
+        '''
+        On the ground
+        if(self.player.rect.y >= 786 - 100):
             self.player.ySpeed = 0
             self.player.jumpsRemaining = 2
+        '''
 
         if(pygame.key.get_pressed() [pygame.K_LEFT] != 0):
             self.player.xSpeed -= 5
@@ -34,4 +37,5 @@ class PlayerNormalState (PlayerState):
                 self.player.jump()
 
     def draw(self):
-        Artist.draw_textures(self.player.image, self.player.x, self.player.y)
+        pass
+        #Artist.draw_textures(self.player.image, self.player.x, self.player.y)

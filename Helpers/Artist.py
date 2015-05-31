@@ -19,3 +19,7 @@ class Artist:
     @staticmethod
     def clear_screen():
         gameDisplay.fill((0, 0, 0))
+
+    @staticmethod
+    def get_display():
+        return gameDisplay

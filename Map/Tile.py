@@ -1,14 +1,13 @@
 from Helpers.Artist import *
+import pygame
 
 
-class Tile():
-    x = 0
-    y = 0
+class Tile(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, imagePath):
-        self.x = x
-        self.y = y
-        self.image = pygame.image.load(imagePath).convert_alpha()
+    def __init__(self, x, y, image):
+        pygame.sprite.Sprite.__init__(self)
 
-    def draw(self):
-        Artist.draw_textures(self.image, self.x, self.y)
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y

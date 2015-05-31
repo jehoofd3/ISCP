@@ -57,7 +57,7 @@ player = Player() # Create the player
 level = [
 "WWWWWWWWWWWWWWWWWWWW",
 "W                  W",
-"W         WWWWWW   W",
+"W   W     WWWWWW   W",
 "W   WWWW       W   W",
 "W   W        WWWW  W",
 "W WWW  WWWW        W",
