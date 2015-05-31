@@ -5,9 +5,10 @@ class GameStateManager (object):
 
     states = []
 
-    def __init__(self, state):
-        self.states = state
- 
+    def __init__(self):
+        self.states = [Level1State(self)]
+        self.run()
+
     def update(self):
         self.states[0].update()
 

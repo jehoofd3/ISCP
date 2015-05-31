@@ -1,20 +1,20 @@
-import pygame
-from Helpers.Artist import *
-from Map.TileGrid import *
 from GameStateManager.GameStateManager import *
+from Helpers.Artist import *
 
-class Boot:
+
+def Boot():
 
     Artist.begin_session()
+    gameExit = False
 
     clock = pygame.time.Clock()
-
-    gameExit = False
 
     gsm = GameStateManager()
 
     while not gameExit:
+        # Event handling
         for event in pygame.event.get():
+            # Loop stoppen wanneer het kruisje ingedrukt wordt
             if event.type == pygame.QUIT:
                 gameExit = True
 
@@ -22,10 +22,15 @@ class Boot:
 
         gsm.update()
         gsm.draw()
-        gsm.run()
 
+        # Alle objecten renderen
         pygame.display.update()
+
+        # FPS instellen
         clock.tick(60)
+
+    pygame.quit()
+    quit()
 
 if __name__ == '__main__':
     Boot()
