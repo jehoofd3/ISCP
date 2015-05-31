@@ -6,8 +6,8 @@ __metaclass__ = type
 
 class Level1State(GameState):
 
-    map = TileGrid("Data/Levels/LevelEen.txt", "../Images/Sprite1.png")
-    player = Player(0, 0, "../Images/p2_front.png")
+    map = TileGrid("Data/Levels/LevelEen.txt", "../Data/Images/Sprite1.png")
+    player = Player(0, 0, "../Data/Images/p2_front.png")
 
     def __init__(self, gsm):
         super(Level1State, self).__init__(gsm)
