@@ -43,6 +43,8 @@ class Level1State(GameState):
                 self.player.rect.bottom = block.rect.top
             '''
 
+
+
     def draw(self):
         self.map.draw()
         self.player.draw()
