@@ -1,36 +1,42 @@
-from GameStateManager.GameStateManager import *
-from Helpers.Artist import *
+from GameStateManager.LevelStateManager import *
+from Player.PlayerStateManager import *
 
+class Boot(object):
 
-def Boot():
+    def __init__(self):
+        Artist.begin_session()
+        game_exit = False
 
-    Artist.begin_session()
-    gameExit = False
+        clock = pygame.time.Clock()
 
-    clock = pygame.time.Clock()
+        gsm = LevelStateManager()
+        psm = PlayerStateManager()
 
-    gsm = GameStateManager()
+        while not game_exit:
+            # Event handling
+            for event in pygame.event.get():
+                # Loop stoppen wanneer het kruisje ingedrukt wordt
+                if event.type == pygame.QUIT:
+                    game_exit = True
 
-    while not gameExit:
-        # Event handling
-        for event in pygame.event.get():
-            # Loop stoppen wanneer het kruisje ingedrukt wordt
-            if event.type == pygame.QUIT:
-                gameExit = True
+            Artist.clear_screen()
 
-        Artist.clear_screen()
+            #GameStateManager
+            gsm.update()
+            gsm.draw()
 
-        gsm.update()
-        gsm.draw()
+            #PlayerStateManager
+            psm.update()
+            psm.draw()
 
-        # Alle objecten renderen
-        pygame.display.update()
+            # Alle objecten renderen
+            pygame.display.update()
 
-        # FPS instellen
-        clock.tick(60)
+            # FPS instellen
+            clock.tick(60)
 
-    pygame.quit()
-    quit()
+        pygame.quit()
+        quit()
 
 if __name__ == '__main__':
-    Boot()
+    Boot().__init__()

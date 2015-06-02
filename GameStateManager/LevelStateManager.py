@@ -1,13 +1,15 @@
 from Level1State import *
 
-
-class GameStateManager (object):
+class LevelStateManager(object):
 
     states = []
 
     def __init__(self):
-        self.states = [Level1State(self)]
+        self.states = [Level1State()]
         self.run()
+
+    def run(self):
+        self.states[0].run()
 
     def update(self):
         self.states[0].update()
@@ -15,5 +17,3 @@ class GameStateManager (object):
     def draw(self):
         self.states[0].draw()
 
-    def run(self):
-        self.states[0].run()
