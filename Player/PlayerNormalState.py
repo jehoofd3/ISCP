@@ -7,7 +7,7 @@ class PlayerNormalState:
     walk_l = []
     walk_r = []
 
-    spawn_x = 500
+    spawn_x = 440
     spawn_y = 10
     image_player = "../Data/Images/p2_front.png"
 
@@ -46,19 +46,20 @@ class PlayerNormalState:
         blocks_hit_list = pygame.sprite.spritecollide(self.player, TileGrid.get_group(), False)
 
         for block in blocks_hit_list:
-            self.player.rect.bottom = block.rect.top
-
-            if self.player.rect.bottom >= block.rect.top:
+            if self.player.rect.bottom >= block.rect.top and not self.player.rect.right <= block.rect.left:
                 self.player.rect.bottom = block.rect.top
+                print True
+            else:
+                print False
 
-            if self.xSpeed > 0 and self.player.rect.bottom == block.rect.bottom:
-                    self.player.rect.right = block.rect.left
+            if self.player.rect.top >= block.rect.bottom:
+                self.player.rect.top = block.rect.bottom
 
-            print block.rect.top
-            print block.rect.bottom
-            print block.rect.left
-            print block.rect.right
+            if self.player.rect.left >= block.rect.right:
+                self.player.rect.left = block.rect.right
 
+            if self.player.rect.right <= block.rect.left:
+                self.player.rect.right = block.rect.left
 
         if len(blocks_hit_list) != 0:
             self.ySpeed = 0
@@ -83,37 +84,3 @@ class PlayerNormalState:
     #returns true when there is collision.
     def collision(self, group_1, group_2):
        pass
-
-    '''
-
-         def draw(self, surface):
-        """draw all sprites onto the surface
-
-        Group.draw(surface): return None
-
-        Draws all of the member sprites onto the given surface.
-
-        """
-        sprites = self.sprites()
-        surface_blit = surface.blit
-        for spr in sprites:
-            self.spritedict[spr] = surface_blit(spr.image, spr.rect)
-        self.lostsprites = []
-
-
-
-       # blocks_hit_list = pygame.sprite.spritecollideany(self.player_group, TileGrid.get_group())
-        #blocks_hit_list = pygame.sprite.spritecollide(self.player_group, TileGrid.get_group(), True)
-        #blocks_hit_list = pygame.sprite.groupcollide(TileGrid.get_group(), TileGrid.get_group(), False, False)
-           for block in blocks_hit_list:
-            self.rect.bottom = block.rect.top
-            print block.rect.top
-            print block.rect.bottom
-            print block.rect.left
-            print block.rect.right
-            print 'block'
-
-        if len(blocks_hit_list) != 0:
-            self.ySpeed = 0
-            self.gravity = 0
-'''
