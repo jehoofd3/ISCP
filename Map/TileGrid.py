@@ -3,6 +3,7 @@ from Sprite.SpriteSheet import *
 from Helpers.Artist import *
 
 class TileGrid(SpriteSheet):
+
     map_group = pygame.sprite.Group()
     rows = 60 #len(map)
     collums = 12 #len(map[0])
@@ -18,11 +19,12 @@ class TileGrid(SpriteSheet):
     def draw(self):
         self.map_group.draw(Artist.get_display())
 
-    def get_group(self):
-        return self.map_group
-
     def create_map(self):
         for i in range(9):
             self.map_group.add(Tile(i*64, 704, super(TileGrid, self).get_image(128, 0, 64, 64)))
 
         self.map_group.add(Tile(512, 640, super(TileGrid, self).get_image(128, 0, 64, 64)))
+
+    @staticmethod
+    def get_group():
+        return TileGrid.map_group
