@@ -24,6 +24,8 @@ class TileGrid(SpriteSheet):
             self.map_group.add(Tile(i*64, 704, super(TileGrid, self).get_image(128, 0, 64, 64)))
 
         self.map_group.add(Tile(512, 640, super(TileGrid, self).get_image(128, 0, 64, 64)))
+        self.map_group.add(Tile(256, 448, super(TileGrid, self).get_image(128, 0, 64, 64)))
+        self.map_group.add(Tile(0, 640, super(TileGrid, self).get_image(128, 0, 64, 64)))
 
     @staticmethod
     def get_group():

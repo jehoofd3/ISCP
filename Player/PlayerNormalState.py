@@ -7,6 +7,14 @@ class PlayerNormalState:
     walk_l = []
     walk_r = []
 
+    block_u = False
+    block_d = False
+    block_l = False
+    block_r = False
+
+    tile_length = 64
+
+
     spawn_x = 500
     spawn_y = 10
     image_player = "../Data/Images/p2_front.png"
@@ -23,48 +31,77 @@ class PlayerNormalState:
         self.xSpeed = 0
         self.ySpeed = 0
         self.jumpsRemaining = 2
-        self.jumpWasPressed = False
-        self.jumpPressed = False
 
     def run(self):
         pass
 
     def update(self):
+
         self.player.rect.x += self.xSpeed
         self.player.rect.y -= self.ySpeed
-
         self.xSpeed = 0
-
         self.ySpeed -= self.gravity
 
-        if pygame.key.get_pressed()[pygame.K_LEFT] != 0:
+        blocks_hit_list = pygame.sprite.spritecollide(self.player, TileGrid.get_group(), False)
+        for block in blocks_hit_list:
+
+            # Collision up
+            if (self.player.rect.top <= block.rect.bottom and self.player.rect.top >= block.rect.top):
+                self.block_u = True
+            else:
+                self.block_u = False
+
+            # Collision under
+            if (self.player.rect.bottom >= block.rect.top and self.player.rect.bottom <= block.rect.bottom):
+                self.block_d = True
+            else:
+                self.block_d = False
+
+            # Collision right
+            if (self.player.rect.right >= block.rect.left and self.player.rect.right <= block.rect.right and
+                self.player.rect.bottom <= block.rect.bottom):
+                self.block_r = True
+            else:
+                self.block_r = False
+
+            #Collision left
+            if (self.player.rect.left <= block.rect.right and self.player.rect.left >= block.rect.left and
+                self.player.rect.bottom <= block.rect.bottom):
+                self.block_l = True
+            else:
+                self.block_l = False
+
+
+        # Als de list leeg is, betekend het dat de player geen collision met Tile(s) heeft. Door alle variablen op False
+        # te zetten blijft de Gravity actief en kan de player naar links / rechts bewegen en springen
+        if not blocks_hit_list:
+            self.block_u = False
+            self.block_d = False
+            self.block_l = False
+            self.block_r = False
+
+
+        if pygame.key.get_pressed()[pygame.K_LEFT] != 0 and not self.block_l:
             self.xSpeed -= 5
 
-        if pygame.key.get_pressed()[pygame.K_RIGHT] != 0:
+        if pygame.key.get_pressed()[pygame.K_RIGHT] != 0 and not self.block_r:
             self.xSpeed += 5
 
-        blocks_hit_list = pygame.sprite.spritecollide(self.player, TileGrid.get_group(), False)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP and self.jumpsRemaining > 0:
+                    self.jump()
 
-        for block in blocks_hit_list:
-            self.player.rect.bottom = block.rect.top
-
-            if self.player.rect.bottom >= block.rect.top:
-                self.player.rect.bottom = block.rect.top
-
-            if self.xSpeed > 0 and self.player.rect.bottom == block.rect.bottom:
-                    self.player.rect.right = block.rect.left
-
-            print block.rect.top
-            print block.rect.bottom
-            print block.rect.left
-            print block.rect.right
-
-
-        if len(blocks_hit_list) != 0:
+        if self.block_u:
             self.ySpeed = 0
-            self.gravity = 0
-        else:
-            self.gravity = 0.4
+            self.player.rect.top += 5
+
+        # Collision under
+        if self.block_d:
+            self.ySpeed = 0
+            self.player.rect.bottom = (self.player.rect.bottom / 64 * 64)
+            self.jumpsRemaining = 2
+
 
     def draw(self):
         surface = Artist.get_display()
@@ -84,36 +121,6 @@ class PlayerNormalState:
     def collision(self, group_1, group_2):
        pass
 
-    '''
-
-         def draw(self, surface):
-        """draw all sprites onto the surface
-
-        Group.draw(surface): return None
-
-        Draws all of the member sprites onto the given surface.
-
-        """
-        sprites = self.sprites()
-        surface_blit = surface.blit
-        for spr in sprites:
-            self.spritedict[spr] = surface_blit(spr.image, spr.rect)
-        self.lostsprites = []
-
-
-
-       # blocks_hit_list = pygame.sprite.spritecollideany(self.player_group, TileGrid.get_group())
-        #blocks_hit_list = pygame.sprite.spritecollide(self.player_group, TileGrid.get_group(), True)
-        #blocks_hit_list = pygame.sprite.groupcollide(TileGrid.get_group(), TileGrid.get_group(), False, False)
-           for block in blocks_hit_list:
-            self.rect.bottom = block.rect.top
-            print block.rect.top
-            print block.rect.bottom
-            print block.rect.left
-            print block.rect.right
-            print 'block'
-
-        if len(blocks_hit_list) != 0:
-            self.ySpeed = 0
-            self.gravity = 0
-'''
+    def jump(self):
+        self.ySpeed = 10
+        self.jumpsRemaining -=1

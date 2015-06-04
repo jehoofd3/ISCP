@@ -16,5 +16,3 @@ class PlayerStateManager(object):
 
     def draw(self):
         self.states[0].draw()
-
-
