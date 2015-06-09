@@ -11,6 +11,8 @@ class TileGrid(SpriteSheet):
     def __init__(self, level_path, sprite_path):
         #Set sprite path in spritesheet
         super(TileGrid, self).__init__(sprite_path)
+        self.level_path = level_path
+
         self.create_map()
 
     def run(self):
@@ -20,12 +22,15 @@ class TileGrid(SpriteSheet):
         self.map_group.draw(Artist.get_display())
 
     def create_map(self):
-        for i in range(9):
-            self.map_group.add(Tile(i*64, 704, super(TileGrid, self).get_image(128, 0, 64, 64)))
+        file = open(self.level_path)
 
-        self.map_group.add(Tile(512, 640, super(TileGrid, self).get_image(128, 0, 64, 64)))
-        self.map_group.add(Tile(256, 448, super(TileGrid, self).get_image(128, 0, 64, 64)))
-        self.map_group.add(Tile(0, 640, super(TileGrid, self).get_image(128, 0, 64, 64)))
+        for i in range(self.collums):
+            for j in range(self.rows):
+                img = int(file.next())
+                if (img == -1 or img == 0):
+                    pass
+                else:
+                    self.map_group.add(Tile(j * 64, i * 64, super(TileGrid, self).get_image(0, (img - 1) * 64, 64, 64)))
 
     @staticmethod
     def get_group():

@@ -1,8 +1,9 @@
 from Map.TileGrid import *
 
+
 class Level1State(object):
 
-    map = TileGrid("Data/Levels/LevelEen.txt", "../Data/Images/Sprite1.png")
+    map = TileGrid("../Data/Levels/ProjectEen.txt", "../Data/Images/Map/SingleSprite.png")
 
     def __init__(self):
         pass
@@ -17,5 +18,3 @@ class Level1State(object):
 
     def draw(self):
         self.map.draw()
-
-

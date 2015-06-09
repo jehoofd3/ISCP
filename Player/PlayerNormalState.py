@@ -2,6 +2,7 @@ import pygame
 from Helpers.Artist import *
 from Map.TileGrid import *
 
+
 class PlayerNormalState:
 
     walk_l = []
