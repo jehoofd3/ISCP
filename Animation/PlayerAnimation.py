@@ -4,9 +4,9 @@ import pygame
 class PlayerAnimation():
 
     def __init__(self, player):
-        # Deze class krijgt een object enemy mee. Het is mogelijk de afbeeldingen in de
+        # Deze class krijgt een object player mee. Het is mogelijk de afbeeldingen in de
         # constructor toe te voegen, maar dit lijkt me overbodig omdat je de lijsten
-        # uit de enemy kan halen
+        # uit de player kan halen
         self.player = player
         self.walk_l = self.player.walk_l
         self.walk_r = self.player.walk_r
@@ -14,10 +14,12 @@ class PlayerAnimation():
         self.dead_r = self.player.dead_r
         self.jump_l = self.player.jump_l
         self.jump_r = self.player.jump_r
+        self.stand_l = self.player.stand_l
+        self.stand_r = self.player.stand_r
 
         # texture is de afbeelding. Er moet een default afbeelding mee gegeven worden anders is
         # de var in het eerste frame leeg. Hierdoor krijg je een error
-        self.texture = pygame.image.load("../Data/Images/Enemy/Fly/l_0.png").convert_alpha()
+        self.texture = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
 
         # frame_cap zijn de max beelden (frames) die elke seconde berekend worden
         # In de Boot class zetten we het op max 60
@@ -28,19 +30,20 @@ class PlayerAnimation():
         # dit omdat het gebruikelijk is. Veel game engines doen het ook op deze manier.
         # frame_cap is 60, dit wordt gedeeld door de lengte van de list walk_l, hier
         # zitten 2 afbeeldingen in. Hierdoor wordt er om de 30 frames (0,5 seconde)
-        # een andere afbeelding aan de enemy mee gegeven.
+        # een andere afbeelding aan de player mee gegeven.
         self.tex_switch = self.frame_cap / len(self.walk_l)
 
         # De var frame_count is nodig om bij te houden hoeveel frames er verlopen zijn.
         # Dit is nodig om de afbeelding te wisselen
         self.frame_count = 0
 
-        # Deze twee vars zijn nodig om bij te houden of de enemy naar links of rechts
+        # Deze twee vars zijn nodig om bij te houden of de player naar links of rechts
         # loopt. Zo is het bij te houden welke dead image er terug gestuurd moet worden
         self.left_released = None
         self.right_released = None
 
         self.length_list = len(self.walk_l)
+        print self.length_list, "HI"
 
 
     def update(self):
@@ -88,10 +91,10 @@ class PlayerAnimation():
         self.frame_count += 1
 
     def left_stand(self):
-        self.texture = self.walk_l[0]
+        self.texture = self.stand_l
 
     def right_stand(self):
-        self.texture = self.walk_r[0]
+        self.texture = self.stand_r
 
     def left_jump(self):
         self.texture = self.jump_l
