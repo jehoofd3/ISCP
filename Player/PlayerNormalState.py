@@ -14,8 +14,6 @@ class PlayerNormalState:
     block_r = False
 
     tile_length = 64
-
-
     spawn_x = 500
     spawn_y = 10
     image_player = "../Data/Images/p2_front.png"
@@ -102,7 +100,6 @@ class PlayerNormalState:
             self.ySpeed = 0
             self.player.rect.bottom = (self.player.rect.bottom / 64 * 64)
             self.jumpsRemaining = 2
-
 
     def draw(self):
         surface = Artist.get_display()

@@ -1,7 +1,7 @@
 import pygame
 
 
-class EnemyAnimation():
+class EnemyAnimation:
 
     def __init__(self, enemy):
         # Deze class krijgt een object enemy mee. Het is mogelijk de afbeeldingen in de
@@ -42,38 +42,38 @@ class EnemyAnimation():
 
 
     def update(self):
-        if(self.enemy.xSpeed > 0):
+        if self.enemy.xSpeed > 0:
             self.right_walk()
             self.left_released = False
             self.right_released = True
-        elif(self.enemy.xSpeed < 0):
+        elif self.enemy.xSpeed < 0:
             self.left_walk()
             self.left_released = True
             self.right_released = False
         return self.texture
 
     def right_walk(self):
-        if(self.frame_count >= self.frame_cap):
+        if self.frame_count >= self.frame_cap:
             self.frame_count = 0
 
         for i in range(self.length_list):
-            if(self.frame_count / self.tex_switch == i):
+            if self.frame_count / self.tex_switch == i:
                 self.texture = self.walk_r[i]
 
         self.frame_count += 1
 
     def left_walk(self):
-        if(self.frame_count >= self.frame_cap):
+        if self.frame_count >= self.frame_cap:
             self.frame_count = 0
 
         for i in range(self.length_list):
-            if(self.frame_count / self.tex_switch == i):
+            if self.frame_count / self.tex_switch == i:
                 self.texture = self.walk_l[i]
 
         self.frame_count += 1
 
     def dead(self):
-        if(self.right_released):
+        if self.right_released:
             self.texture = self.dead_r
         else:
             self.texture = self.dead_l

@@ -3,7 +3,7 @@ import pygame
 class Artist:
 
     global game_display
-    game_display = pygame.display.set_mode((4000, 768))
+    game_display = pygame.display.set_mode((960, 768))
 
     def __init__(self):
         pass

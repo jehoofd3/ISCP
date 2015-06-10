@@ -1,7 +1,7 @@
 import pygame
 
 
-class PlayerAnimation():
+class PlayerAnimation:
 
     def __init__(self, player):
         # Deze class krijgt een object player mee. Het is mogelijk de afbeeldingen in de
@@ -29,7 +29,7 @@ class PlayerAnimation():
         # We hebben er voor gekozen alle afbeeldingen in 1 sec (60 frames) te wisselen,
         # dit omdat het gebruikelijk is. Veel game engines doen het ook op deze manier.
         # frame_cap is 60, dit wordt gedeeld door de lengte van de list walk_l, hier
-        # zitten 2 afbeeldingen in. Hierdoor wordt er om de 30 frames (0,5 seconde)
+        # zitten 11 afbeeldingen in. Hierdoor wordt er om de 6 frames (0,05 seconde)
         # een andere afbeelding aan de player mee gegeven.
         self.tex_switch = self.frame_cap / len(self.walk_l)
 
@@ -43,49 +43,48 @@ class PlayerAnimation():
         self.right_released = None
 
         self.length_list = len(self.walk_l)
-        print self.length_list, "HI"
 
 
     def update(self):
-        if(self.player.xSpeed > 0):
+        if self.player.xSpeed > 0:
             self.right_walk()
             self.left_released = False
             self.right_released = True
 
-        elif(self.player.xSpeed < 0):
+        elif self.player.xSpeed < 0:
             self.left_walk()
             self.left_released = True
             self.right_released = False
 
-        elif(self.player.xSpeed == 0 and self.right_released):
+        elif self.player.xSpeed == 0 and self.right_released:
             self.right_stand()
 
-        elif(self.player.xSpeed == 0 and self.left_released):
+        elif self.player.xSpeed == 0 and self.left_released:
             self.left_stand()
 
-        if(self.player.ySpeed != 0 and self.right_released):
+        if self.player.ySpeed != 0 and self.right_released:
             self.right_jump()
-        elif(self.player.ySpeed != 0 and self.left_released):
+        elif self.player.ySpeed != 0 and self.left_released:
             self.left_jump()
 
         return self.texture
 
     def right_walk(self):
-        if(self.frame_count >= self.frame_cap):
+        if self.frame_count >= self.frame_cap:
             self.frame_count = 0
 
         for i in range(self.length_list):
-            if(self.frame_count / self.tex_switch == i):
+            if self.frame_count / self.tex_switch == i:
                 self.texture = self.walk_r[i]
 
         self.frame_count += 1
 
     def left_walk(self):
-        if(self.frame_count >= self.frame_cap):
+        if self.frame_count >= self.frame_cap:
             self.frame_count = 0
 
         for i in range(self.length_list):
-            if(self.frame_count / self.tex_switch == i):
+            if self.frame_count / self.tex_switch == i:
                 self.texture = self.walk_l[i]
 
         self.frame_count += 1
@@ -103,7 +102,7 @@ class PlayerAnimation():
         self.texture = self.jump_r
 
     def dead(self):
-        if(self.right_released):
+        if self.right_released:
             self.texture = self.dead_r
         else:
             self.texture = self.dead_l
