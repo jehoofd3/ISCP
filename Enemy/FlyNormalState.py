@@ -13,7 +13,7 @@ class FlyNormalState(EnemyState):
         self.enemy.basic_movement()
         self.enemy.gravity()
 
-        self.enemy.xSpeed = 3
+        self.enemy.xSpeed = 1
 
         if self.enemy.block_d:
             self.enemy.ySpeed = 0

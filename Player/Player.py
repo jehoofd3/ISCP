@@ -1,6 +1,7 @@
 import pygame
 from Helpers.Artist import *
 from PlayerNormalState import *
+from PlayerDieState import *
 from Animation.PlayerAnimation import *
 
 
@@ -17,7 +18,6 @@ class Player (pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-
         self.xSpeed = 0
         self.ySpeed = 0
         self.jumpsRemaining = 2
@@ -36,9 +36,8 @@ class Player (pygame.sprite.Sprite):
         self.dead_r = pygame.image.load("../Data/Images/Player/dead_r.png").convert_alpha()
         self.stand_l = pygame.image.load("../Data/Images/Player/stand_l.png").convert_alpha()
         self.stand_r = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
+
         self.animation = PlayerAnimation(self)
-
-
 
     def run(self):
         self.states[0].run()
@@ -63,3 +62,4 @@ class Player (pygame.sprite.Sprite):
 
     def kill(self):
         self.states[0] = [PlayerDieState(self)]
+

@@ -8,7 +8,6 @@ class PlayerNormalState (PlayerState):
     def __init__(self, player):
         super(PlayerNormalState, self).__init__(player)
         self.player = player
-        self.block_u, self.block_d, self.block_r, self.block_l = None, None, None, None
 
     def run(self):
         pass

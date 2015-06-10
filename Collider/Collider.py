@@ -11,6 +11,7 @@ class Collider:
     def update(self):
         self.player_collider()
         self.enemy_collider()
+        self.player_enemy_collider()
 
     def player_collider(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
@@ -85,3 +86,13 @@ class Collider:
                 self.enemy_list[i].block_d = False
                 self.enemy_list[i].block_l = False
                 self.enemy_list[i].block_r = False
+
+    def player_enemy_collider(self):
+
+        for i in range(len(self.enemy_list)):
+            blocks_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
+            for block in blocks_hit_list:
+                if self.player.ySpeed == 0:
+                    self.player.kill()
+                else:
+                    self.enemy_list[i].kill()

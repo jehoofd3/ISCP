@@ -41,3 +41,6 @@ class Enemy(object):
 
     def gravity(self):
         self.ySpeed -= 0.4
+
+    def kill(self):
+        print "Enemy kill"
