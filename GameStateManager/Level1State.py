@@ -7,7 +7,7 @@ from Collider.Collider import *
 class Level1State(object):
     map = TileGrid("../Data/Levels/ProjectEen.txt", "../Data/Images/Map/SingleSprite.png")
     player = Player(0, 0)
-    fly_1 = Fly(0, 0)
+    fly_1 = Fly(100, 0)
 
     enemy_list = [fly_1]
     collider = Collider(player, map.get_group(), enemy_list)

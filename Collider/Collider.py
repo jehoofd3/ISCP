@@ -92,7 +92,9 @@ class Collider:
         for i in range(len(self.enemy_list)):
             blocks_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list, False)
             for block in blocks_hit_list:
-                if self.player.ySpeed == 0:
+
+                if self.player.ySpeed == 0 and not self.enemy_list[i].dead:
                     self.player.kill()
-                else:
+                elif self.player.ySpeed != 0 and not self.enemy_list[i].dead:
                     self.enemy_list[i].kill()
+                    self.player.ySpeed = 5

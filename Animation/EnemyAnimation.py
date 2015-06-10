@@ -50,6 +50,10 @@ class EnemyAnimation:
             self.left_walk()
             self.left_released = True
             self.right_released = False
+
+        if self.enemy.dead:
+            self.dead()
+
         return self.texture
 
     def right_walk(self):

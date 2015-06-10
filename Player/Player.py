@@ -9,10 +9,9 @@ class Player (pygame.sprite.Sprite):
     states, walk_l, walk_r = [], [], []
     dead_l, dead_r, jump_l, jump_r, stand_l, stand_r = None, None, None, None, None, None
     block_u, block_d, block_r, block_l = None, None, None, None
+    dead = None
 
     def __init__(self, x, y):
-        self.states = [PlayerNormalState(self)]
-
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
         self.rect = self.image.get_rect()
@@ -23,6 +22,10 @@ class Player (pygame.sprite.Sprite):
         self.jumpsRemaining = 2
         self.jumpWasPressed = None
         self.jumpPressed = None
+
+        self.health = 3
+        self.start_x = x
+        self.start_y = y
 
         for i in range(11):
             self.walk_l.append(pygame.image.load("../Data/Images/Player/Left/l_" + str(i) + ".png").convert_alpha())
@@ -39,6 +42,8 @@ class Player (pygame.sprite.Sprite):
 
         self.animation = PlayerAnimation(self)
 
+        self.states = [PlayerNormalState(self)]
+
     def run(self):
         self.states[0].run()
 
@@ -47,6 +52,7 @@ class Player (pygame.sprite.Sprite):
 
     def draw(self):
         Artist.get_display().blit(self.animation.update(), self.rect)
+        self.states[0].draw()
 
     def jump(self):
         self.ySpeed = 10
@@ -61,5 +67,7 @@ class Player (pygame.sprite.Sprite):
         self.ySpeed -= 0.4
 
     def kill(self):
-        self.states[0] = [PlayerDieState(self)]
-
+        if not self.dead:
+            self.states.pop()
+            self.states = [PlayerDieState(self)]
+            self.health -= 1

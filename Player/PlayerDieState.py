@@ -1,4 +1,6 @@
 from PlayerState import *
+from PlayerNormalState import *
+from Helpers.Artist import *
 
 
 class PlayerDieState(PlayerState):
@@ -8,10 +10,16 @@ class PlayerDieState(PlayerState):
         self.player = player
 
     def run(self):
-        print "RUN"
+        self.player.dead = True
+        self.player.jump()
 
     def update(self):
-        print "UPDATE"
+        self.player.basic_movement()
+        self.player.gravity()
+
+        if self.player.rect.top >= 960:
+            self.player.states.pop()
+            self.player.states = [PlayerNormalState(self.player)]
 
     def draw(self):
         pass

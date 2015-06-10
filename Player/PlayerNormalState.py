@@ -3,6 +3,7 @@ from Map.TileGrid import *
 import pygame
 from Helpers.Artist import *
 
+
 class PlayerNormalState (PlayerState):
 
     def __init__(self, player):
@@ -10,7 +11,10 @@ class PlayerNormalState (PlayerState):
         self.player = player
 
     def run(self):
-        pass
+        self.player.dead = False
+        self.player.rect.x = self.player.start_x
+        self.player.rect.y = self.player.start_y
+        self.player.ySpeed = 0
 
     def update(self):
         self.player.basic_movement()
@@ -31,7 +35,6 @@ class PlayerNormalState (PlayerState):
             self.player.ySpeed = 0
             self.player.rect.bottom = ((self.player.rect.bottom / 64) * 64)
             self.player.jumpsRemaining = 2
-
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:

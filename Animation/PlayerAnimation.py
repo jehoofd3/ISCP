@@ -39,8 +39,8 @@ class PlayerAnimation:
 
         # Deze twee vars zijn nodig om bij te houden of de player naar links of rechts
         # loopt. Zo is het bij te houden welke dead image er terug gestuurd moet worden
-        self.left_released = None
-        self.right_released = None
+        self.left_released = True
+        self.right_released = True
 
         self.length_list = len(self.walk_l)
 
@@ -66,6 +66,9 @@ class PlayerAnimation:
             self.right_jump()
         elif self.player.ySpeed != 0 and self.left_released:
             self.left_jump()
+
+        if self.player.dead:
+            self.dead()
 
         return self.texture
 

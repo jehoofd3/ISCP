@@ -2,6 +2,7 @@ import pygame
 from Helpers.Artist import *
 from FlyNormalState import *
 from Sprite.SpriteSheet import *
+from EnemyDieState import *
 from Animation.EnemyAnimation import *
 
 
@@ -9,6 +10,7 @@ class Enemy(object):
     states, walk_l, walk_r = [], [], []
     dead_l, dead_r = None, None
     block_u, block_d, block_r, block_l = None, None, None, None
+    dead = False
 
     def __init__(self, x, y):
         self.image = pygame.image.load("../Data/Images/Enemy/Fly/l_0.png").convert_alpha()
@@ -43,4 +45,5 @@ class Enemy(object):
         self.ySpeed -= 0.4
 
     def kill(self):
-        print "Enemy kill"
+        self.states.pop()
+        self.states = [EnemyDieState(self)]
