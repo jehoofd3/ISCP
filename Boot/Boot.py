@@ -1,5 +1,4 @@
 from GameStateManager.LevelStateManager import *
-from Player.PlayerStateManager import *
 
 class Boot(object):
 
@@ -10,7 +9,6 @@ class Boot(object):
         clock = pygame.time.Clock()
 
         gsm = LevelStateManager()
-        psm = PlayerStateManager()
 
         while not game_exit:
             # Event handling
@@ -24,10 +22,6 @@ class Boot(object):
             #GameStateManager
             gsm.update()
             gsm.draw()
-
-            #PlayerStateManager
-            psm.update()
-            psm.draw()
 
             # Alle objecten renderen
             pygame.display.update()
