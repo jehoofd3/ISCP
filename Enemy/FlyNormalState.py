@@ -15,5 +15,10 @@ class FlyNormalState(EnemyState):
 
         self.enemy.xSpeed = 3
 
+        if self.enemy.block_d:
+            self.enemy.ySpeed = 0
+            self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
+            self.enemy.jumpsRemaining = 2
+
     def draw(self):
         pass

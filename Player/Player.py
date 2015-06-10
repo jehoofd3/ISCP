@@ -7,6 +7,7 @@ from Animation.PlayerAnimation import *
 class Player (pygame.sprite.Sprite):
     states, walk_l, walk_r = [], [], []
     dead_l, dead_r, jump_l, jump_r, stand_l, stand_r = None, None, None, None, None, None
+    block_u, block_d, block_r, block_l = None, None, None, None
 
     def __init__(self, x, y):
         self.states = [PlayerNormalState(self)]
@@ -59,3 +60,6 @@ class Player (pygame.sprite.Sprite):
 
     def gravity(self):
         self.ySpeed -= 0.4
+
+    def kill(self):
+        self.states[0] = [PlayerDieState(self)]

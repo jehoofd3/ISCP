@@ -8,6 +8,7 @@ from Animation.EnemyAnimation import *
 class Enemy(object):
     states, walk_l, walk_r = [], [], []
     dead_l, dead_r = None, None
+    block_u, block_d, block_r, block_l = None, None, None, None
 
     def __init__(self, x, y):
         self.image = pygame.image.load("../Data/Images/Enemy/Fly/l_0.png").convert_alpha()
@@ -39,7 +40,4 @@ class Enemy(object):
         self.xSpeed = 0
 
     def gravity(self):
-        if self.rect.y < 500:
-            self.ySpeed -= 0.4
-        else:
-            self.ySpeed = 0
+        self.ySpeed -= 0.4
