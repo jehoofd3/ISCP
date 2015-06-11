@@ -2,8 +2,11 @@ import pygame
 
 class Artist:
 
+    screen_width = 960
+    screen_height = 768
+
     global game_display
-    game_display = pygame.display.set_mode((960, 768))
+    game_display = pygame.display.set_mode((screen_width, screen_height))
 
     def __init__(self):
         pass
@@ -24,3 +27,8 @@ class Artist:
     @staticmethod
     def get_display():
         return game_display
+
+    #70 is player width
+    @staticmethod
+    def get_half_screen_width():
+        return (Artist.screen_width / 2) - 70

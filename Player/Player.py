@@ -4,7 +4,6 @@ from PlayerNormalState import *
 from PlayerDieState import *
 from Animation.PlayerAnimation import *
 
-
 class Player (pygame.sprite.Sprite):
     states, walk_l, walk_r = [], [], []
     dead_l, dead_r, jump_l, jump_r, stand_l, stand_r = None, None, None, None, None, None
@@ -71,3 +70,9 @@ class Player (pygame.sprite.Sprite):
             self.states.pop()
             self.states = [PlayerDieState(self)]
             self.health -= 1
+
+    def get_player_x_speed(self):
+        return self.xSpeed
+
+    def get_player_x(self):
+        return self.rect.x

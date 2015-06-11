@@ -1,6 +1,8 @@
 from Level1State import *
+from Level2State import *
 
-class LevelStateManager(object):
+
+class LevelStateManager:
 
     states = []
 
@@ -17,3 +19,6 @@ class LevelStateManager(object):
     def draw(self):
         self.states[0].draw()
 
+    @staticmethod
+    def switch_state():
+        LevelStateManager.states[0] = Level2State()

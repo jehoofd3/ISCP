@@ -6,6 +6,10 @@ from Helpers.Artist import *
 
 class PlayerNormalState (PlayerState):
 
+    player_standard_speed = 6
+    player_x_speed = 6
+    half_screen_width = Artist.get_half_screen_width()
+
     def __init__(self, player):
         super(PlayerNormalState, self).__init__(player)
         self.player = player
@@ -21,10 +25,10 @@ class PlayerNormalState (PlayerState):
         self.player.gravity()
 
         if pygame.key.get_pressed()[pygame.K_LEFT] != 0 and not self.player.block_l:
-            self.player.xSpeed -= 5
+            self.player.xSpeed -= self.player_x_speed
 
         if pygame.key.get_pressed()[pygame.K_RIGHT] != 0 and not self.player.block_r:
-            self.player.xSpeed += 5
+            self.player.xSpeed += self.player_x_speed
 
         if self.player.block_u:
             self.ySpeed = 0
@@ -40,6 +44,12 @@ class PlayerNormalState (PlayerState):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP and self.player.jumpsRemaining > 0:
                     self.player.jump()
+
+        # zodat de player x speed door de helft gaat als de map meegaat
+        if self.player.rect.x >= self.half_screen_width:
+            self.player_x_speed = self.player_standard_speed / 2
+        else:
+            self.player_x_speed = self.player_standard_speed
 
     def draw(self):
         pass
