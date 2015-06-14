@@ -1,17 +1,16 @@
 import pygame
 
 
-class EnemyAnimation:
+class EnemyAnimation(object):
 
-    def __init__(self, enemy):
+    def __init__(self, walk_l, walk_r, dead_l, dead_r):
         # Deze class krijgt een object enemy mee. Het is mogelijk de afbeeldingen in de
         # constructor toe te voegen, maar dit lijkt me overbodig omdat je de lijsten
         # uit de enemy kan halen
-        self.enemy = enemy
-        self.walk_l = self.enemy.walk_l
-        self.walk_r = self.enemy.walk_r
-        self.dead_l = self.enemy.dead_l
-        self.dead_r = self.enemy.dead_r
+        self.walk_l = walk_l
+        self.walk_r = walk_r
+        self.dead_l = dead_l
+        self.dead_r = dead_r
 
         # texture is de afbeelding. Er moet een default afbeelding mee gegeven worden anders is
         # de var in het eerste frame leeg. Hierdoor krijg je een error
@@ -41,17 +40,17 @@ class EnemyAnimation:
         self.length_list = len(self.walk_l)
 
 
-    def update(self):
-        if self.enemy.xSpeed > 0:
+    def update(self, xSpeed, dead):
+        if xSpeed > 0:
             self.right_walk()
             self.left_released = False
             self.right_released = True
-        elif self.enemy.xSpeed < 0:
+        elif xSpeed < 0:
             self.left_walk()
             self.left_released = True
             self.right_released = False
 
-        if self.enemy.dead:
+        if dead:
             self.dead()
 
         return self.texture

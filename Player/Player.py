@@ -67,7 +67,6 @@ class Player (pygame.sprite.Sprite):
 
     def kill(self):
         if not self.dead:
-            self.states.pop()
             self.states = [PlayerDieState(self)]
             self.health -= 1
 

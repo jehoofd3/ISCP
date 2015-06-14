@@ -1,6 +1,7 @@
 from EnemyState import *
 
 
+
 class EnemyDieState(EnemyState):
 
     def __init__(self, enemy):
@@ -11,7 +12,12 @@ class EnemyDieState(EnemyState):
         self.enemy.dead = True
 
     def update(self):
-        pass
+        self.enemy.basic_movement()
+        self.enemy.gravity()
+
+        if self.enemy.block_d:
+            self.enemy.ySpeed = 0
+            self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
 
     def draw(self):
         pass

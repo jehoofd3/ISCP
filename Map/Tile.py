@@ -11,5 +11,4 @@ class Tile(pygame.sprite.Sprite):
         self.rect.y = y
 
     def shift_x(self, x_speed):
-        print x_speed
         self.rect.x -= x_speed

@@ -31,7 +31,7 @@ class PlayerNormalState (PlayerState):
             self.player.xSpeed += self.player_x_speed
 
         if self.player.block_u:
-            self.ySpeed = 0
+            self.player.ySpeed = 0
             self.player.rect.top += 5
 
         # Collision under
