@@ -6,8 +6,6 @@ class Fish(Enemy):
     w_l, w_r, d_l, d_r = [], [], None, None
 
     def __init__(self, x, y, range):
-        self.start_x = x
-
         self.w_l.append(pygame.image.load("../Data/Images/Enemy/Fish/l_0.png").convert_alpha())
         self.w_l.append(pygame.image.load("../Data/Images/Enemy/Fish/l_1.png").convert_alpha())
         self.w_r.append(pygame.image.load("../Data/Images/Enemy/Fish/r_0.png").convert_alpha())
@@ -18,4 +16,3 @@ class Fish(Enemy):
         super(Fish, self).__init__(x, y, range, self.w_l, self.w_r, self.d_l, self.d_r)
 
         self.states = [FishNormalState(self)]
-        self.run()

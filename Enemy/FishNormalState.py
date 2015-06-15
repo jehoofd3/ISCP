@@ -1,4 +1,6 @@
 from EnemyState import *
+from FlyJumpState import *
+import time
 
 
 class FishNormalState(EnemyState):
@@ -7,11 +9,16 @@ class FishNormalState(EnemyState):
         super(FishNormalState, self).__init__(enemy)
         
     def run(self):
+        self.enemy.rect.y = self.enemy.start_y
         self.left = None
         self.right = None
 
+        self.start_time = time.time()
+        self.switch_time = 7
+
     def update(self):
         self.enemy.basic_movement()
+        self.current_time = time.time()
 
         if self.enemy.rect.x <= self.enemy.start_x:
             self.right = True
@@ -25,6 +32,10 @@ class FishNormalState(EnemyState):
             self.enemy.xSpeed -= self.enemy.speed
         if self.right:
             self.enemy.xSpeed += self.enemy.speed
+
+        if self.current_time - self.start_time >= self.switch_time:
+            self.enemy.states = [FishJumpState(self.enemy)]
+
 
     def draw(self):
         pass

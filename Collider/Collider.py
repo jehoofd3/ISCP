@@ -1,4 +1,5 @@
 import pygame
+import Enemy
 
 
 class Collider(object):
@@ -18,6 +19,7 @@ class Collider(object):
         self.player_collider()
         self.enemy_collider()
         self.player_enemy_collider()
+        self.bullet_collider()
 
     def player_collider(self):
         # Player killen wanneer hij met zijn onderkant (player.rect.bottom) de onderkant
@@ -126,3 +128,30 @@ class Collider(object):
                 elif self.player.ySpeed != 0 and not self.enemy_list[i].dead:
                     self.enemy_list[i].kill()
                     self.player.ySpeed = 5
+
+    def bullet_collider(self):
+        for i in range(len(self.enemy_list)):
+            if isinstance(self.enemy_list[i], Enemy.Tank.Tank):
+                for j in range(self.enemy_list[i].get_len_bl()):
+
+                    # als de enemy een tank is, voer de code uit om te kijken of de bullet de map raakt.
+                    # Zoja dan explodeert hij
+                    block_hit_list = pygame.sprite.spritecollide(self.enemy_list[i].get_bl()[j], self.map, False)
+                    for hit in block_hit_list:
+                        self.enemy_list[i].get_bl()[j].explode()
+
+                    # Als de bullet de player raakt gaat de player dood en explodeert de bullet
+                    block_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list[i].get_bl(), False)
+                    for hit in block_hit_list:
+                        self.player.dead = True
+                        self.enemy_list[i].get_bl()[j].explode()
+
+                    if self.enemy_list[i].get_bl()[j].rect.x >= self.player.rect.x:
+                        self.enemy_list[i].get_bl()[j].l_r = True
+                    else:
+                        self.enemy_list[i].get_bl()[j].l_r = False
+
+                    if self.enemy_list[i].get_bl()[j].rect.y >= self.player.rect.y:
+                        self.enemy_list[i].get_bl()[j].u_d = True
+                    else:
+                        self.enemy_list[i].get_bl()[j].u_d = False

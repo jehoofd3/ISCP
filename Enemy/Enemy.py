@@ -12,16 +12,17 @@ class Enemy(object):
     dead, follow, left_right = False, False, None
 
     def __init__(self, x, y, range, walk_l, walk_r, dead_l, dead_r):
-        self.image = pygame.image.load("../Data/Images/Enemy/Fly/l_0.png").convert_alpha()
-        self.rect = self.image.get_rect()
+        self.rect = walk_l[0].get_rect()
         self.rect.x = x
         self.rect.y = y
         self.xSpeed = 0
         self.ySpeed = 0
         self.jumpsRemaining = 2
         self.speed = 2
-        self.start_speed = 2
+        self.start_speed = self.speed
         self.range = range
+        self.start_x = x
+        self.start_y = y
 
         self.animation = EnemyAnimation(walk_l, walk_r, dead_l, dead_r)
 
@@ -49,9 +50,3 @@ class Enemy(object):
 
     def kill(self):
         self.states = [EnemyDieState(self)]
-
-    def reset_images(self):
-        self.walk_l = []
-        self.walk_r = []
-        self.dead_l = None
-        self.dead_r = None

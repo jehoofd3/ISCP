@@ -1,6 +1,7 @@
 from Map.TileGrid import *
 from Enemy.Fly import *
 from Enemy.Fish import *
+from Enemy.Tank import *
 from Player.Player import *
 from Collider.Collider import *
 from Helpers.Artist import *
@@ -8,10 +9,10 @@ from Helpers.Artist import *
 class Level1State(object):
     map = TileGrid("../Data/Levels/ProjectEen.txt", "../Data/Images/Map/SingleSprite.png")
     player = Player(140, 400)
-    fly_1 = Fly(300, 600, 200)
-    fish_1 = Fish(300, 700, 200)
+    tank_1 = Tank(300, 500, 200)
+    fly_1 = Fly(400, 600, 50)
 
-    enemy_list = [fish_1, fly_1]
+    enemy_list = [tank_1, fly_1]
     collider = Collider(player, map.get_group(), enemy_list)
 
     player_x = 0
