@@ -16,7 +16,7 @@ class TileGrid(SpriteSheet):
 
         file = open(level_path)
 
-        self.background_image = pygame.image.load("../Data/Levels/BackgroundEen.png")
+        self.background_image = pygame.image.load("../Data/Levels/BackgroundEen.png").convert()
 
         for i in range(self.collums):
             for j in range(self.rows):

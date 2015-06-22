@@ -2,12 +2,12 @@ from Level1State import *
 from Level2State import *
 
 
-class LevelStateManager:
+class LevelStateManager(object):
 
     states = []
 
     def __init__(self):
-        self.states = [Level1State()]
+        self.states = [Level1State(self)]
         self.run()
 
     def run(self):

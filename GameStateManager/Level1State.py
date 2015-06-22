@@ -1,18 +1,20 @@
 from Map.TileGrid import *
+import LevelState
 from Enemy.Fly import *
 from Enemy.Fish import *
+from Enemy.Slime import *
+from Enemy.Snake import *
 from Enemy.Tank import *
 from Player.Player import *
 from Collider.Collider import *
 from Helpers.Artist import *
 
-class Level1State(object):
+class Level1State(LevelState.LevelState):
     map = TileGrid("../Data/Levels/ProjectEen.txt", "../Data/Images/Map/SingleSprite.png")
     player = Player(140, 400)
-    tank_1 = Tank(300, 500, 200)
-    fly_1 = Fly(400, 600, 50)
+    slime_1 = Slime(500, 500, 10)
 
-    enemy_list = [tank_1, fly_1]
+    enemy_list = []
     collider = Collider(player, map.get_group(), enemy_list)
 
     player_x = 0
@@ -20,8 +22,8 @@ class Level1State(object):
 
     half_screen_width = Artist.get_half_screen_width()
 
-    def __init__(self):
-        pass
+    def __init__(self, level):
+        super(Level1State, self).__init__(level)
 
     def run(self):
         self.map.run()

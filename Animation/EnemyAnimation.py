@@ -14,7 +14,7 @@ class EnemyAnimation(object):
 
         # texture is de afbeelding. Er moet een default afbeelding mee gegeven worden anders is
         # de var in het eerste frame leeg. Hierdoor krijg je een error
-        self.texture = pygame.image.load("../Data/Images/Enemy/Fly/l_0.png").convert_alpha()
+        self.texture = self.walk_l[0]
 
         # frame_cap zijn de max beelden (frames) die elke seconde berekend worden
         # In de Boot class zetten we het op max 60

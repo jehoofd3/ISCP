@@ -22,7 +22,6 @@ class Player (pygame.sprite.Sprite):
         self.jumpWasPressed = None
         self.jumpPressed = None
 
-        self.health = 3
         self.start_x = x
         self.start_y = y
 
@@ -41,6 +40,9 @@ class Player (pygame.sprite.Sprite):
 
         self.animation = PlayerAnimation(self)
 
+        self.health = 3
+        self.health_img = pygame.image.load("../Data/Images/Player/Health/health.png").convert_alpha()
+
         self.states = [PlayerNormalState(self)]
 
     def run(self):
@@ -50,8 +52,10 @@ class Player (pygame.sprite.Sprite):
         self.states[0].update()
 
     def draw(self):
+        for i in range(self.health):
+            Artist.get_display().blit(self.health_img, [i * 53, 30, 53, 45])
         Artist.get_display().blit(self.animation.update(), self.rect)
-        self.states[0].draw()
+
 
     def jump(self):
         self.ySpeed = 10

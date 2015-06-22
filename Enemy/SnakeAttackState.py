@@ -1,35 +1,31 @@
 from EnemyState import *
-from FlyGoBackState import *
 
 
-class FlyAttackState(EnemyState):
+class SnakeAttackState(EnemyState):
 
     def __init__(self, enemy):
-        super(FlyAttackState, self).__init__(enemy)
+        super(SnakeAttackState, self).__init__(enemy)
 
     def run(self):
-        self.enemy.speed *= 1.5
+        self.enemy.speed *= 2
 
     def update(self):
         self.enemy.basic_movement()
         self.enemy.gravity()
+
+        if self.enemy.l_r:
+            self.enemy.xSpeed += self.enemy.speed
+        else:
+            self.enemy.xSpeed -= self.enemy.speed
 
         if self.enemy.block_d:
             self.enemy.ySpeed = 0
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
             self.enemy.jumpsRemaining = 2
 
-        if self.enemy.left_right:
-            self.enemy.xSpeed += self.enemy.speed
-        else:
-            self.enemy.xSpeed -= self.enemy.speed
-
         if self.enemy.block_l or self.enemy.block_r:
             self.enemy.xSpeed = 0
-        #    self.enemy.jump()
-
-        if not self.enemy.follow:
-            self.enemy.states = [FlyGoBackState(self.enemy)]
+           # self.enemy.jump()
 
     def draw(self):
         pass

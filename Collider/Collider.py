@@ -9,6 +9,7 @@ class Collider(object):
         self.map = map
         self.enemy_list = enemy_list
         self.range = 150
+        self.snake_hulp = 0
 
         # De player moet in een group gezet worden. Wanneer je een enemy killt, kill je ze allemaal.
         # Zo los je het probleem op
@@ -19,7 +20,7 @@ class Collider(object):
         self.player_collider()
         self.enemy_collider()
         self.player_enemy_collider()
-        self.bullet_collider()
+        self.objects_collider()
 
     def player_collider(self):
         # Player killen wanneer hij met zijn onderkant (player.rect.bottom) de onderkant
@@ -33,28 +34,29 @@ class Collider(object):
             # Collision up
             if (self.player.rect.top <= block.rect.bottom and self.player.rect.top >= block.rect.top):
                 self.player.block_u = True
-            else:
+            elif (self.player.rect.top >= block.rect.bottom and self.player.rect.top <= block.rect.top):
                 self.player.block_u = False
 
             # Collision under
             if (self.player.rect.bottom >= block.rect.top and self.player.rect.bottom <= block.rect.bottom):
                 self.player.block_d = True
-
-            else:
+            elif(self.player.rect.bottom <= block.rect.top and self.player.rect.bottom >= block.rect.bottom):
                 self.player.block_d = False
 
             #Collision left
             if (self.player.rect.left <= block.rect.right and self.player.rect.left >= block.rect.left and
                 self.player.rect.bottom <= block.rect.bottom):
                 self.player.block_l = True
-            else:
+            elif (self.player.rect.left >= block.rect.right and self.player.rect.left <= block.rect.left and
+                self.player.rect.bottom >= block.rect.bottom):
                 self.player.block_l = False
 
             # Collision right
             if (self.player.rect.right >= block.rect.left and self.player.rect.right <= block.rect.right and
                 self.player.rect.bottom <= block.rect.bottom):
                 self.player.block_r = True
-            else:
+            elif (self.player.rect.right <= block.rect.left and self.player.rect.right >= block.rect.right and
+                self.player.rect.bottom >= block.rect.bottom):
                 self.player.block_r = False
 
         # Als de list leeg is, betekend het dat de player geen collision met Tile(s) heeft. Door alle variablen op False
@@ -129,7 +131,7 @@ class Collider(object):
                     self.enemy_list[i].kill()
                     self.player.ySpeed = 5
 
-    def bullet_collider(self):
+    def objects_collider(self):
         for i in range(len(self.enemy_list)):
             if isinstance(self.enemy_list[i], Enemy.Tank.Tank):
                 for j in range(self.enemy_list[i].get_len_bl()):
@@ -143,7 +145,7 @@ class Collider(object):
                     # Als de bullet de player raakt gaat de player dood en explodeert de bullet
                     block_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list[i].get_bl(), False)
                     for hit in block_hit_list:
-                        self.player.dead = True
+                        self.player.kill()
                         self.enemy_list[i].get_bl()[j].explode()
 
                     if self.enemy_list[i].get_bl()[j].rect.x >= self.player.rect.x:
@@ -155,3 +157,17 @@ class Collider(object):
                         self.enemy_list[i].get_bl()[j].u_d = True
                     else:
                         self.enemy_list[i].get_bl()[j].u_d = False
+
+            # Wanneer de enemy een slime is wordt er gekeken of de slime nieuwe snakes aangemaakt heeft.
+            # Zoja, dan wordt die snake aan de enemy_list toegevoegd. Hierdoor werkt hij met de collider
+            if isinstance(self.enemy_list[i], Enemy.Slime.Slime):
+                if len(self.enemy_list[i].snake_list) > self.snake_hulp:
+                    self.enemy_list.append(self.enemy_list[i].get_snake(self.snake_hulp))
+                    self.snake_hulp += 1
+
+            # Als de enemy een snake is wordt er gekeken of hij naar links of rechts moet lopen
+            if isinstance(self.enemy_list[i], Enemy.Snake.Snake):
+                if self.player.rect.x >= self.enemy_list[i].rect.x:
+                    self.enemy_list[i].l_r = True
+                else:
+                    self.enemy_list[i].l_r = False

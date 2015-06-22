@@ -17,8 +17,7 @@ class PlayerDieState(PlayerState):
         self.player.basic_movement()
         self.player.gravity()
 
-        if self.player.rect.top >= 960:
-            self.player.states.pop()
+        if self.player.rect.top >= 768:
             self.player.states = [PlayerNormalState(self.player)]
 
     def draw(self):
