@@ -1,71 +1,66 @@
 import pygame
-import Enemy
+class Collider:
 
+    left_right_collision = False
+    previous_collision = ''
+    one_time = False
+    second_time = False
+    level_state_manager = None
+    main_menu = None
 
-class Collider(object):
+    is_collision = False
+    player_behind = 0
 
-    def __init__(self, player, map, enemy_list):
+    def __init__(self, player, map, enemy_list, level_state_manager, main_menu):
         self.player = player
         self.map = map
         self.enemy_list = enemy_list
-        self.range = 150
-        self.snake_hulp = 0
-
-        # De player moet in een group gezet worden. Wanneer je een enemy killt, kill je ze allemaal.
-        # Zo los je het probleem op
-        self.player_group = pygame.sprite.Group()
-        self.player_group.add(player)
+        self.level_state_manager = level_state_manager
+        self.main_menu = main_menu
 
     def update(self):
         self.player_collider()
         self.enemy_collider()
         self.player_enemy_collider()
-        self.objects_collider()
 
     def player_collider(self):
-        # Player killen wanneer hij met zijn onderkant (player.rect.bottom) de onderkant
-        # van het scherm aanraakt 768 is de height van het scherm
-        if self.player.rect.bottom > 768:
-            self.player.kill()
-
         blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
         for block in blocks_hit_list:
+            #if on exit sign , load next level
+            if block.image_type == 114:
+                self.level_state_manager.next_level(self.main_menu)
 
-            # Collision up
-            if (self.player.rect.top <= block.rect.bottom and self.player.rect.top >= block.rect.top):
-                self.player.block_u = True
-            elif (self.player.rect.top >= block.rect.bottom and self.player.rect.top <= block.rect.top):
-                self.player.block_u = False
+            #vertically
+            if self.player.rect.bottom >= block.rect.top:
+                if not self.player.rect.topleft[1] > block.rect.bottomright[1]:
+                    pass
+                
+                if not block.rect.topleft[1] > self.player.rect.bottomright[1]:
+                    self.player.collision_under = True
 
-            # Collision under
-            if (self.player.rect.bottom >= block.rect.top and self.player.rect.bottom <= block.rect.bottom):
-                self.player.block_d = True
-            elif(self.player.rect.bottom <= block.rect.top and self.player.rect.bottom >= block.rect.bottom):
-                self.player.block_d = False
+            #horizontally
+            if self.player.rect.bottom >= block.rect.bottom:
+                if not self.player.rect.topleft[0] > block.rect.bottomright[0] or block.rect.topleft[0] > self.player.rect.bottomright[0]:
+                    if block.rect.left < self.player.rect.left and self.player.face_direction == 'Left':
+                        self.player.canGoLeft = False
+                        self.player.canGoRight = True
 
-            #Collision left
-            if (self.player.rect.left <= block.rect.right and self.player.rect.left >= block.rect.left and
-                self.player.rect.bottom <= block.rect.bottom):
-                self.player.block_l = True
-            elif (self.player.rect.left >= block.rect.right and self.player.rect.left <= block.rect.left and
-                self.player.rect.bottom >= block.rect.bottom):
-                self.player.block_l = False
+                    if block.rect.left < self.player.rect.left and self.player.face_direction == 'Right':
+                        self.player.canGoLeft = True
+                        self.player.canGoRight = True
 
-            # Collision right
-            if (self.player.rect.right >= block.rect.left and self.player.rect.right <= block.rect.right and
-                self.player.rect.bottom <= block.rect.bottom):
-                self.player.block_r = True
-            elif (self.player.rect.right <= block.rect.left and self.player.rect.right >= block.rect.right and
-                self.player.rect.bottom >= block.rect.bottom):
-                self.player.block_r = False
+                    if block.rect.right > self.player.rect.right and self.player.face_direction == 'Left':
+                        self.player.canGoLeft = True
+                        self.player.canGoRight = True
 
-        # Als de list leeg is, betekend het dat de player geen collision met Tile(s) heeft. Door alle variablen op False
-        # te zetten blijft de Gravity actief en kan de player naar links / rechts bewegen en springen
+                    if block.rect.right > self.player.rect.right and self.player.face_direction == 'Right':
+                        self.player.canGoLeft = True
+                        self.player.canGoRight = False
+
+
         if not blocks_hit_list:
-            self.player.block_u = False
-            self.player.block_d = False
-            self.player.block_l = False
-            self.player.block_r = False
+            self.player.collision_under = False
+
 
     def enemy_collider(self):
         for i in range(len(self.enemy_list)):
@@ -108,8 +103,7 @@ class Collider(object):
         for i in range(len(self.enemy_list)):
 
             # De enemy de player laten volgen wanneer hij in range is
-            if self.enemy_list[i].rect.x - self.player.rect.x <= self.range and \
-                self.enemy_list[i].rect.x - self.player.rect.x >= -self.range:
+            if self.enemy_list[i].rect.x - self.player.rect.x <= self.range and self.enemy_list[i].rect.x - self.player.rect.x >= -self.range:
                 self.enemy_list[i].follow = True
             else:
                 self.enemy_list[i].follow = False

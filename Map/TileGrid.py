@@ -1,40 +1,40 @@
 from Map.Tile import *
-from Sprite.SpriteSheet import *
+from Sprite.ImageLoader import *
 from Helpers.Artist import *
 
-class TileGrid(SpriteSheet):
+class TileGrid(ImageLoader):
 
     map_group = pygame.sprite.Group()
     background_image = None
     rows = 60
-    collums = 12
-
+    columns = 12
     shift_speed = 8.0
 
-    def __init__(self, level_path, sprite_path):
-        super(TileGrid, self).__init__(sprite_path)
+    x_start = 0
+    x_start_shift_map = 0
+    display = Artist.get_display()
 
+    def __init__(self, level_path):
         file = open(level_path)
+        self.map_group.empty()
+        self.background_image = pygame.image.load("../Data/Levels/BackgroundEen.png")
 
-        self.background_image = pygame.image.load("../Data/Levels/BackgroundEen.png").convert()
-
-        for i in range(self.collums):
+        for i in range(self.columns):
             for j in range(self.rows):
-                img = int(file.next())
-                if img == -1 or img == 0:
+                imageNumber = int(file.next())
+                if imageNumber == -1 or imageNumber == 0:
                     pass
                 else:
-                    self.map_group.add(Tile(j * 64, i * 64, super(TileGrid, self).get_image(0, (img - 1) * 64, 64, 64)))
-
+                    self.map_group.add(Tile(j * 64, i * 64, super(TileGrid, self).get_image(0, (imageNumber - 1) * 64, imageNumber), imageNumber))
 
     def run(self):
         pass
 
     def draw(self):
-        Artist.get_display().blit(self.background_image, [0, 0])
         self.map_group.draw(Artist.get_display())
 
     def shift_map(self, player_x_speed):
+        self.x_start_shift_map += player_x_speed
         for sprite in self.map_group:
             sprite.shift_x(player_x_speed)
             #sprite.shift_x(round(player_x_speed / self.shift_speed)
@@ -43,30 +43,5 @@ class TileGrid(SpriteSheet):
     def get_group():
         return TileGrid.map_group
 
-
-
-'''
-public class Camera
-{
-	public static void setCamera(float playerX, float playerY)
-	{
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-
-		if(playerX < WIDTH/2)
-		{
-			glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
-		}
-		else if(playerX > TOTALWIDTH - (WIDTH / 2))
-		{
-			glOrtho(TOTALWIDTH - WIDTH, TOTALWIDTH, HEIGHT, 0, -1, 1);
-		}
-		else
-		{
-			glOrtho(playerX - (WIDTH / 2), playerX + (WIDTH / 2), HEIGHT, 0, -1, 1);
-		}
-
-		glMatrixMode(GL_MODELVIEW);
-	}
-}
-'''
+    def set_x_start_shift_map(self, player_spawn_x):
+        self.x_start_shift_map = player_spawn_x

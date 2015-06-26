@@ -10,18 +10,30 @@ class Player (pygame.sprite.Sprite):
     block_u, block_d, block_r, block_l = None, None, None, None
     dead = None
 
+    canGoRight = True
+    canGoLeft = True
+    collision_under = False
+    collision_up = False
+
+    half_screen_width = Artist.get_half_screen_width()
+    face_direction = 'Right'
+
+    jumpsRemaining = 2
+    jumpWasPressed = None
+    jumpPressed = None
+    health = 3
+    xSpeed = 0
+    ySpeed = 0
+    start_x = 0
+    start_y = 0
+    is_shifting = False
+
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.xSpeed = 0
-        self.ySpeed = 0
-        self.jumpsRemaining = 2
-        self.jumpWasPressed = None
-        self.jumpPressed = None
-
         self.start_x = x
         self.start_y = y
 
@@ -40,29 +52,26 @@ class Player (pygame.sprite.Sprite):
 
         self.animation = PlayerAnimation(self)
 
-        self.health = 3
-        self.health_img = pygame.image.load("../Data/Images/Player/Health/health.png").convert_alpha()
-
-        self.states = [PlayerNormalState(self)]
+        self.states = PlayerNormalState(self)
 
     def run(self):
-        self.states[0].run()
+        self.states.run()
 
     def update(self):
-        self.states[0].update()
+        self.states.update()
 
     def draw(self):
-        for i in range(self.health):
-            Artist.get_display().blit(self.health_img, [i * 53, 30, 53, 45])
         Artist.get_display().blit(self.animation.update(), self.rect)
-
+        self.states.draw()
 
     def jump(self):
         self.ySpeed = 10
         self.jumpsRemaining -= 1
 
     def basic_movement(self):
-        self.rect.x += self.xSpeed
+        if not self.is_shifting:
+            self.rect.x += self.xSpeed
+
         self.rect.y -= self.ySpeed
         self.xSpeed = 0
 
@@ -71,6 +80,7 @@ class Player (pygame.sprite.Sprite):
 
     def kill(self):
         if not self.dead:
+            self.states.pop()
             self.states = [PlayerDieState(self)]
             self.health -= 1
 

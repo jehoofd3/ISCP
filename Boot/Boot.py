@@ -1,6 +1,9 @@
-from GameStateManager.LevelStateManager import *
+import pygame
+from Helpers.Artist import *
+from LevelStateManager.LevelStateManager import *
 
 class Boot(object):
+    mouse_button_pressed = False
 
     def __init__(self):
         Artist.begin_session()
@@ -8,20 +11,19 @@ class Boot(object):
 
         clock = pygame.time.Clock()
 
-        gsm = LevelStateManager()
+        lsm = LevelStateManager()
+
+        lsm.run()
 
         while not game_exit:
             # Event handling
-            for event in pygame.event.get():
-                # Loop stoppen wanneer het kruisje ingedrukt wordt
-                if event.type == pygame.QUIT:
-                    game_exit = True
-
+            # Pygame removes events from the queue. pygame.quit argument ensures that only the pygame.quit events are removed.
+            for event in pygame.event.get(pygame.QUIT):
+                game_exit = True
             Artist.clear_screen()
 
-            #GameStateManager
-            gsm.update()
-            gsm.draw()
+            lsm.update()
+            lsm.draw()
 
             # Alle objecten renderen
             pygame.display.update()
@@ -34,3 +36,5 @@ class Boot(object):
 
 if __name__ == '__main__':
     Boot().__init__()
+
+

@@ -4,7 +4,6 @@ class Artist:
 
     screen_width = 960
     screen_height = 768
-    bullet_index = 0
 
     global game_display
     game_display = pygame.display.set_mode((screen_width, screen_height))
@@ -29,12 +28,20 @@ class Artist:
     def get_display():
         return game_display
 
-    #70 is player width
     @staticmethod
-    def get_half_screen_width():
-        return (Artist.screen_width / 2) - 70
+    def get_screen_width():
+        return Artist.screen_width
 
     @staticmethod
-    def get_bi():
-        Artist.bullet_index += 1
-        return Artist.bullet_index
+    def get_screen_height():
+        return Artist.screen_height
+
+    @staticmethod
+    def get_half_screen_width():
+        return Artist.screen_width / 2
+
+    @staticmethod
+    def get_half_screen_height():
+        return Artist.screen_height / 2
+
+

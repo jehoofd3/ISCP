@@ -1,7 +1,6 @@
 import pygame
 from Helpers.Artist import *
 from FlyNormalState import *
-from Sprite.SpriteSheet import *
 from EnemyDieState import *
 from Animation.EnemyAnimation import *
 
