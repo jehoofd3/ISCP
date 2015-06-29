@@ -32,7 +32,7 @@ class PlayerNormalState (PlayerState):
             self.player.face_direction = 'Right'
 
         if self.player.collision_up:
-            pass
+            self.player.ySpeed = - 3
 
         # Collision under
         if self.player.collision_under:

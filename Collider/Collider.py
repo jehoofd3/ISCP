@@ -35,7 +35,7 @@ class Collider:
             self.player.collision_under = False
 
     def player_collision_up(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_right_image, self.map, False)
+        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_up_image, self.map, False)
 
         if blocks_hit_list:
             self.player.collision_up = True

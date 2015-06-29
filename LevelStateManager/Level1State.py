@@ -24,7 +24,7 @@ class Level1State(LevelState.LevelState):
     background_image = pygame.image.load("../Data/Levels/BackgroundEen.png").convert()
 
     shift_start = 410
-    shift_end = 3290
+    shift_end = 3285
 
     fly = Fly(180, 50, 10)
 

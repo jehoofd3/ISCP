@@ -86,15 +86,15 @@ class Player (pygame.sprite.Sprite):
         self.states.update()
 
         # PLayer under
-        self.player_under_image.rect.x = self.rect.x + 5
+        self.player_under_image.rect.x = self.rect.x + 10
         self.player_under_image.rect.y = self.rect.y + 94
 
         # PLayer up
-        self.player_up_image.rect.x = self.rect.x + 5
-        self.player_up_image.rect.y = self.rect.y - 10
+        self.player_up_image.rect.x = self.rect.x + 10
+        self.player_up_image.rect.y = self.rect.y - 1
 
         # PLayer left
-        self.player_left_image.rect.x = self.rect.x - 10
+        self.player_left_image.rect.x = self.rect.x - 1
         self.player_left_image.rect.y = self.rect.y + 12
 
         # PLayer right
