@@ -28,6 +28,11 @@ class Player (pygame.sprite.Sprite):
     start_y = 0
     is_shifting = False
 
+    player_under_image = None
+    player_up_image = None
+    player_left_image = None
+    player_right_image = None
+
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
@@ -54,15 +59,55 @@ class Player (pygame.sprite.Sprite):
 
         self.states = PlayerNormalState(self)
 
+        # Player under sprite
+        self.player_under_image = pygame.sprite.Sprite()
+        self.player_under_image.image = pygame.image.load("../Data/OB.png").convert()
+        self.player_under_image.rect = self.player_under_image.image.get_rect()
+
+        # Player up sprite
+        self.player_up_image = pygame.sprite.Sprite()
+        self.player_up_image.image = pygame.image.load("../Data/OB.png").convert()
+        self.player_up_image.rect = self.player_up_image.image.get_rect()
+
+        # Player left sprite
+        self.player_left_image = pygame.sprite.Sprite()
+        self.player_left_image.image = pygame.image.load("../Data/LR.png").convert()
+        self.player_left_image.rect = self.player_left_image.image.get_rect()
+
+        # Player right sprite
+        self.player_right_image = pygame.sprite.Sprite()
+        self.player_right_image.image = pygame.image.load("../Data/LR.png").convert()
+        self.player_right_image.rect = self.player_right_image.image.get_rect()
+
     def run(self):
         self.states.run()
 
     def update(self):
         self.states.update()
 
+        # PLayer under
+        self.player_under_image.rect.x = self.rect.x + 5
+        self.player_under_image.rect.y = self.rect.y + 94
+
+        # PLayer up
+        self.player_up_image.rect.x = self.rect.x + 5
+        self.player_up_image.rect.y = self.rect.y - 10
+
+        # PLayer left
+        self.player_left_image.rect.x = self.rect.x - 10
+        self.player_left_image.rect.y = self.rect.y + 12
+
+        # PLayer right
+        self.player_right_image.rect.x = self.rect.x + 70
+        self.player_right_image.rect.y = self.rect.y + 12
+
     def draw(self):
         Artist.get_display().blit(self.animation.update(), self.rect)
         self.states.draw()
+        Artist.get_display().blit(self.player_under_image.image, self.player_under_image.rect)
+        Artist.get_display().blit(self.player_up_image.image, self.player_up_image.rect)
+        Artist.get_display().blit(self.player_left_image.image, self.player_left_image.rect)
+        Artist.get_display().blit(self.player_right_image.image, self.player_right_image.rect)
 
     def jump(self):
         self.ySpeed = 10

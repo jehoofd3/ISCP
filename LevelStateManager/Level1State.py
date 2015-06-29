@@ -43,13 +43,13 @@ class Level1State(LevelState.LevelState):
         self.map.run()
 
     def update(self):
+        self.collider.update()
         self.player.update()
         self.fly.update()
 
         for e in self.enemy_list:
             e.update()
 
-        self.collider.update()
 
         # Code that it will only shift between the given values
         if not self.player.is_shifting:

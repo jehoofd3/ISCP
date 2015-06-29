@@ -2,9 +2,11 @@ import pygame
 
 class Artist:
 
+    # Window dimensions
     screen_width = 960
     screen_height = 768
 
+    # Make a window with the specified with and height.
     global game_display
     game_display = pygame.display.set_mode((screen_width, screen_height))
 
@@ -13,8 +15,10 @@ class Artist:
 
     @staticmethod
     def begin_session():
+        # Initialize all imported pygame modules
         pygame.init()
-        pygame.display.set_caption("2d Game")
+
+        pygame.display.set_caption("Escape")
 
     @staticmethod
     def draw_textures(image, x, y):

@@ -19,48 +19,44 @@ class Collider:
         self.main_menu = main_menu
 
     def update(self):
-        self.player_collider()
+        self.player_collision_down()
+        self.player_collision_up()
+        self.player_collision_left()
+        self.player_collision_right()
         self.enemy_collider()
         self.player_enemy_collider()
 
-    def player_collider(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
-        for block in blocks_hit_list:
-            #if on exit sign , load next level
-            if block.image_type == 114:
-                self.level_state_manager.next_level(self.main_menu)
+    def player_collision_down(self):
+        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)
 
-            #vertically
-            if self.player.rect.bottom >= block.rect.top:
-                if not self.player.rect.topleft[1] > block.rect.bottomright[1]:
-                    pass
-                
-                if not block.rect.topleft[1] > self.player.rect.bottomright[1]:
-                    self.player.collision_under = True
-
-            #horizontally
-            if self.player.rect.bottom >= block.rect.bottom:
-                if not self.player.rect.topleft[0] > block.rect.bottomright[0] or block.rect.topleft[0] > self.player.rect.bottomright[0]:
-                    if block.rect.left < self.player.rect.left and self.player.face_direction == 'Left':
-                        self.player.canGoLeft = False
-                        self.player.canGoRight = True
-
-                    if block.rect.left < self.player.rect.left and self.player.face_direction == 'Right':
-                        self.player.canGoLeft = True
-                        self.player.canGoRight = True
-
-                    if block.rect.right > self.player.rect.right and self.player.face_direction == 'Left':
-                        self.player.canGoLeft = True
-                        self.player.canGoRight = True
-
-                    if block.rect.right > self.player.rect.right and self.player.face_direction == 'Right':
-                        self.player.canGoLeft = True
-                        self.player.canGoRight = False
-
-
-        if not blocks_hit_list:
+        if blocks_hit_list:
+            self.player.collision_under = True
+        else:
             self.player.collision_under = False
 
+    def player_collision_up(self):
+        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_right_image, self.map, False)
+
+        if blocks_hit_list:
+            self.player.collision_up = True
+        else:
+            self.player.collision_up = False
+
+    def player_collision_left(self):
+        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_left_image, self.map, False)
+
+        if blocks_hit_list:
+            self.player.canGoLeft = False
+        else:
+            self.player.canGoLeft = True
+
+    def player_collision_right(self):
+        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_right_image, self.map, False)
+
+        if blocks_hit_list:
+            self.player.canGoRight = False
+        else:
+            self.player.canGoRight = True
 
     def enemy_collider(self):
         for i in range(len(self.enemy_list)):
