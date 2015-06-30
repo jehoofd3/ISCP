@@ -23,6 +23,26 @@ class Enemy(object):
         self.start_x = x
         self.start_y = y
 
+        # Player under sprite
+        self.enemy_under_image = pygame.sprite.Sprite()
+        self.enemy_under_image.image = pygame.image.load("../Data/OB.png").convert()
+        self.enemy_under_image.rect = pygame.Rect(0, 0, self.rect.width * 0.8, 1)
+
+        # Player up sprite
+        self.enemy_up_image = pygame.sprite.Sprite()
+        self.enemy_up_image.image = pygame.image.load("../Data/OB.png").convert()
+        self.enemy_up_image.rect = pygame.Rect(0, 0, self.rect.width * 0.8, 1)
+
+        # Player left sprite
+        self.enemy_left_image = pygame.sprite.Sprite()
+        self.enemy_left_image.image = pygame.image.load("../Data/LR.png").convert()
+        self.enemy_left_image.rect = pygame.Rect(0, 0, 1, self.rect.height * 0.8)
+
+        # Player right sprite
+        self.enemy_right_image = pygame.sprite.Sprite()
+        self.enemy_right_image.image = pygame.image.load("../Data/LR.png").convert()
+        self.enemy_right_image.rect = pygame.Rect(0, 0, 1, self.rect.height * 0.8)
+
         self.animation = EnemyAnimation(walk_l, walk_r, dead_l, dead_r)
 
     def run(self):
@@ -31,8 +51,32 @@ class Enemy(object):
     def update(self):
         self.states[0].update()
 
+        # PLayer under
+        self.enemy_under_image.rect.x = self.rect.x + 1
+        self.enemy_under_image.rect.y = self.rect.y + self.rect.width + 1
+        print self.rect.width
+
+        # PLayer up
+        self.enemy_up_image.rect.x = self.rect.x
+        self.enemy_up_image.rect.y = self.rect.y - 1
+
+        # PLayer left
+        self.enemy_left_image.rect.x = self.rect.x - 1
+        self.enemy_left_image.rect.y = self.rect.y
+
+        # PLayer right
+        self.enemy_right_image.rect.x = self.rect.x + self.rect.width
+        self.enemy_right_image.rect.y = self.rect.y
+
+        if self.rect.bottom >= 960:
+            self.kill()
+
     def draw(self):
         Artist.get_display().blit(self.animation.update(self.xSpeed, self.dead), self.rect)
+        Artist.get_display().blit(self.enemy_under_image.image, self.enemy_under_image.rect)
+        Artist.get_display().blit(self.enemy_up_image.image, self.enemy_up_image.rect)
+        Artist.get_display().blit(self.enemy_left_image.image, self.enemy_left_image.rect)
+        Artist.get_display().blit(self.enemy_right_image.image, self.enemy_right_image.rect)
 
     def jump(self):
         if self.jumpsRemaining > 0:

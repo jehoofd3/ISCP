@@ -23,8 +23,13 @@ class Collider:
         self.player_collision_up()
         self.player_collision_left()
         self.player_collision_right()
-        self.enemy_collider()
-        self.player_enemy_collider()
+
+        self.enemy_collision_down()
+        self.enemy_collision_up()
+        self.enemy_collision_left()
+        self.enemy_collision_right()
+
+    #    self.player_enemy_collider()
 
     def player_collision_down(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)
@@ -57,6 +62,45 @@ class Collider:
             self.player.canGoRight = False
         else:
             self.player.canGoRight = True
+
+
+
+
+    def enemy_collision_down(self):
+        for e in self.enemy_list:
+            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_under_image, self.map, False)
+
+            if blocks_hit_list:
+                e.block_d = True
+            else:
+                e.block_d = False
+
+    def enemy_collision_up(self):
+        for e in self.enemy_list:
+            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_up_image, self.map, False)
+
+            if blocks_hit_list:
+                e.block_u = True
+            else:
+                e.block_u = False
+
+    def enemy_collision_left(self):
+        for e in self.enemy_list:
+            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_left_image, self.map, False)
+
+            if blocks_hit_list:
+                e.block_l = False
+            else:
+                e.block_l = True
+
+    def enemy_collision_right(self):
+        for e in self.enemy_list:
+            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_right_image, self.map, False)
+
+            if blocks_hit_list:
+                e.block_r = False
+            else:
+                e.block_r = True
 
     def enemy_collider(self):
         for i in range(len(self.enemy_list)):

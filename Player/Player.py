@@ -101,6 +101,9 @@ class Player (pygame.sprite.Sprite):
         self.player_right_image.rect.x = self.rect.x + 70
         self.player_right_image.rect.y = self.rect.y + 12
 
+        if self.rect.bottom >= 960:
+            self.kill()
+
     def draw(self):
         Artist.get_display().blit(self.animation.update(), self.rect)
         self.states.draw()
@@ -125,8 +128,7 @@ class Player (pygame.sprite.Sprite):
 
     def kill(self):
         if not self.dead:
-            self.states.pop()
-            self.states = [PlayerDieState(self)]
+            self.states = PlayerDieState(self)
             self.health -= 1
 
     def get_player_x_speed(self):

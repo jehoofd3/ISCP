@@ -26,7 +26,8 @@ class Level1State(LevelState.LevelState):
     shift_start = 410
     shift_end = 3285
 
-    fly = Fly(180, 50, 10)
+    fly = Fly(200, 50, 200)
+    enemy_list.append(fly)
 
     main_menu = None
 
@@ -43,13 +44,11 @@ class Level1State(LevelState.LevelState):
         self.map.run()
 
     def update(self):
-        self.collider.update()
         self.player.update()
-        self.fly.update()
-
         for e in self.enemy_list:
             e.update()
 
+        self.collider.update()
 
         # Code that it will only shift between the given values
         if not self.player.is_shifting:
@@ -68,7 +67,6 @@ class Level1State(LevelState.LevelState):
     def draw(self):
         Artist.get_display().blit(self.background_image, [0, 0])
         self.map.draw()
-        self.fly.draw()
         for e in self.enemy_list:
             e.draw()
 
