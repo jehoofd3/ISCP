@@ -11,6 +11,8 @@ class Collider:
     level_state_manager = None
     main_menu = None
     snake_hulp = 0
+    range = 100
+    player_group = pygame.sprite.Group()
 
     is_collision = False
     player_behind = 0
@@ -21,6 +23,7 @@ class Collider:
         self.enemy_list = enemy_list
         self.level_state_manager = level_state_manager
         self.main_menu = main_menu
+        self.player_group.add(player)
 
     def update(self):
         self.player_collision_down()
@@ -33,8 +36,8 @@ class Collider:
         self.enemy_collision_left()
         self.enemy_collision_right()
 
+        self.player_enemy_collider()
         self.objects_collider()
-    #    self.player_enemy_collider()
 
     def player_collision_down(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)
@@ -203,6 +206,9 @@ class Collider:
                 if len(self.enemy_list[i].snake_list) > self.snake_hulp:
                     self.enemy_list.append(self.enemy_list[i].get_snake(self.snake_hulp))
                     self.snake_hulp += 1
+
+
+
 
             # Als de enemy een snake is wordt er gekeken of hij naar links of rechts moet lopen
             if isinstance(self.enemy_list[i], Enemy.Snake.Snake):
