@@ -1,4 +1,7 @@
 import pygame
+import Enemy
+
+
 class Collider:
 
     left_right_collision = False
@@ -7,6 +10,7 @@ class Collider:
     second_time = False
     level_state_manager = None
     main_menu = None
+    snake_hulp = 0
 
     is_collision = False
     player_behind = 0
@@ -29,6 +33,7 @@ class Collider:
         self.enemy_collision_left()
         self.enemy_collision_right()
 
+        self.objects_collider()
     #    self.player_enemy_collider()
 
     def player_collision_down(self):

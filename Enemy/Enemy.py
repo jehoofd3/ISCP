@@ -10,7 +10,7 @@ class Enemy(object):
     block_u, block_d, block_r, block_l = None, None, None, None
     dead, follow, left_right = False, False, None
 
-    def __init__(self, x, y, range, walk_l, walk_r, dead_l, dead_r):
+    def __init__(self, x, y, range, walk_l, walk_r, dead_l, dead_r, OB, LR):
         self.rect = walk_l[0].get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -25,23 +25,23 @@ class Enemy(object):
 
         # Player under sprite
         self.enemy_under_image = pygame.sprite.Sprite()
-        self.enemy_under_image.image = pygame.image.load("../Data/OB.png").convert()
-        self.enemy_under_image.rect = pygame.Rect(0, 0, self.rect.width * 0.8, 1)
+        self.enemy_under_image.image = OB
+        self.enemy_under_image.rect = self.enemy_under_image.image.get_rect()
 
         # Player up sprite
         self.enemy_up_image = pygame.sprite.Sprite()
-        self.enemy_up_image.image = pygame.image.load("../Data/OB.png").convert()
-        self.enemy_up_image.rect = pygame.Rect(0, 0, self.rect.width * 0.8, 1)
+        self.enemy_up_image.image = OB
+        self.enemy_up_image.rect = self.enemy_up_image.image.get_rect()
 
         # Player left sprite
         self.enemy_left_image = pygame.sprite.Sprite()
-        self.enemy_left_image.image = pygame.image.load("../Data/LR.png").convert()
-        self.enemy_left_image.rect = pygame.Rect(0, 0, 1, self.rect.height * 0.8)
+        self.enemy_left_image.image = LR
+        self.enemy_left_image.rect = self.enemy_left_image.image.get_rect()
 
         # Player right sprite
         self.enemy_right_image = pygame.sprite.Sprite()
-        self.enemy_right_image.image = pygame.image.load("../Data/LR.png").convert()
-        self.enemy_right_image.rect = pygame.Rect(0, 0, 1, self.rect.height * 0.8)
+        self.enemy_right_image.image = LR
+        self.enemy_right_image.rect = self.enemy_right_image.image.get_rect()
 
         self.animation = EnemyAnimation(walk_l, walk_r, dead_l, dead_r)
 
@@ -51,20 +51,20 @@ class Enemy(object):
     def update(self):
         self.states[0].update()
 
-        # PLayer under
+        # Enemy under
         self.enemy_under_image.rect.x = self.rect.x + 1
-        self.enemy_under_image.rect.y = self.rect.y + self.rect.width + 1
-        print self.rect.width
+        self.enemy_under_image.rect.y = self.rect.y + (self.rect.width/2) + 1
 
-        # PLayer up
+
+        # Enemy up
         self.enemy_up_image.rect.x = self.rect.x
         self.enemy_up_image.rect.y = self.rect.y - 1
 
-        # PLayer left
+        # Enemy left
         self.enemy_left_image.rect.x = self.rect.x - 1
         self.enemy_left_image.rect.y = self.rect.y
 
-        # PLayer right
+        # Enemy right
         self.enemy_right_image.rect.x = self.rect.x + self.rect.width
         self.enemy_right_image.rect.y = self.rect.y
 
