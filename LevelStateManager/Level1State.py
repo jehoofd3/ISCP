@@ -26,7 +26,7 @@ class Level1State(LevelState.LevelState):
     shift_start = 410
     shift_end = 3285
 
-    fly = Fly(200, 50, 200)
+    fly = Tank(500, 50, 200)
     slime = Slime(500, 200, 10)
     enemy_list.append(fly)
     enemy_list.append(slime)
