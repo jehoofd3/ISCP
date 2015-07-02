@@ -36,4 +36,3 @@ class Slime(Enemy):
 
     def get_snake(self, index):
         return self.snake_list[index]
-

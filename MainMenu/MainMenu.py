@@ -123,9 +123,3 @@ class MainMenu(LevelState):
         self.main_menu_sprites[button_name].rect = self.main_menu_sprites[button_name].image.get_rect()
         self.main_menu_sprites[button_name].rect.x = width
         self.main_menu_sprites[button_name].rect.y = height
-
-
-
-
-
-
