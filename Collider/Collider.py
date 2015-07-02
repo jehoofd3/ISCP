@@ -2,8 +2,7 @@ import pygame
 import Enemy
 
 
-class Collider:
-
+class Collider(object):
     left_right_collision = False
     previous_collision = ''
     one_time = False
@@ -11,7 +10,7 @@ class Collider:
     level_state_manager = None
     main_menu = None
     snake_hulp = 0
-    range = 100
+    range = 300
     player_group = pygame.sprite.Group()
 
     is_collision = False
@@ -71,9 +70,6 @@ class Collider:
         else:
             self.player.canGoRight = True
 
-
-
-
     def enemy_collision_down(self):
         for e in self.enemy_list:
             blocks_hit_list = pygame.sprite.spritecollide(e.enemy_under_image, self.map, False)
@@ -110,46 +106,9 @@ class Collider:
             else:
                 e.block_r = True
 
-    def enemy_collider(self):
-        for i in range(len(self.enemy_list)):
-            blocks_hit_list = pygame.sprite.spritecollide(self.enemy_list[i], self.map, False)
-            for block in blocks_hit_list:
-                # Collision up
-                if (self.enemy_list[i].rect.top <= block.rect.bottom and self.enemy_list[i].rect.top >= block.rect.top):
-                    self.enemy_list[i].block_u = True
-                else:
-                    self.enemy_list[i].block_u = False
-
-                # Collision under
-                if (self.enemy_list[i].rect.bottom >= block.rect.top and self.enemy_list[i].rect.bottom <= block.rect.bottom):
-                    self.enemy_list[i].block_d = True
-                else:
-                    self.enemy_list[i].block_d = False
-
-                # Collision right
-                if (self.enemy_list[i].rect.right >= block.rect.left and self.enemy_list[i].rect.right <= block.rect.right and
-                    self.enemy_list[i].rect.bottom <= block.rect.bottom):
-                    self.enemy_list[i].block_r = True
-                else:
-                    self.enemy_list[i].block_r = False
-
-                #Collision left
-                if (self.enemy_list[i].rect.left <= block.rect.right and self.enemy_list[i].rect.left >= block.rect.left and
-                    self.enemy_list[i].rect.bottom <= block.rect.bottom):
-                    self.enemy_list[i].block_l = True
-                else:
-                    self.enemy_list[i].block_l = False
-
-            if not blocks_hit_list:
-                self.enemy_list[i].block_u = False
-                self.enemy_list[i].block_d = False
-                self.enemy_list[i].block_l = False
-                self.enemy_list[i].block_r = False
-
     def player_enemy_collider(self):
 
         for i in range(len(self.enemy_list)):
-
             # De enemy de player laten volgen wanneer hij in range is
             if self.enemy_list[i].rect.x - self.player.rect.x <= self.range and self.enemy_list[i].rect.x - self.player.rect.x >= -self.range:
                 self.enemy_list[i].follow = True
@@ -174,45 +133,36 @@ class Collider:
                     self.player.ySpeed = 5
 
     def objects_collider(self):
-        for i in range(len(self.enemy_list)):
-            if isinstance(self.enemy_list[i], Enemy.Tank.Tank):
-                for j in range(self.enemy_list[i].get_len_bl()):
+        for e in self.enemy_list:
+            if isinstance(e, Enemy.Tank.Tank):
+                for b in e.get_bl():
+                    map_hit = pygame.sprite.spritecollide(b, self.map, False)
+                    if map_hit:
+                        b.explode()
 
-                    # als de enemy een tank is, voer de code uit om te kijken of de bullet de map raakt.
-                    # Zoja dan explodeert hij
-                    block_hit_list = pygame.sprite.spritecollide(self.enemy_list[i].get_bl()[j], self.map, False)
-                    for hit in block_hit_list:
-                        self.enemy_list[i].get_bl()[j].explode()
-
-                    # Als de bullet de player raakt gaat de player dood en explodeert de bullet
-                    block_hit_list = pygame.sprite.spritecollide(self.player, self.enemy_list[i].get_bl(), False)
-                    for hit in block_hit_list:
+                    player_hit = pygame.sprite.spritecollide(self.player, e.get_bl(), False)
+                    if player_hit:
                         self.player.kill()
-                        self.enemy_list[i].get_bl()[j].explode()
+                        b.explode()
 
-                    if self.enemy_list[i].get_bl()[j].rect.x >= self.player.rect.x:
-                        self.enemy_list[i].get_bl()[j].l_r = True
+                    if b.rect.x >= self.player.rect.x:
+                        b.l_r = True
                     else:
-                        self.enemy_list[i].get_bl()[j].l_r = False
+                        b.l_r = False
 
-                    if self.enemy_list[i].get_bl()[j].rect.y >= self.player.rect.y:
-                        self.enemy_list[i].get_bl()[j].u_d = True
+                    if b.rect.y >= self.player.rect.y:
+                        b.u_d = True
                     else:
-                        self.enemy_list[i].get_bl()[j].u_d = False
+                        b.u_d = False
 
-            # Wanneer de enemy een slime is wordt er gekeken of de slime nieuwe snakes aangemaakt heeft.
-            # Zoja, dan wordt die snake aan de enemy_list toegevoegd. Hierdoor werkt hij met de collider
-            if isinstance(self.enemy_list[i], Enemy.Slime.Slime):
-                if len(self.enemy_list[i].snake_list) > self.snake_hulp:
-                    self.enemy_list.append(self.enemy_list[i].get_snake(self.snake_hulp))
+            if isinstance(e, Enemy.Slime.Slime):
+                if len(e.snake_list) > self.snake_hulp:
+                    self.enemy_list.append(e.get_snake(self.snake_hulp))
                     self.snake_hulp += 1
 
-
-
-
             # Als de enemy een snake is wordt er gekeken of hij naar links of rechts moet lopen
-            if isinstance(self.enemy_list[i], Enemy.Snake.Snake):
-                if self.player.rect.x >= self.enemy_list[i].rect.x:
-                    self.enemy_list[i].l_r = True
+            if isinstance(e, Enemy.Snake.Snake):
+                if self.player.rect.x >= e.rect.x:
+                    e.l_r = True
                 else:
-                    self.enemy_list[i].l_r = False
+                    e.l_r = False

@@ -7,7 +7,7 @@ class SnakeAttackState(EnemyState):
         super(SnakeAttackState, self).__init__(enemy)
 
     def run(self):
-        self.enemy.speed *= 2
+        pass
 
     def update(self):
         self.enemy.basic_movement()
@@ -22,10 +22,6 @@ class SnakeAttackState(EnemyState):
             self.enemy.ySpeed = 0
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
             self.enemy.jumpsRemaining = 2
-
-        if self.enemy.block_l or self.enemy.block_r:
-            self.enemy.xSpeed = 0
-           # self.enemy.jump()
 
     def draw(self):
         pass

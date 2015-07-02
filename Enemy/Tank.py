@@ -22,7 +22,7 @@ class Tank(Enemy):
         self.LR = pygame.image.load("../Data/Images/Enemy/Tank/Tank_LR.png").convert()
         super(Tank, self).__init__(x, y, range, self.w_l, self.w_r, self.d_l, self.d_r, self.OB, self.LR)
 
-        self.states = [TankShootState(self)]
+        self.states = [TankNormalState(self)]
 
     def update(self):
         self.states[0].update()

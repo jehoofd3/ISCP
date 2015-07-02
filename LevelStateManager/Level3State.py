@@ -4,8 +4,9 @@ from Player.Player import *
 from Collider.Collider import *
 from Helpers.Artist import *
 from MainMenu.MainMenu import *
+from Parallax.Background import *
 
-class Level3State(LevelState):
+class Level3State(LevelState.LevelState):
     map = None
 
     player_x = 0
@@ -16,7 +17,6 @@ class Level3State(LevelState):
     enemy_list = []
     level_state_manager = None
     collider = None
-    background_image = pygame.image.load("../Data/Levels/BackgroundDrie.png").convert()
 
     shift_start = 410
     shift_end = 3290
@@ -32,6 +32,7 @@ class Level3State(LevelState):
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         self.map.set_x_start_shift_map(self.player_spawn_x)
+        self.background = Background("../Data/Levels/BackgroundDrie.png", 0, 0)
 
     def run(self):
         self.map.run()
@@ -40,6 +41,8 @@ class Level3State(LevelState):
         self.player.update()
 
         self.collider.update()
+
+        self.background.update(self.player.xSpeed, 0)
 
         # Code that it will only shift between the given values
         if not self.player.is_shifting:
@@ -56,6 +59,6 @@ class Level3State(LevelState):
             self.level_state_manager.states = self.main_menu
 
     def draw(self):
-        Artist.get_display().blit(self.background_image, [0, 0])
+        self.background.draw()
         self.map.draw()
         self.player.draw()

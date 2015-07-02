@@ -15,7 +15,7 @@ class Bullet(object):
         self.rect.y = y
         self.xSpeed = 0
         self.ySpeed = 0
-        self.speed = 5
+        self.speed = 2
         self.active = True
 
         self.index = index

@@ -16,7 +16,7 @@ class BulletExplosionState(BulletState):
         self.del_time = 1
 
     def update(self):
-        if time.time() - self.start_time + self.del_time >= 1:
+        if time.time() - self.start_time + self.del_time >= 2:
             self.bullet.states = [es.EmptyState(self.bullet)]
 
     def draw(self):
