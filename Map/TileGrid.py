@@ -37,7 +37,6 @@ class TileGrid(ImageLoader):
         self.x_start_shift_map += player_x_speed
         for sprite in self.map_group:
             sprite.shift_x(player_x_speed)
-            #sprite.shift_x(round(player_x_speed / self.shift_speed)
 
     @staticmethod
     def get_group():

@@ -12,7 +12,7 @@ class Level3State(LevelState):
     player_y = 0
     player_spawn_x = 170
     player_spawn_y = 100
-    player = Player(player_spawn_x, player_spawn_y)
+    player = None
     enemy_list = []
     level_state_manager = None
     collider = None
@@ -29,6 +29,7 @@ class Level3State(LevelState):
         self.map = TileGrid("../Data/Levels/Level3.txt")
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
+        self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         self.map.set_x_start_shift_map(self.player_spawn_x)
 

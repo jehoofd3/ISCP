@@ -9,7 +9,6 @@ class MainMenu(LevelState):
     mouse_pos = ''
     option_menu = None
     levelStateManager = None
-    player = Player(100, 100)
     display = Artist.get_display()
     screen_width = Artist.get_screen_width()
     screen_height = Artist.get_screen_height()

@@ -17,7 +17,7 @@ class Level1State(LevelState.LevelState):
     player_y = 0
     player_spawn_x = 270
     player_spawn_y = 100
-    player = Player(player_spawn_x, player_spawn_y)
+    player = None
     enemy_list = []
     level_state_manager = None
     collider = None
@@ -31,6 +31,7 @@ class Level1State(LevelState.LevelState):
     enemy_list.append(fly)
     enemy_list.append(slime)
 
+
     main_menu = None
 
     half_screen_width = Artist.get_half_screen_width()
@@ -39,6 +40,7 @@ class Level1State(LevelState.LevelState):
         self.map = TileGrid("../Data/Levels/Level1.txt")
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
+        self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         self.map.set_x_start_shift_map(self.player_spawn_x)
 
@@ -56,7 +58,7 @@ class Level1State(LevelState.LevelState):
         if not self.player.is_shifting:
             self.map.x_start_shift_map += self.player.xSpeed
 
-        if self.map.x_start_shift_map >= self.shift_start and self.map.x_start_shift_map <= self.shift_end:
+        if self.shift_start <= self.map.x_start_shift_map <= self.shift_end:
             self.player.is_shifting = True
             self.map.shift_map(self.player.get_player_x_speed())
         else:

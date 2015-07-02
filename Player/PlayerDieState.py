@@ -17,8 +17,11 @@ class PlayerDieState(PlayerState):
         self.player.basic_movement()
         self.player.gravity()
 
-        if self.player.rect.top >= 960:
+        self.player.collision_under = False
+
+        if self.player.rect.bottom >= 960:
             self.player.states = PlayerNormalState(self.player)
+            self.player.level_state_manager.reset_level()
 
     def draw(self):
         pass

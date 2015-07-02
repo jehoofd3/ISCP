@@ -25,11 +25,9 @@ class PlayerNormalState (PlayerState):
 
         if pygame.key.get_pressed()[pygame.K_LEFT] != 0 and self.player.canGoLeft:
             self.player.xSpeed -= self.player_x_speed
-            self.player.face_direction = 'Left'
 
         if pygame.key.get_pressed()[pygame.K_RIGHT] != 0 and self.player.canGoRight:
             self.player.xSpeed += self.player_x_speed
-            self.player.face_direction = 'Right'
 
         if self.player.collision_up:
             self.player.ySpeed = - 3

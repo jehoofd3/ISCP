@@ -28,12 +28,17 @@ class Player (pygame.sprite.Sprite):
     start_y = 0
     is_shifting = False
 
+    level_state_manager = None
+
     player_under_image = None
     player_up_image = None
     player_left_image = None
     player_right_image = None
 
-    def __init__(self, x, y):
+    jump_sound = None
+
+    def __init__(self, x, y, level_state_manager):
+        self.level_state_manager = level_state_manager
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
         self.rect = self.image.get_rect()
@@ -41,6 +46,10 @@ class Player (pygame.sprite.Sprite):
         self.rect.y = y
         self.start_x = x
         self.start_y = y
+        self.jump_sound = pygame.mixer.music.load('../Data/Music/Levels/Jump.wav')
+
+        self.walk_l = []
+        self.walk_r = []
 
         for i in range(11):
             self.walk_l.append(pygame.image.load("../Data/Images/Player/Left/l_" + str(i) + ".png").convert_alpha())
@@ -61,22 +70,22 @@ class Player (pygame.sprite.Sprite):
 
         # Player under sprite
         self.player_under_image = pygame.sprite.Sprite()
-        self.player_under_image.image = pygame.image.load("../Data/OB.png").convert()
+        self.player_under_image.image = pygame.image.load("../Data/OB.png").convert_alpha()
         self.player_under_image.rect = self.player_under_image.image.get_rect()
 
         # Player up sprite
         self.player_up_image = pygame.sprite.Sprite()
-        self.player_up_image.image = pygame.image.load("../Data/OB.png").convert()
+        self.player_up_image.image = pygame.image.load("../Data/OB.png").convert_alpha()
         self.player_up_image.rect = self.player_up_image.image.get_rect()
 
         # Player left sprite
         self.player_left_image = pygame.sprite.Sprite()
-        self.player_left_image.image = pygame.image.load("../Data/LR.png").convert()
+        self.player_left_image.image = pygame.image.load("../Data/LR.png").convert_alpha()
         self.player_left_image.rect = self.player_left_image.image.get_rect()
 
         # Player right sprite
         self.player_right_image = pygame.sprite.Sprite()
-        self.player_right_image.image = pygame.image.load("../Data/LR.png").convert()
+        self.player_right_image.image = pygame.image.load("../Data/LR.png").convert_alpha()
         self.player_right_image.rect = self.player_right_image.image.get_rect()
 
     def run(self):
@@ -113,6 +122,7 @@ class Player (pygame.sprite.Sprite):
         Artist.get_display().blit(self.player_right_image.image, self.player_right_image.rect)
 
     def jump(self):
+        pygame.mixer.music.play()
         self.ySpeed = 10
         self.jumpsRemaining -= 1
 
