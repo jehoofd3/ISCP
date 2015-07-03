@@ -51,7 +51,7 @@ class Collider(object):
         for block in blocks_hit_list:
             if block.image_type == 114:
                 self.level_state_manager.next_level()
-
+            #test
             if block.image_type == 80 or block.image_type == 81 or block.image_type == 82 or block.image_type == 83 or block.image_type == 84 or block.image_type == 85:
                 self.player.kill()
 
