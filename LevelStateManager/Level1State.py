@@ -26,9 +26,16 @@ class Level1State(LevelState.LevelState):
     shift_start = 410
     shift_end = 3285
 
-    fly = Tank(500, 50, 200)
-    slime = Slime(500, 200, 10)
-
+    fly = Fly(100, 300, 0)
+    slime_2 = Slime(64, 400, 0)
+    slime_3 = Slime(832, 150, 0)
+    slime_4 = Slime(832, 400, 0)
+    tank_1 = Tank(164, 200, 30)
+    tank_2 = Tank(128, 620, 30)
+    tank_3 = Tank(250, 620, 30)
+    tank_4 = Tank(360, 620, 30)
+    tank_5 = Tank(450, 620, 30)
+    enemy_list.append(fly)
 
     main_menu = None
 
@@ -48,6 +55,7 @@ class Level1State(LevelState.LevelState):
 
     def update(self):
         self.player.update()
+
         for e in self.enemy_list:
             e.update()
 
@@ -61,6 +69,10 @@ class Level1State(LevelState.LevelState):
         if self.shift_start <= self.map.x_start_shift_map <= self.shift_end:
             self.player.is_shifting = True
             self.map.shift_map(self.player.get_player_x_speed())
+
+            for e in self.enemy_list:
+                e.move_with_map(self.player.get_player_x_speed())
+
         else:
             self.player.is_shifting = False
         # end shift map
@@ -71,6 +83,7 @@ class Level1State(LevelState.LevelState):
     def draw(self):
         self.background.draw()
         self.map.draw()
+
         for e in self.enemy_list:
             e.draw()
 

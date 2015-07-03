@@ -19,7 +19,6 @@ class Level4State(LevelState.LevelState):
     player_y = 0
     player_spawn_x = 270
     player_spawn_y = 100
-    player = Player(player_spawn_x, player_spawn_y)
     enemy_list = []
     level_state_manager = None
     collider = None
@@ -27,16 +26,16 @@ class Level4State(LevelState.LevelState):
     shift_start = 410
     shift_end = 3285
 
-    slime_1 = Slime(64, 150, 0)
+    fly = Fly(150, 150, 0)
     slime_2 = Slime(64, 400, 0)
     slime_3 = Slime(832, 150, 0)
     slime_4 = Slime(832, 400, 0)
-    tank_1 = Tank(64, 620, 30)
+    tank_1 = Tank(64, 100, 30)
     tank_2 = Tank(128, 620, 30)
     tank_3 = Tank(250, 620, 30)
     tank_4 = Tank(360, 620, 30)
     tank_5 = Tank(450, 620, 30)
-    enemy_list.append(tank_1)
+    enemy_list.append(fly)
     '''
     enemy_list.append(slime_1)
     enemy_list.append(slime_2)
@@ -56,6 +55,7 @@ class Level4State(LevelState.LevelState):
         self.map = TileGrid("../Data/Levels/Level4.txt")
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
+        self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         self.map.set_x_start_shift_map(self.player_spawn_x)
         self.background = Background("../Data/Levels/BackgroundEen.png", 0, 0)

@@ -1,6 +1,6 @@
 import pygame
 import Enemy
-
+from Helpers.Artist import *
 
 class Collider(object):
     left_right_collision = False
@@ -25,6 +25,7 @@ class Collider(object):
         self.player_group.add(player)
 
     def update(self):
+        self.player_collision_map_objects()
         self.player_collision_down()
         self.player_collision_up()
         self.player_collision_left()
@@ -37,6 +38,22 @@ class Collider(object):
 
         self.player_enemy_collider()
         self.objects_collider()
+
+        if self.player.rect.x <= 0:
+            self.player.canGoLeft = False
+
+        if self.player.rect.x >= Artist.get_screen_width() - 70:
+            self.player.canGoRight = False
+
+    def player_collision_map_objects(self):
+        blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
+
+        for block in blocks_hit_list:
+            if block.image_type == 114:
+                self.level_state_manager.next_level()
+
+            if block.image_type == 80 or block.image_type == 81 or block.image_type == 82 or block.image_type == 83 or block.image_type == 84 or block.image_type == 85:
+                self.player.kill()
 
     def player_collision_down(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)

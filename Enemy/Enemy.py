@@ -93,3 +93,7 @@ class Enemy(object):
 
     def kill(self):
         self.states = [EnemyDieState(self)]
+
+    def move_with_map(self, shift_x):
+        self.rect.x -= shift_x
+

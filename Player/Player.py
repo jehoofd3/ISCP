@@ -92,6 +92,7 @@ class Player (pygame.sprite.Sprite):
         self.states.run()
 
     def update(self):
+        print self.ySpeed
         self.states.update()
 
         # PLayer under

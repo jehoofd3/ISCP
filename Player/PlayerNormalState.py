@@ -38,11 +38,12 @@ class PlayerNormalState (PlayerState):
             self.player.rect.bottom = ((self.player.rect.bottom / 64) * 64)
             self.player.jumpsRemaining = 2
 
-        if pygame.key.get_pressed()[pygame.K_UP] and self.player.jumpsRemaining > 0:
-            self.player.jump()
-            self.player.collision_under = False
-            self.player.canGoLeft = True
-            self.player.canGoRight = True
+        for event in pygame.event.get(pygame.KEYDOWN):
+            if event.key == pygame.K_UP and self.player.jumpsRemaining > 0:
+                self.player.collision_under = True
+                self.player.jump()
+                self.player.canGoLeft = True
+                self.player.canGoRight = True
 
     def draw(self):
         pass

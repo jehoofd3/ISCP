@@ -114,7 +114,7 @@ class MainMenu(LevelState):
             if self.alpha <= 0:
                 self.pressed_play = False
                 self.fade_out_done = False
-                self.levelStateManager.states = Level4State(self.levelStateManager, self)
+                self.levelStateManager.states = Level1State(self.levelStateManager, self)
 
         if self.pressed_play and not self.music_faded:
             pygame.mixer.music.fadeout(1000)
