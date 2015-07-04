@@ -36,7 +36,7 @@ class Collider(object):
         self.enemy_collision_left()
         self.enemy_collision_right()
 
-        self.player_enemy_collider()
+     #   self.player_enemy_collider()
         self.objects_collider()
 
         if self.player.rect.x <= 0:
@@ -110,18 +110,18 @@ class Collider(object):
             blocks_hit_list = pygame.sprite.spritecollide(e.enemy_left_image, self.map, False)
 
             if blocks_hit_list:
-                e.block_l = False
-            else:
                 e.block_l = True
+            else:
+                e.block_l = False
 
     def enemy_collision_right(self):
         for e in self.enemy_list:
             blocks_hit_list = pygame.sprite.spritecollide(e.enemy_right_image, self.map, False)
 
             if blocks_hit_list:
-                e.block_r = False
-            else:
                 e.block_r = True
+            else:
+                e.block_r = False
 
     def player_enemy_collider(self):
 

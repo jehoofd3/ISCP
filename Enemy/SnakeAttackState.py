@@ -23,5 +23,13 @@ class SnakeAttackState(EnemyState):
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
             self.enemy.jumpsRemaining = 2
 
+        if self.enemy.block_l:
+            self.enemy.xSpeed = 0
+            self.enemy.rect.x += 1
+
+        if  self.enemy.block_r:
+            self.enemy.xSpeed = 0
+            self.enemy.rect.x -= 1
+
     def draw(self):
         pass

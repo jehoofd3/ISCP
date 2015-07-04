@@ -26,7 +26,7 @@ class Level1State(LevelState.LevelState):
     shift_start = 410
     shift_end = 3285
 
-    fly = Fly(100, 300, 0)
+    fly = Fly(100, 300, 100)
     slime_2 = Slime(64, 400, 0)
     slime_3 = Slime(832, 150, 0)
     slime_4 = Slime(832, 400, 0)
@@ -35,7 +35,7 @@ class Level1State(LevelState.LevelState):
     tank_3 = Tank(250, 620, 30)
     tank_4 = Tank(360, 620, 30)
     tank_5 = Tank(450, 620, 30)
-    enemy_list.append(fly)
+    enemy_list.append(tank_1)
 
     main_menu = None
 
