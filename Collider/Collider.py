@@ -10,7 +10,7 @@ class Collider(object):
     level_state_manager = None
     main_menu = None
     snake_hulp = 0
-    range = 300
+    range = 200
     player_group = pygame.sprite.Group()
 
     is_collision = False
@@ -36,7 +36,7 @@ class Collider(object):
         self.enemy_collision_left()
         self.enemy_collision_right()
 
-     #   self.player_enemy_collider()
+        self.player_enemy_collider()
         self.objects_collider()
 
         if self.player.rect.x <= 0:
@@ -124,29 +124,27 @@ class Collider(object):
                 e.block_r = False
 
     def player_enemy_collider(self):
-
-        for i in range(len(self.enemy_list)):
+        for e in self.enemy_list:
             # De enemy de player laten volgen wanneer hij in range is
-            if self.enemy_list[i].rect.x - self.player.rect.x <= self.range and self.enemy_list[i].rect.x - self.player.rect.x >= -self.range:
-                self.enemy_list[i].follow = True
+            if e.rect.x - self.player.rect.x < self.range and e.rect.x - self.player.rect.x >= -self.range:
+                e.follow = True
             else:
-                self.enemy_list[i].follow = False
+                e.follow = False
 
             # Als de player in range is wordt er op deze manier door gegeven of de enemy naar
             # links of rechts moet lopen
-            if self.enemy_list[i].follow:
-                if self.enemy_list[i].rect.x > self.player.rect.x:
-                    self.enemy_list[i].left_right = False
+            if e.follow:
+                if e.rect.x > self.player.rect.x:
+                    e.left_right = False
                 else:
-                    self.enemy_list[i].left_right = True
+                    e.left_right = True
 
-            blocks_hit_list = pygame.sprite.spritecollide(self.enemy_list[i], self.player_group, False)
+            blocks_hit_list = pygame.sprite.spritecollide(e, self.player_group, False)
             for block in blocks_hit_list:
-
-                if self.player.ySpeed == 0 and not self.enemy_list[i].dead:
+                if self.player.ySpeed == 0 and not e.dead:
                     self.player.kill()
-                elif self.player.ySpeed != 0 and not self.enemy_list[i].dead:
-                    self.enemy_list[i].kill()
+                elif self.player.ySpeed != 0 and not e.dead:
+                    e.kill()
                     self.player.ySpeed = 5
 
     def objects_collider(self):

@@ -20,26 +20,25 @@ class Tank(Enemy):
 
         self.OB = pygame.image.load("../Data/Images/Enemy/Tank/Tank_OB.png").convert()
         self.LR = pygame.image.load("../Data/Images/Enemy/Tank/Tank_LR.png").convert()
+
         super(Tank, self).__init__(x, y, range, self.w_l, self.w_r, self.d_l, self.d_r, self.OB, self.LR)
 
         self.states = [TankNormalState(self)]
 
     def update(self):
-        self.states[0].update()
-        for i in range(len(self.bullet_list)):
-            self.bullet_list[i].update()
+        super(Tank, self).update()
+
+        for b in self.bullet_list:
+            b.update()
 
     def draw(self):
-        Artist.get_display().blit(self.animation.update(self.xSpeed, self.dead), self.rect)
+        super(Tank, self).draw()
 
-        for i in range(len(self.bullet_list)):
-            self.bullet_list[i].draw()
+        for b in self.bullet_list:
+            b.draw()
 
     def add_bullet(self, x, y):
         self.bullet_list.append(Bullet(x, y, Artist.get_bi()))
 
     def get_bl(self):
         return self.bullet_list
-
-    def get_len_bl(self):
-        return len(self.bullet_list)

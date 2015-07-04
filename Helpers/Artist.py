@@ -5,7 +5,6 @@ class Artist:
     # Window dimensions
     screen_width = 960
     screen_height = 768
-    bi = 0
 
     # Make a window with the specified with and height.
     global game_display
@@ -48,11 +47,3 @@ class Artist:
     @staticmethod
     def get_half_screen_height():
         return Artist.screen_height / 2
-
-    @staticmethod
-    def get_bi():
-        Artist.bi += 1
-        return Artist.bi
-
-
-

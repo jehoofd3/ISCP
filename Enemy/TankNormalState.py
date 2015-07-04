@@ -16,11 +16,6 @@ class TankNormalState(EnemyState):
         self.enemy.basic_movement()
         self.enemy.gravity()
 
-        if self.enemy.block_d:
-            self.enemy.ySpeed = 0
-            self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
-            self.enemy.jumpsRemaining = 2
-
         if self.enemy.rect.x <= self.enemy.start_x:
             self.right = True
             self.left = False
@@ -29,6 +24,19 @@ class TankNormalState(EnemyState):
             self.right = False
             self.left = True
 
+        if self.enemy.block_d:
+            self.enemy.ySpeed = 0
+            self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
+            self.enemy.jumpsRemaining = 2
+
+        if self.enemy.block_l:
+            self.enemy.xSpeed = 0
+            self.enemy.rect.x += 1
+
+        if  self.enemy.block_r:
+            self.enemy.xSpeed = 0
+            self.enemy.rect.x -= 1
+
         if self.left:
             self.enemy.xSpeed -= self.enemy.speed
         if self.right:
@@ -36,6 +44,7 @@ class TankNormalState(EnemyState):
 
         if self.enemy.follow:
             self.enemy.states = [TankShootState(self.enemy)]
+
 
     def draw(self):
         pass

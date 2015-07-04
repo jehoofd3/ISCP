@@ -35,7 +35,8 @@ class Level1State(LevelState.LevelState):
     tank_3 = Tank(250, 620, 30)
     tank_4 = Tank(360, 620, 30)
     tank_5 = Tank(450, 620, 30)
-    enemy_list.append(tank_1)
+
+    enemy_list.append(fly)
 
     main_menu = None
 
