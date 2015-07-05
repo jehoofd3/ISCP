@@ -126,7 +126,7 @@ class Collider(object):
     def player_enemy_collider(self):
         for e in self.enemy_list:
             # De enemy de player laten volgen wanneer hij in range is
-            if e.rect.x - self.player.rect.x < self.range and e.rect.x - self.player.rect.x >= -self.range:
+            if e.rect.x - self.player.rect.x <= self.range and e.rect.x - self.player.rect.x >= -self.range:
                 e.follow = True
             else:
                 e.follow = False
@@ -157,8 +157,9 @@ class Collider(object):
 
                     player_hit = pygame.sprite.spritecollide(self.player, e.get_bl(), False)
                     if player_hit:
-                        self.player.kill()
-                        b.explode()
+                        if b.active:
+                            self.player.kill()
+                            b.explode()
 
                     if b.rect.x >= self.player.rect.x:
                         b.l_r = True

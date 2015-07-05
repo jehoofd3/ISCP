@@ -14,6 +14,7 @@ class BulletExplosionState(BulletState):
         self.bullet.b_r = pygame.image.load("../Data/Images/Bullet/Smoke/smokeWhite3.png").convert_alpha()
         self.start_time = time.time()
         self.del_time = 1
+        self.bullet.active = False
 
     def update(self):
         if time.time() - self.start_time + self.del_time >= 2:

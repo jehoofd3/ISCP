@@ -38,7 +38,7 @@ class Tank(Enemy):
             b.draw()
 
     def add_bullet(self, x, y):
-        self.bullet_list.append(Bullet(x, y, Artist.get_bi()))
+        self.bullet_list.append(Bullet(x, y))
 
     def get_bl(self):
         return self.bullet_list
