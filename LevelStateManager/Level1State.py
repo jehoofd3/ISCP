@@ -26,7 +26,7 @@ class Level1State(LevelState.LevelState):
     shift_start = 410
     shift_end = 3285
 
-    fly = Fly(100, 300, 100)
+    fly = Fly(200, 300, 10)
     slime_2 = Slime(64, 400, 0)
     slime_3 = Slime(832, 150, 0)
     slime_4 = Slime(832, 400, 0)

@@ -23,9 +23,6 @@ class Boot(object):
             for event in pygame.event.get(pygame.QUIT):
                 game_exit = True
 
-            # Clear the screen with a black
-            Artist.clear_screen()
-
             lsm.update()
             lsm.draw()
 
