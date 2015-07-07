@@ -22,6 +22,8 @@ class SnakeAttackState(EnemyState):
             self.enemy.ySpeed = 0
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
             self.enemy.jumpsRemaining = 1
+        else:
+            self.enemy.jump()
 
         if self.enemy.block_l:
             self.enemy.xSpeed = 0

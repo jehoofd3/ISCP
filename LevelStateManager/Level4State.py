@@ -27,9 +27,9 @@ class Level4State(LevelState.LevelState):
     shift_end = 3285
 
     fly = Fly(150, 150, 0)
-    slime_2 = Slime(64, 400, 0)
-    slime_3 = Slime(832, 150, 0)
-    slime_4 = Slime(832, 400, 0)
+    slime_2 = Slime(64, 400)
+    slime_3 = Slime(832, 150)
+    slime_4 = Slime(832, 400)
     tank_1 = Tank(64, 100, 30)
     tank_2 = Tank(128, 620, 30)
     tank_3 = Tank(250, 620, 30)

@@ -53,10 +53,11 @@ class Enemy(object):
     def update(self):
         self.states[0].update()
 
-        #
+        # Voor de range
         self.start_x -= self.shift_x
+
         # Enemy under
-        self.enemy_under_image.rect.x = self.rect.x + 1
+        self.enemy_under_image.rect.x = self.rect.x + 10
         self.enemy_under_image.rect.y = self.rect.y + (self.rect.height) + 1
 
         # Enemy up

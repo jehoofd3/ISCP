@@ -12,13 +12,14 @@ class SlimeNormalState(EnemyState):
         self.shoot_time = 3
 
     def update(self):
+        self.enemy.rect.y -= self.enemy.ySpeed
+        self.enemy.gravity()
         self.current_time = time.time()
         self.enemy.xSpeed = 5
 
         if self.enemy.block_d:
             self.enemy.ySpeed = 0
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
-            self.enemy.jumpsRemaining = 2
 
         # Code om de snake af te vuren
         if self.current_time >= self.start_time + self.shoot_time:

@@ -42,9 +42,10 @@ class Level1State(LevelState.LevelState, Camera):
 
     def run(self):
         self.map.run()
-        del self.enemy_list[:]
         fly = Fly(200, 300, 100)
-        self.enemy_list.append(fly)
+        slime = Slime(200, 300)
+
+        self.enemy_list.append(slime)
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
@@ -53,6 +54,7 @@ class Level1State(LevelState.LevelState, Camera):
         self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
             e.update()
+            print len(self.enemy_list)
 
         self.collider.update()
 

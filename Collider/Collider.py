@@ -14,6 +14,15 @@ class Collider(object):
     player_behind = 0
 
     def __init__(self, player, map, enemy_list, level_state_manager, main_menu):
+        self.level_state_manager = None
+        self.main_menu = None
+        self.snake_hulp = 0
+        self.range = 200
+        self.player_group = pygame.sprite.Group()
+
+        self.is_collision = False
+        self.player_behind = 0
+
         self.player = player
         self.map = map
         self.enemy_list = enemy_list
