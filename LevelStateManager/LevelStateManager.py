@@ -26,7 +26,7 @@ class LevelStateManager:
     def next_level(self):
         self.level += 1
 
-        if self.level == 4:
+        if self.level == 5:
             self.states = EndDemo()
         else:
             self.states = getattr(sys.modules[__name__], 'Level' + str(self.level) + 'State')(self, self.main_menu)

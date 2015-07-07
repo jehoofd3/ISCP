@@ -18,7 +18,7 @@ class Player (pygame.sprite.Sprite):
     half_screen_width = Artist.get_half_screen_width()
     face_direction = 'Right'
 
-    jumpsRemaining = 2
+    jumpsRemaining = 1
     jumpWasPressed = None
     jumpPressed = None
     health = 3

@@ -16,10 +16,12 @@ class EndDemo(LevelState):
         pass
 
     def update(self):
+        # This piece of code is used to quit the game when you pressed space.
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             pygame.quit()
             quit()
 
     def draw(self):
+        # Draw the background to the screen.
         Artist.get_display().blit(self.background_image, [0, 0])
 

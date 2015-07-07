@@ -3,10 +3,7 @@ import Enemy
 from Helpers.Artist import *
 
 class Collider(object):
-    left_right_collision = False
-    previous_collision = ''
-    one_time = False
-    second_time = False
+
     level_state_manager = None
     main_menu = None
     snake_hulp = 0
@@ -45,6 +42,10 @@ class Collider(object):
         if self.player.rect.x >= Artist.get_screen_width() - 70:
             self.player.canGoRight = False
 
+    # Collision between the player and all the images of the map.
+    # This pygame method puts all of the map images where the player collides with in a list.
+    # It needs a sprite as the first parameter, and it needs a sprite group as the second parameter.
+    #
     def player_collision_map_objects(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
 

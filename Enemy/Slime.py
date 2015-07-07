@@ -23,8 +23,9 @@ class Slime(Enemy):
 
     def update(self):
         self.states[0].update()
-        for i in range(len(self.snake_list)):
-            self.snake_list[i].update()
+        for snake in self.snake_list:
+            snake.update()
+            snake.move_with_map(self.shift_x)
 
     def draw(self):
         Artist.get_display().blit(self.animation.update(self.xSpeed, self.dead), self.rect)

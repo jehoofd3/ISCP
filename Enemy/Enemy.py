@@ -9,7 +9,8 @@ class Enemy(object):
     states = []
     block_u, block_d, block_r, block_l = None, None, None, None
     dead, follow, left_right = False, False, None
-
+    bullet_list = []
+    shift_x = 0
     def __init__(self, x, y, range, walk_l, walk_r, dead_l, dead_r, OB, LR):
         self.rect = walk_l[0].get_rect()
         self.rect.x = x
@@ -94,5 +95,10 @@ class Enemy(object):
         self.states = [EnemyDieState(self)]
 
     def move_with_map(self, shift_x):
+        self.shift_x = shift_x
         self.rect.x -= shift_x
+
+        for b in self.bullet_list:
+            b.move_with_map(shift_x)
+
 

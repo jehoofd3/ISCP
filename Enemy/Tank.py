@@ -8,7 +8,7 @@ from Helpers.Artist import *
 
 class Tank(Enemy):
     w_l, w_r, d_l, d_r = [], [], None, None
-    bullet_list, OB, LR = [], None, None
+    OB, LR = None, None
 
     def __init__(self, x, y, range):
         self.w_l.append(pygame.image.load("../Data/Images/Enemy/Tank/l_0.png").convert_alpha())

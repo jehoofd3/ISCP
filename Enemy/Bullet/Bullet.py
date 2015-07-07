@@ -40,3 +40,6 @@ class Bullet(object):
 
     def explode(self):
         self.states = [BulletExplosionState(self)]
+
+    def move_with_map(self, shift_x):
+        self.rect.x -= shift_x

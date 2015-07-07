@@ -31,19 +31,17 @@ class PlayerNormalState (PlayerState):
 
         if self.player.collision_up:
             self.player.ySpeed = - 3
-
+        #t
         # Collision under
         if self.player.collision_under:
             self.player.ySpeed = 0
             self.player.rect.bottom = ((self.player.rect.bottom / 64) * 64)
             self.player.jumpsRemaining = 2
 
-        for event in pygame.event.get(pygame.KEYDOWN):
-            if event.key == pygame.K_UP and self.player.jumpsRemaining > 0:
-                self.player.collision_under = True
-                self.player.jump()
-                self.player.canGoLeft = True
-                self.player.canGoRight = True
+        if pygame.key.get_pressed()[pygame.K_UP] and self.player.jumpsRemaining > 0:
+            self.player.jump()
+            self.player.canGoLeft = True
+            self.player.canGoRight = True
 
     def draw(self):
         pass

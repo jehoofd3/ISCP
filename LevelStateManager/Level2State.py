@@ -18,6 +18,9 @@ class Level2State(LevelState.LevelState):
     level_state_manager = None
     collider = None
 
+    slime = Slime(1800, 10, 0)
+
+    enemy_list.append(slime)
     shift_start = 410
     shift_end = 3290
 
@@ -40,17 +43,23 @@ class Level2State(LevelState.LevelState):
     def update(self):
         self.player.update()
 
+        for e in self.enemy_list:
+            e.update()
+
         self.collider.update()
 
         self.background.update(self.player.xSpeed, 0)
-
         # Code that it will only shift between the given values
         if not self.player.is_shifting:
             self.map.x_start_shift_map += self.player.xSpeed
 
-        if self.map.x_start_shift_map >= self.shift_start and self.map.x_start_shift_map <= self.shift_end:
+        if self.shift_start <= self.map.x_start_shift_map <= self.shift_end:
             self.player.is_shifting = True
             self.map.shift_map(self.player.get_player_x_speed())
+
+            for e in self.enemy_list:
+                e.move_with_map(self.player.get_player_x_speed())
+
         else:
             self.player.is_shifting = False
         # end shift map
@@ -61,4 +70,8 @@ class Level2State(LevelState.LevelState):
     def draw(self):
         self.background.draw()
         self.map.draw()
+
+        for e in self.enemy_list:
+            e.draw()
+
         self.player.draw()

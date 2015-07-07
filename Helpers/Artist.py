@@ -6,6 +6,8 @@ class Artist:
     screen_width = 960
     screen_height = 768
 
+    bi = 0
+
     # Make a window with the specified with and height.
     global game_display
     game_display = pygame.display.set_mode((screen_width, screen_height))
@@ -15,18 +17,22 @@ class Artist:
 
     @staticmethod
     def begin_session():
-        # Initialize all imported pygame modules
+        # Initializes all imported pygame modules.
+
+        # No exceptions will be raised if a module fails, but the total number if successful and failed inits will be returned as a tuple.
+        # You can always initialize individual modules manually, but pygame.init()initialize all imported pygame modules is a convenient way to get everything started.
+        # The init() functions for individual modules will raise exceptions when they fail.
+        # You may want to initalise the different modules seperately to speed up your program or to not use things your game does not.
+        #It is safe to call this init() more than once: repeated calls will have no effect. This is true even if you have pygame.quit() all the modules.
         pygame.init()
 
+        # Gives a title to the window.
         pygame.display.set_caption("Escape")
 
     @staticmethod
     def draw_textures(image, x, y):
+        # This pygame method draws an image on the surface.
         game_display.blit(image, [x, y])
-
-    @staticmethod
-    def clear_screen():
-        game_display.fill((0, 0, 0))
 
     @staticmethod
     def get_display():
@@ -47,3 +53,11 @@ class Artist:
     @staticmethod
     def get_half_screen_height():
         return Artist.screen_height / 2
+
+    @staticmethod
+    def get_bi():
+        Artist.bi += 1
+        return Artist.bi
+
+
+
