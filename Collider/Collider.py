@@ -127,10 +127,14 @@ class Collider(object):
     def player_enemy_collider(self):
         for e in self.enemy_list:
             # De enemy de player laten volgen wanneer hij in range is
-            if e.rect.x - self.player.rect.x <= self.range and e.rect.x - self.player.rect.x >= -self.range:
+            if e.rect.x - self.player.rect.x <= self.range and \
+                e.rect.x - self.player.rect.x >= -self.range and \
+                e.rect.y - self.player.rect.y <= self.range * 2 and \
+                e.rect.y - self.player.rect.y >= -self.range * 2:
                 e.follow = True
             else:
                 e.follow = False
+            print e.follow
 
             # Als de player in range is wordt er op deze manier door gegeven of de enemy naar
             # links of rechts moet lopen
@@ -152,10 +156,12 @@ class Collider(object):
         for e in self.enemy_list:
             if isinstance(e, Enemy.Tank.Tank):
                 for b in e.get_bl():
+                    # De kogel laten exploderen wanneer hij collision met de map heeft
                     map_hit = pygame.sprite.spritecollide(b, self.map, False)
                     if map_hit:
                         b.explode()
 
+                    # De player killen en de kogel laten exploderen wanneer de kogel de player raakt
                     player_hit = pygame.sprite.spritecollide(self.player, e.get_bl(), False)
                     if player_hit:
                         if b.active:

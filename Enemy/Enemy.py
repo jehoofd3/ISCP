@@ -11,13 +11,14 @@ class Enemy(object):
     dead, follow, left_right = False, False, None
     bullet_list = []
     shift_x = 0
+
     def __init__(self, x, y, range, walk_l, walk_r, dead_l, dead_r, OB, LR):
         self.rect = walk_l[0].get_rect()
         self.rect.x = x
         self.rect.y = y
         self.xSpeed = 0
         self.ySpeed = 0
-        self.jumpsRemaining = 2
+        self.jumpsRemaining = 0
         self.speed = 2
         self.start_speed = self.speed
         self.range = range
@@ -52,6 +53,8 @@ class Enemy(object):
     def update(self):
         self.states[0].update()
 
+        #
+        self.start_x -= self.shift_x
         # Enemy under
         self.enemy_under_image.rect.x = self.rect.x + 1
         self.enemy_under_image.rect.y = self.rect.y + (self.rect.height) + 1
@@ -67,6 +70,9 @@ class Enemy(object):
         # Enemy right
         self.enemy_right_image.rect.x = self.rect.x + self.rect.width
         self.enemy_right_image.rect.y = self.rect.y
+
+        if self.block_l or self.block_r:
+            self.jump()
 
         if self.rect.bottom >= 960:
             self.kill()
