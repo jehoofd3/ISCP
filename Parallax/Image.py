@@ -2,5 +2,13 @@ from Parallax import *
 
 class Image(Parallax):
 
-    def __init__(self, image_path, x, y):
-        super(Image, self).__init__(image_path, x, x)
+    def __init__(self, image_path, x, y, speed):
+        self.speed = speed
+        super(Image, self).__init__(image_path, x, y)
+
+    def update(self, x, y, player_x):
+        super(Image, self).update(x, y, player_x)
+        if x >= 0:
+            self.x -= self.speed
+        else:
+            self.x += self.speed

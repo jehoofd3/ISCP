@@ -52,13 +52,14 @@ class Level4State(LevelState.LevelState):
     half_screen_width = Artist.get_half_screen_width()
 
     def __init__(self, level_state_manager, main_menu):
-        self.map = TileGrid("../Data/Levels/Level4.txt")
+        self.enemy_list = []
+        self.map = TileGrid("../Data/Levels/Level4/Level4.txt")
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         self.map.set_x_start_shift_map(self.player_spawn_x)
-        self.background = Background("../Data/Levels/BackgroundEen.png", 0, 0)
+        self.background = Background("../Data/Levels/Level4/BackgroundEen.png", 0, 0)
 
     def run(self):
         self.map.run()

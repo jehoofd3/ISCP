@@ -29,7 +29,7 @@ class SnakeAttackState(EnemyState):
             self.enemy.xSpeed = 0
             self.enemy.rect.x += 1
 
-        if  self.enemy.block_r:
+        if self.enemy.block_r:
             self.enemy.xSpeed = 0
             self.enemy.rect.x -= 1
 
