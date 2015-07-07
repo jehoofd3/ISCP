@@ -28,6 +28,7 @@ class Collider(object):
         self.player_collision_left()
         self.player_collision_right()
 
+        self.enemy_collision_map_objects()
         self.enemy_collision_down()
         self.enemy_collision_up()
         self.enemy_collision_left()
@@ -52,9 +53,17 @@ class Collider(object):
         for block in blocks_hit_list:
             if block.image_type == 114:
                 self.level_state_manager.next_level()
-            #test
-            if block.image_type == 80 or block.image_type == 81 or block.image_type == 82 or block.image_type == 83 or block.image_type == 84 or block.image_type == 85:
-                self.player.kill()
+
+            for x in range(80, 85):
+                if block.image_type == x:
+                    self.player.kill()
+
+            for x in range(117, 134):
+                if block.image_type == x:
+                    if self.player.xSpeed > 0:
+                        self.player.xSpeed += 4
+                    else:
+                        self.player.xSpeed -= 4
 
     def player_collision_down(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)
@@ -87,6 +96,15 @@ class Collider(object):
             self.player.canGoRight = False
         else:
             self.player.canGoRight = True
+
+    def enemy_collision_map_objects(self):
+        for enemy in self.enemy_list:
+            blocks_hit_list = pygame.sprite.spritecollide(enemy, self.map, False)
+
+            for block in blocks_hit_list:
+                for x in range(80, 85):
+                    if block.image_type == x:
+                        enemy.kill()
 
     def enemy_collision_down(self):
         for e in self.enemy_list:

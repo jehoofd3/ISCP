@@ -114,6 +114,7 @@ class MainMenu(LevelState):
             if self.alpha <= 0:
                 self.pressed_play = False
                 self.fade_out_done = False
+                self.levelStateManager.states.level = 1
                 self.levelStateManager.states = Level1State(self.levelStateManager, self)
                 self.levelStateManager.states.run()
 
