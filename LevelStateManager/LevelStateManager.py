@@ -13,6 +13,7 @@ class LevelStateManager:
     def __init__(self):
         self.states = MainMenu(self)
         self.main_menu = self.states
+        self.states.run()
 
     def run(self):
         self.states.run()
@@ -28,9 +29,12 @@ class LevelStateManager:
 
         if self.level == 5:
             self.states = EndDemo()
+            self.states.run()
         else:
             self.states = getattr(sys.modules[__name__], 'Level' + str(self.level) + 'State')(self, self.main_menu)
+            self.states.run()
 
     def reset_level(self):
         self.states = getattr(sys.modules[__name__], 'Level' + str(self.level) + 'State')(self, self.main_menu)
+        self.states.run()
 

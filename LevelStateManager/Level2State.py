@@ -5,22 +5,20 @@ from Collider.Collider import *
 from Helpers.Artist import *
 from Parallax.Background import *
 from MainMenu.MainMenu import *
+from Camera import *
 
-class Level2State(LevelState.LevelState):
+class Level2State(LevelState.LevelState, Camera):
     map = None
 
     player_x = 0
     player_y = 0
     player_spawn_x = 170
-    player_spawn_y = 100
+    player_spawn_y = 180
     player = None
     enemy_list = []
     level_state_manager = None
     collider = None
 
-    slime = Slime(1800, 10, 0)
-
-    enemy_list.append(slime)
     shift_start = 410
     shift_end = 3290
 
@@ -39,30 +37,21 @@ class Level2State(LevelState.LevelState):
 
     def run(self):
         self.map.run()
+        del self.enemy_list[:]
+        slime = Slime(1800, 10, 0)
+        self.enemy_list.append(slime)
+        Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
+        Camera.update(self)
         self.player.update()
-
+        self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
             e.update()
 
         self.collider.update()
-
+        print self.map.x_start_shift_map
         self.background.update(self.player.xSpeed, 0)
-        # Code that it will only shift between the given values
-        if not self.player.is_shifting:
-            self.map.x_start_shift_map += self.player.xSpeed
-
-        if self.shift_start <= self.map.x_start_shift_map <= self.shift_end:
-            self.player.is_shifting = True
-            self.map.shift_map(self.player.get_player_x_speed())
-
-            for e in self.enemy_list:
-                e.move_with_map(self.player.get_player_x_speed())
-
-        else:
-            self.player.is_shifting = False
-        # end shift map
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.states = self.main_menu

@@ -62,6 +62,7 @@ class Level4State(LevelState.LevelState):
 
     def run(self):
         self.map.run()
+        del self.enemy_list[:]
 
     def update(self):
         self.player.update()

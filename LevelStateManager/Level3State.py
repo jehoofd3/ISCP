@@ -6,7 +6,7 @@ from Helpers.Artist import *
 from MainMenu.MainMenu import *
 from Parallax.Background import *
 
-class Level3State(LevelState.LevelState):
+class Level3State(LevelState.LevelState, Camera):
     map = None
 
     player_x = 0
@@ -36,24 +36,16 @@ class Level3State(LevelState.LevelState):
 
     def run(self):
         self.map.run()
+        del self.enemy_list[:]
+        Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
+        Camera.update(self)
         self.player.update()
 
         self.collider.update()
 
         self.background.update(self.player.xSpeed, 0)
-
-        # Code that it will only shift between the given values
-        if not self.player.is_shifting:
-            self.map.x_start_shift_map += self.player.xSpeed
-
-        if self.map.x_start_shift_map >= self.shift_start and self.map.x_start_shift_map <= self.shift_end:
-            self.player.is_shifting = True
-            self.map.shift_map(self.player.get_player_x_speed())
-        else:
-            self.player.is_shifting = False
-        # end shift map
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.states = self.main_menu

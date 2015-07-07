@@ -10,8 +10,9 @@ from Collider.Collider import *
 from Helpers.Artist import *
 from Parallax.Background import *
 from MainMenu.MainMenu import *
+from Camera import *
 
-class Level1State(LevelState.LevelState):
+class Level1State(LevelState.LevelState, Camera):
     map = None
 
     player_x = 0
@@ -25,18 +26,6 @@ class Level1State(LevelState.LevelState):
 
     shift_start = 410
     shift_end = 3285
-
-    fly = Fly(200, 300, 100)
-    slime_2 = Slime(64, 400, 0)
-    slime_3 = Slime(832, 150, 0)
-    slime_4 = Slime(832, 400, 0)
-    tank_1 = Tank(164, 600, 200)
-    tank_2 = Tank(128, 620, 30)
-    tank_3 = Tank(250, 620, 30)
-    tank_4 = Tank(360, 620, 30)
-    tank_5 = Tank(450, 620, 30)
-
-    enemy_list.append(tank_1)
 
     main_menu = None
 
@@ -53,8 +42,13 @@ class Level1State(LevelState.LevelState):
 
     def run(self):
         self.map.run()
+        del self.enemy_list[:]
+        fly = Fly(200, 300, 100)
+        self.enemy_list.append(fly)
+        Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
+        Camera.update(self)
         self.player.update()
         self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
@@ -63,20 +57,6 @@ class Level1State(LevelState.LevelState):
         self.collider.update()
 
         self.background.update(self.player.xSpeed, 0)
-        # Code that it will only shift between the given values
-        if not self.player.is_shifting:
-            self.map.x_start_shift_map += self.player.xSpeed
-
-        if self.shift_start <= self.map.x_start_shift_map <= self.shift_end:
-            self.player.is_shifting = True
-            self.map.shift_map(self.player.get_player_x_speed())
-
-            for e in self.enemy_list:
-                e.move_with_map(self.player.get_player_x_speed())
-
-        else:
-            self.player.is_shifting = False
-        # end shift map
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.states = self.main_menu
