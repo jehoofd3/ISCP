@@ -54,7 +54,6 @@ class Level1State(LevelState.LevelState, Camera):
         self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
             e.update()
-            print len(self.enemy_list)
 
         self.collider.update()
 

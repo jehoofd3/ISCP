@@ -24,6 +24,7 @@ class Enemy(object):
         self.range = range
         self.start_x = x
         self.start_y = y
+        self.bullet_list = []
 
         # Player under sprite
         self.enemy_under_image = pygame.sprite.Sprite()

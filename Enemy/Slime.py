@@ -8,6 +8,8 @@ class Slime(Enemy):
     snake_list = []
 
     def __init__(self, x, y):
+        self.snake_list = []
+
         self.w_l[0] = (pygame.image.load("../Data/Images/Enemy/Slime/slime_0.png").convert_alpha())
         self.w_l[1] = (pygame.image.load("../Data/Images/Enemy/Slime/slime_1.png").convert_alpha())
         self.w_r[0] = (pygame.image.load("../Data/Images/Enemy/Slime/slime_0.png").convert_alpha())
