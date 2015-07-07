@@ -94,6 +94,9 @@ class Enemy(object):
         self.rect.y -= self.ySpeed
         self.xSpeed = 0
 
+        if self.block_u:
+            self.ySpeed = - 3
+
     def gravity(self):
         self.ySpeed -= 0.4
 

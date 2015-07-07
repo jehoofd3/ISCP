@@ -134,7 +134,6 @@ class Collider(object):
                 e.follow = True
             else:
                 e.follow = False
-            print e.follow
 
             # Als de player in range is wordt er op deze manier door gegeven of de enemy naar
             # links of rechts moet lopen
