@@ -20,7 +20,7 @@ class TankShootState(EnemyState):
         if self.enemy.block_d:
             self.enemy.ySpeed = 0
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
-            self.enemy.jumpsRemaining = 2
+            self.enemy.jumpsRemaining = 1
 
         if self.enemy.block_l:
             self.enemy.xSpeed = 0

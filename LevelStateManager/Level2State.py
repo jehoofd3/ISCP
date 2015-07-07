@@ -50,7 +50,6 @@ class Level2State(LevelState.LevelState, Camera):
             e.update()
 
         self.collider.update()
-        print self.map.x_start_shift_map
         self.background.update(self.player.xSpeed, 0)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:

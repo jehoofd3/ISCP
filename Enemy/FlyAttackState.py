@@ -1,5 +1,5 @@
 from EnemyState import *
-from FlyGoBackState import *
+import FlyNormalState
 
 
 class FlyAttackState(EnemyState):
@@ -8,7 +8,7 @@ class FlyAttackState(EnemyState):
         super(FlyAttackState, self).__init__(enemy)
 
     def run(self):
-        self.enemy.speed *= 1.5
+        self.enemy.speed *= 1.2
 
     def update(self):
         self.enemy.basic_movement()
@@ -17,7 +17,9 @@ class FlyAttackState(EnemyState):
         if self.enemy.block_d:
             self.enemy.ySpeed = 0
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
-            self.enemy.jumpsRemaining = 2
+            self.enemy.jumpsRemaining = 1
+        else:
+            self.enemy.jump()
 
         if self.enemy.left_right:
             self.enemy.xSpeed += self.enemy.speed
@@ -26,10 +28,10 @@ class FlyAttackState(EnemyState):
 
         if self.enemy.block_l or self.enemy.block_r:
             self.enemy.xSpeed = 0
-        #    self.enemy.jump()
+            self.enemy.jump()
 
         if not self.enemy.follow:
-            self.enemy.states = [FlyGoBackState(self.enemy)]
+            self.enemy.states = [FlyNormalState.FlyNormalState(self.enemy)]
 
     def draw(self):
         pass
