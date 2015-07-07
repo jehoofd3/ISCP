@@ -150,7 +150,8 @@ class Collider(object):
                 e.rect.y - self.player.rect.y <= self.range * 2 and \
                 e.rect.y - self.player.rect.y >= -self.range * 2:
                 e.follow = True
-            else:
+            elif e.rect.x - self.player.rect.x >= self.range * 1.8 or \
+                e.rect.x - self.player.rect.x <= -self.range * 1.8 and e.follow:
                 e.follow = False
 
             # Als de player in range is wordt er op deze manier door gegeven of de enemy naar
@@ -163,9 +164,9 @@ class Collider(object):
 
             blocks_hit_list = pygame.sprite.spritecollide(e, self.player_group, False)
             for block in blocks_hit_list:
-                if self.player.ySpeed == 0 and not e.dead:
+                if self.player.ySpeed == 0 and not e.dead and not self.player.dead:
                     self.player.kill()
-                elif self.player.ySpeed != 0 and not e.dead:
+                elif self.player.ySpeed != 0 and not e.dead and not self.player.dead:
                     e.kill()
                     self.player.ySpeed = 5
 
