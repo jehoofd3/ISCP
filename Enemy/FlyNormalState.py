@@ -8,8 +8,8 @@ class FlyNormalState(EnemyState):
         super(FlyNormalState, self).__init__(enemy)
 
     def run(self):
-        self.left = None
-        self.right = None
+        self.right = True
+        self.left = False
         self.enemy.speed = self.enemy.start_speed
 
     def update(self):

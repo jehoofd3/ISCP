@@ -11,8 +11,8 @@ class FishNormalState(EnemyState):
     def run(self):
         self.enemy.rect.y = self.enemy.start_y
         self.enemy.ySpeed = 0
-        self.left = None
-        self.right = None
+        self.right = True
+        self.left = False
         self.start_time = time.time()
         self.switch_time = 7
 

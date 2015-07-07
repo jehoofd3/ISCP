@@ -155,27 +155,28 @@ class Collider(object):
         for e in self.enemy_list:
             if isinstance(e, Enemy.Tank.Tank):
                 for b in e.get_bl():
-                    # De kogel laten exploderen wanneer hij collision met de map heeft
-                    map_hit = pygame.sprite.spritecollide(b, self.map, False)
-                    if map_hit:
-                        b.explode()
-
-                    # De player killen en de kogel laten exploderen wanneer de kogel de player raakt
-                    player_hit = pygame.sprite.spritecollide(self.player, e.get_bl(), False)
-                    if player_hit:
-                        if b.active:
-                            self.player.kill()
+                    if b.active:
+                        # De kogel laten exploderen wanneer hij collision met de map heeft
+                        map_hit = pygame.sprite.spritecollide(b, self.map, False)
+                        if map_hit:
                             b.explode()
 
-                    if b.rect.x >= self.player.rect.x:
-                        b.l_r = True
-                    else:
-                        b.l_r = False
+                        # De player killen en de kogel laten exploderen wanneer de kogel de player raakt
+                        player_hit = pygame.sprite.spritecollide(self.player, e.get_bl(), False)
+                        if player_hit:
+                            if b.active:
+                                self.player.kill()
+                                b.explode()
 
-                    if b.rect.y >= self.player.rect.y:
-                        b.u_d = True
-                    else:
-                        b.u_d = False
+                        if b.rect.x >= self.player.rect.x:
+                            b.l_r = True
+                        else:
+                            b.l_r = False
+
+                        if b.rect.y >= self.player.rect.y:
+                            b.u_d = True
+                        else:
+                            b.u_d = False
 
             if isinstance(e, Enemy.Slime.Slime):
                 if len(e.snake_list) > self.snake_hulp:

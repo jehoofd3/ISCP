@@ -30,14 +30,13 @@ class Level1State(LevelState.LevelState):
     slime_2 = Slime(64, 400, 0)
     slime_3 = Slime(832, 150, 0)
     slime_4 = Slime(832, 400, 0)
-    tank_1 = Tank(164, 600, 30)
+    tank_1 = Tank(164, 600, 200)
     tank_2 = Tank(128, 620, 30)
     tank_3 = Tank(250, 620, 30)
     tank_4 = Tank(360, 620, 30)
     tank_5 = Tank(450, 620, 30)
 
-    enemy_list.append(slime_2)
-    enemy_list.append(fly)
+    enemy_list.append(tank_1)
 
     main_menu = None
 

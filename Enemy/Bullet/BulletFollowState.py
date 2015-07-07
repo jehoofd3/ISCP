@@ -9,7 +9,7 @@ class BulletFollowState(BulletState):
 
     def run(self):
         self.start_time = time.time()
-        self.switch_time = 5
+        self.switch_time = 7
 
     def update(self):
         self.bullet.basic_movement()
@@ -22,6 +22,9 @@ class BulletFollowState(BulletState):
             self.bullet.ySpeed += self.bullet.speed
         else:
             self.bullet.ySpeed -= self.bullet.speed
+
+        if time.time() - self.start_time >= self.switch_time:
+            self.bullet.explode()
 
     def draw(self):
         pass

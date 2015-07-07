@@ -8,8 +8,8 @@ class TankNormalState(EnemyState):
         super(TankNormalState, self).__init__(enemy)
 
     def run(self):
-        self.right = None
-        self.left = None
+        self.right = True
+        self.left = False
         self.enemy.speed = self.enemy.start_speed
 
     def update(self):
@@ -23,6 +23,7 @@ class TankNormalState(EnemyState):
         if self.enemy.rect.x > self.enemy.start_x + self.enemy.range:
             self.right = False
             self.left = True
+
 
         if self.enemy.block_d:
             self.enemy.ySpeed = 0
@@ -44,6 +45,7 @@ class TankNormalState(EnemyState):
 
         if self.enemy.follow:
             self.enemy.states = [TankShootState(self.enemy)]
+
 
 
     def draw(self):
