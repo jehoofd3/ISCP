@@ -61,12 +61,12 @@ class Level1State(LevelState.LevelState, Camera):
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
-        Camera.update(self)
+        Camera.update_camera(self, self.player.xSpeed)
         self.player.update()
         self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
             e.update()
-
+#f
         self.collider.update()
 
         self.background.update(self.player.xSpeed, 0, self.player.rect.x)
