@@ -21,12 +21,19 @@ class Player (pygame.sprite.Sprite):
     jumpsRemaining = 0
     jumpWasPressed = None
     jumpPressed = None
-    health = 3
-    xSpeed = 0
+
+    xSpeed = 0.0
+    xSpeed_standing_still = 0
     ySpeed = 0
     start_x = 0
     start_y = 0
     is_shifting = False
+    sliding = False
+
+    health_image_full = pygame.image.load("../Data/Images/Health.png").convert_alpha()
+    health_image_empty = pygame.image.load("../Data/Images/Health_empty.png").convert_alpha()
+
+    lives = ['', '', '']
 
     level_state_manager = None
 
@@ -39,6 +46,13 @@ class Player (pygame.sprite.Sprite):
 
     def __init__(self, x, y, level_state_manager):
         self.level_state_manager = level_state_manager
+
+        for i in range(0, 3):
+            if i <= (self.level_state_manager.player_health - 1):
+                self.lives[i] = self.health_image_full
+            else:
+                self.lives[i] = self.health_image_empty
+
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
         self.rect = self.image.get_rect()
@@ -114,6 +128,11 @@ class Player (pygame.sprite.Sprite):
             self.kill()
 
     def draw(self):
+        x = 0
+        for i in range(0, 3):
+            Artist.get_display().blit(self.lives[i], (x, 50))
+            x += 50
+
         Artist.get_display().blit(self.animation.update(), self.rect)
         self.states.draw()
         Artist.get_display().blit(self.player_under_image.image, self.player_under_image.rect)
@@ -122,6 +141,7 @@ class Player (pygame.sprite.Sprite):
         Artist.get_display().blit(self.player_right_image.image, self.player_right_image.rect)
 
     def jump(self):
+        self.sliding = False
         pygame.mixer.music.play()
         self.ySpeed = 10
         self.jumpsRemaining -= 1
@@ -131,6 +151,7 @@ class Player (pygame.sprite.Sprite):
             self.rect.x += self.xSpeed
 
         self.rect.y -= self.ySpeed
+
         self.xSpeed = 0
 
     def gravity(self):
@@ -139,10 +160,13 @@ class Player (pygame.sprite.Sprite):
     def kill(self):
         if not self.dead:
             self.states = PlayerDieState(self)
-            self.health -= 1
+            self.level_state_manager.player_health -= 1
 
     def get_player_x_speed(self):
         return self.xSpeed
 
     def get_player_x(self):
         return self.rect.x
+
+    def set_sliding(self, is_sliding):
+        self.sliding = is_sliding

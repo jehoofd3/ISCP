@@ -26,6 +26,7 @@ class Collider(object):
 
     def update(self):
         self.player_collision_map_objects()
+        self.player_collision_under_map_objects()
         self.player_collision_down()
         self.player_collision_up()
         self.player_collision_left()
@@ -61,12 +62,19 @@ class Collider(object):
                 if block.image_type == x:
                     self.player.kill()
 
+    def player_collision_under_map_objects(self):
+        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)
+
+        for block in blocks_hit_list:
             for x in range(117, 134):
-                if block.image_type == x:
-                    if self.player.xSpeed > 0:
-                        self.player.xSpeed += 4
-                    else:
-                        self.player.xSpeed -= 4
+                if x == 118 or x == 119:
+                    continue
+                if block.image_type == x and self.player.xSpeed != 0:
+                    self.player.set_sliding(True)
+
+            for x in range(156, 170):
+                if block.image_type == x and self.player.xSpeed != 0:
+                    self.player.set_sliding(True)
 
     def player_collision_down(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)

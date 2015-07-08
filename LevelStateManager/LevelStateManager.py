@@ -9,6 +9,7 @@ class LevelStateManager:
     states = ''
     level = 1
     main_menu = None
+    player_health = 3
 
     def __init__(self):
         self.states = MainMenu(self)
@@ -36,5 +37,9 @@ class LevelStateManager:
 
     def reset_level(self):
         self.states = getattr(sys.modules[__name__], 'Level' + str(self.level) + 'State')(self, self.main_menu)
+        self.states.run()
+
+    def open_level1(self):
+        self.states = Level1State(self, self.main_menu)
         self.states.run()
 

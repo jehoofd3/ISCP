@@ -12,7 +12,6 @@ class Tile(pygame.sprite.Sprite):
         self.image_type = image_type
 
     def shift_x(self, x_speed):
-        #print x_speed
         self.rect.x -= x_speed
 
     def get_x(self):

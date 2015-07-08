@@ -26,6 +26,7 @@ class Level3State(LevelState.LevelState, Camera):
     half_screen_width = Artist.get_half_screen_width()
 
     def __init__(self, level_state_manager, main_menu):
+        self.enemy_list = []
         self.map = TileGrid("../Data/Levels/Level3/Level3.txt")
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
@@ -40,12 +41,12 @@ class Level3State(LevelState.LevelState, Camera):
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
-        Camera.update(self)
+        Camera.update_camera(self, self.player.xSpeed)
         self.player.update()
 
         self.collider.update()
 
-        self.background.update(self.player.xSpeed, 0)
+        self.background.update(0, 0, self.player.xSpeed)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.states = self.main_menu

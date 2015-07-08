@@ -72,7 +72,7 @@ class Level4State(LevelState.LevelState):
 
         self.collider.update()
 
-        self.background.update(self.player.xSpeed, 0)
+        self.background.update(0, 0, self.player.xSpeed)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.states = self.main_menu
