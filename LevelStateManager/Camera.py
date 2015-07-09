@@ -28,4 +28,6 @@ class Camera:
 
         else:
             self.player.is_shifting = False
+            for e in self.enemy_list:
+                e.move_with_map(0)
         # end shift map

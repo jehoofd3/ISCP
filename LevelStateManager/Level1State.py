@@ -55,10 +55,12 @@ class Level1State(LevelState.LevelState, Camera):
         self.map.run()
         fly = Fly(1500, 100, 100)
         tank = Tank(2600, 50, 380)
+        tank_2 = Tank(500, 600, 200)
         fish = Fish(1000, 700, 200)
         self.enemy_list.append(fly)
         self.enemy_list.append(tank)
         self.enemy_list.append(fish)
+        self.enemy_list.append(tank_2)
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 

@@ -11,6 +11,7 @@ class FishJumpState(EnemyState):
         self.enemy.ySpeed = 20
 
     def update(self):
+        self.enemy.block_u = False
         self.enemy.basic_movement()
         self.enemy.gravity()
 

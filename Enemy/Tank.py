@@ -40,8 +40,8 @@ class Tank(Enemy):
         for b in self.bullet_list:
             b.draw()
 
-    def add_bullet(self, x, y):
-        self.bullet_list.append(Bullet(x, y))
+    def add_bullet(self, x, y, left_right):
+        self.bullet_list.append(Bullet(x, y, left_right))
 
     def get_bl(self):
         return self.bullet_list

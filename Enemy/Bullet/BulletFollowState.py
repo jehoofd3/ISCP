@@ -8,23 +8,16 @@ class BulletFollowState(BulletState):
         super(BulletFollowState, self).__init__(bullet)
 
     def run(self):
-        self.start_time = time.time()
-        self.switch_time = 7
+        pass
 
     def update(self):
         self.bullet.basic_movement()
-        if self.bullet.l_r:
+        self.bullet.gravity()
+
+        if self.bullet.left_right:
             self.bullet.xSpeed -= self.bullet.speed
         else:
             self.bullet.xSpeed += self.bullet.speed
-
-        if self.bullet.u_d:
-            self.bullet.ySpeed += self.bullet.speed
-        else:
-            self.bullet.ySpeed -= self.bullet.speed
-
-        if time.time() - self.start_time >= self.switch_time:
-            self.bullet.explode()
 
     def draw(self):
         pass

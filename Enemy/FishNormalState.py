@@ -17,6 +17,7 @@ class FishNormalState(EnemyState):
         self.switch_time = 7
 
     def update(self):
+        self.enemy.block_u = False
         self.enemy.basic_movement()
         self.current_time = time.time()
 

@@ -7,7 +7,7 @@ class Bullet(object):
     states = []
     l_r, u_d = None, None
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, left_right):
         self.b_l = pygame.image.load("../Data/Images/Bullet/b_l.png").convert_alpha()
         self.b_r = pygame.image.load("../Data/Images/Bullet/b_r.png").convert_alpha()
         self.rect = self.b_l.get_rect()
@@ -15,8 +15,9 @@ class Bullet(object):
         self.rect.y = y
         self.xSpeed = 0
         self.ySpeed = 0
-        self.speed = 2
+        self.speed = 8
         self.active = True
+        self.left_right = left_right
 
         self.states = [BulletFollowState(self)]
 
@@ -36,7 +37,9 @@ class Bullet(object):
         self.rect.x += self.xSpeed
         self.rect.y -= self.ySpeed
         self.xSpeed = 0
-        self.ySpeed = 0
+
+    def gravity(self):
+        self.ySpeed -= 0.1
 
     def explode(self):
         self.states = [BulletExplosionState(self)]
