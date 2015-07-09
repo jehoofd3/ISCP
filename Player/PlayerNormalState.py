@@ -28,10 +28,10 @@ class PlayerNormalState (PlayerState):
         self.player.basic_movement()
         self.player.gravity()
 
-        if pygame.key.get_pressed()[pygame.K_LEFT] != 0 and self.player.canGoLeft:
+        if pygame.key.get_pressed()[pygame.K_LEFT] != 0 and not self.player.canGoLeft:
             self.player.xSpeed = -self.player_x_speed
 
-        if pygame.key.get_pressed()[pygame.K_RIGHT] != 0 and self.player.canGoRight:
+        if pygame.key.get_pressed()[pygame.K_RIGHT] != 0 and not self.player.canGoRight:
             self.player.xSpeed = self.player_x_speed
 
         if self.player.collision_up:

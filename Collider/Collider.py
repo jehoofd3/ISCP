@@ -9,6 +9,8 @@ class Collider(object):
     snake_hulp = 0
     range = 200
     player_group = pygame.sprite.Group()
+    player_collision_img = []
+    player_hulp = []
 
     is_collision = False
     player_behind = 0
@@ -16,6 +18,7 @@ class Collider(object):
     def __init__(self, player, map, enemy_list, level_state_manager, main_menu):
         self.snake_hulp = 0
         self.player_group = pygame.sprite.Group()
+        self.player_collision_img = []
 
         self.player = player
         self.map = map
@@ -24,19 +27,21 @@ class Collider(object):
         self.main_menu = main_menu
         self.player_group.add(player)
 
+        self.player_collision_img.append(self.player.player_under_image)
+        self.player_collision_img.append(self.player.player_up_image)
+        self.player_collision_img.append(self.player.player_left_image)
+        self.player_collision_img.append(self.player.player_right_image)
+        self.player_hulp = [None, None, None, None]
+
+        self.update_enemy_collider()
+
     def update(self):
         self.player_collision_map_objects()
         self.player_collision_under_map_objects()
-        self.player_collision_down()
-        self.player_collision_up()
-        self.player_collision_left()
-        self.player_collision_right()
+        self.player_collision()
 
         self.enemy_collision_map_objects()
-        self.enemy_collision_down()
-        self.enemy_collision_up()
-        self.enemy_collision_left()
-        self.enemy_collision_right()
+        self.enemy_collision()
 
         self.player_enemy_collider()
         self.objects_collider()
@@ -44,13 +49,12 @@ class Collider(object):
         if self.player.rect.x <= 0:
             self.player.canGoLeft = False
 
-        if self.player.rect.x >= Artist.get_screen_width() - 70:
+        if self.player.rect.x >= Artist.get_screen_width() - 64:
             self.player.canGoRight = False
 
     # Collision between the player and all the images of the map.
     # This pygame method puts all of the map images where the player collides with in a list.
     # It needs a sprite as the first parameter, and it needs a sprite group as the second parameter.
-    #
     def player_collision_map_objects(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
 
@@ -76,82 +80,41 @@ class Collider(object):
                 if block.image_type == x and self.player.xSpeed != 0:
                     self.player.set_sliding(True)
 
-    def player_collision_down(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)
+    def player_collision(self):
+        for i in range(len(self.player_collision_img)):
+            blocks_hit_list = pygame.sprite.spritecollide(self.player_collision_img[i], self.map, False)
+            if blocks_hit_list:
+                self.player_hulp[i] = True
+            else:
+                self.player_hulp[i] = False
 
-        if blocks_hit_list:
-            self.player.collision_under = True
-        else:
-            self.player.collision_under = False
-
-    def player_collision_up(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_up_image, self.map, False)
-
-        if blocks_hit_list:
-            self.player.collision_up = True
-        else:
-            self.player.collision_up = False
-
-    def player_collision_left(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_left_image, self.map, False)
-
-        if blocks_hit_list:
-            self.player.canGoLeft = False
-        else:
-            self.player.canGoLeft = True
-
-    def player_collision_right(self):
-        blocks_hit_list = pygame.sprite.spritecollide(self.player.player_right_image, self.map, False)
-
-        if blocks_hit_list:
-            self.player.canGoRight = False
-        else:
-            self.player.canGoRight = True
+        self.player.collision_under = self.player_hulp[0]
+        self.player.collision_up = self.player_hulp[1]
+        self.player.canGoLeft = self.player_hulp[2]
+        self.player.canGoRight = self.player_hulp[3]
 
     def enemy_collision_map_objects(self):
         for enemy in self.enemy_list:
-            blocks_hit_list = pygame.sprite.spritecollide(enemy, self.map, False)
+            if not isinstance(enemy, Enemy.Fish.Fish):
+                blocks_hit_list = pygame.sprite.spritecollide(enemy, self.map, False)
+                for block in blocks_hit_list:
+                    for x in range(80, 85):
+                        if block.image_type == x:
+                            enemy.kill()
 
-            for block in blocks_hit_list:
-                for x in range(80, 85):
-                    if block.image_type == x:
-                        enemy.kill()
+    def enemy_collision(self):
+        for i in range(len(self.enemy_list)):
+            for j in range(4):
+                blocks_hit_list = pygame.sprite.spritecollide(self.enemy_collision_img[i][j], self.map, False)
+                if blocks_hit_list:
+                    self.enemy_hulp[i][j] = True
+                else:
+                    self.enemy_hulp[i][j] = False
 
-    def enemy_collision_down(self):
-        for e in self.enemy_list:
-            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_under_image, self.map, False)
-
-            if blocks_hit_list:
-                e.block_d = True
-            else:
-                e.block_d = False
-
-    def enemy_collision_up(self):
-        for e in self.enemy_list:
-            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_up_image, self.map, False)
-
-            if blocks_hit_list:
-                e.block_u = True
-            else:
-                e.block_u = False
-
-    def enemy_collision_left(self):
-        for e in self.enemy_list:
-            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_left_image, self.map, False)
-
-            if blocks_hit_list:
-                e.block_l = True
-            else:
-                e.block_l = False
-
-    def enemy_collision_right(self):
-        for e in self.enemy_list:
-            blocks_hit_list = pygame.sprite.spritecollide(e.enemy_right_image, self.map, False)
-
-            if blocks_hit_list:
-                e.block_r = True
-            else:
-                e.block_r = False
+            self.enemy_list[i].block_d = self.enemy_hulp[i][0]
+            self.enemy_list[i].block_u = self.enemy_hulp[i][1]
+            self.enemy_list[i].block_l = self.enemy_hulp[i][2]
+            self.enemy_list[i].block_r = self.enemy_hulp[i][3]
 
     def player_enemy_collider(self):
         for e in self.enemy_list:
@@ -212,6 +175,7 @@ class Collider(object):
                 if len(e.snake_list) > self.snake_hulp:
                     self.enemy_list.append(e.get_snake(self.snake_hulp))
                     self.snake_hulp += 1
+                    self.update_enemy_collider()
 
             # Als de enemy een snake is wordt er gekeken of hij naar links of rechts moet lopen
             if isinstance(e, Enemy.Snake.Snake):
@@ -219,3 +183,14 @@ class Collider(object):
                     e.l_r = True
                 else:
                     e.l_r = False
+
+    def update_enemy_collider(self):
+        self.enemy_collision_img = [[[] for i in range(4)] for i in range(len(self.enemy_list))]
+
+        for i in range(len(self.enemy_list)):
+            self.enemy_collision_img[i][0] = self.enemy_list[i].enemy_under_image
+            self.enemy_collision_img[i][1] = self.enemy_list[i].enemy_up_image
+            self.enemy_collision_img[i][2] = self.enemy_list[i].enemy_left_image
+            self.enemy_collision_img[i][3] = self.enemy_list[i].enemy_right_image
+
+        self.enemy_hulp = [[[] for i in range(4)] for i in range(len(self.enemy_list))]

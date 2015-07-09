@@ -10,8 +10,8 @@ class Player (pygame.sprite.Sprite):
     block_u, block_d, block_r, block_l = None, None, None, None
     dead = None
 
-    canGoRight = True
-    canGoLeft = True
+    canGoRight = False
+    canGoLeft = False
     collision_under = False
     collision_up = False
 

@@ -40,7 +40,7 @@ class Level1State(LevelState.LevelState, Camera):
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
-        self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
+
         self.map.set_x_start_shift_map(self.player_spawn_x)
         self.background = Background("../Data/Levels/Level1/BackgroundEen.png", 0, 0)
 
@@ -58,6 +58,7 @@ class Level1State(LevelState.LevelState, Camera):
         slime = Slime(200, 300)
 
         self.enemy_list.append(slime)
+        self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
