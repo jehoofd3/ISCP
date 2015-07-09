@@ -55,6 +55,7 @@ class Collider(object):
     # Collision between the player and all the images of the map.
     # This pygame method puts all of the map images where the player collides with in a list.
     # It needs a sprite as the first parameter, and it needs a sprite group as the second parameter.
+    #
     def player_collision_map_objects(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
 
@@ -97,6 +98,7 @@ class Collider(object):
         for enemy in self.enemy_list:
             if not isinstance(enemy, Enemy.Fish.Fish):
                 blocks_hit_list = pygame.sprite.spritecollide(enemy, self.map, False)
+
                 for block in blocks_hit_list:
                     for x in range(80, 85):
                         if block.image_type == x:
@@ -111,10 +113,10 @@ class Collider(object):
                 else:
                     self.enemy_hulp[i][j] = False
 
-            self.enemy_list[i].block_d = self.enemy_hulp[i][0]
-            self.enemy_list[i].block_u = self.enemy_hulp[i][1]
-            self.enemy_list[i].block_l = self.enemy_hulp[i][2]
-            self.enemy_list[i].block_r = self.enemy_hulp[i][3]
+                self.enemy_list[i].block_d = self.enemy_hulp[i][0]
+                self.enemy_list[i].block_u = self.enemy_hulp[i][1]
+                self.enemy_list[i].block_l = self.enemy_hulp[i][2]
+                self.enemy_list[i].block_r = self.enemy_hulp[i][3]
 
     def player_enemy_collider(self):
         for e in self.enemy_list:

@@ -20,7 +20,7 @@ class PlayerDieState(PlayerState):
         self.player.collision_under = False
 
         if self.player.rect.bottom >= 960:
-            if self.player.lives[0] == self.player.health_image_empty:
+            if self.player.lives[1] == self.player.health_image_empty:
                 self.player.level_state_manager.player_health = 3
                 self.player.level_state_manager.level = 1
                 self.player.level_state_manager.open_level1()

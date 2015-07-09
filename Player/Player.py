@@ -44,10 +44,12 @@ class Player (pygame.sprite.Sprite):
 
     jump_sound = None
 
+    player_on_snow = False
+    player_on_ice = False
+
     def __init__(self, x, y, level_state_manager):
         self.level_state_manager = level_state_manager
-
-        for i in range(0, 3):
+        for i in range(0, len(self.lives)):
             if i <= (self.level_state_manager.player_health - 1):
                 self.lives[i] = self.health_image_full
             else:
@@ -129,9 +131,9 @@ class Player (pygame.sprite.Sprite):
 
     def draw(self):
         x = 0
-        for i in range(0, 3):
+        for i in range(0, len(self.lives)):
             Artist.get_display().blit(self.lives[i], (x, 50))
-            x += 50
+            x += 55
 
         Artist.get_display().blit(self.animation.update(), self.rect)
         self.states.draw()
@@ -141,7 +143,10 @@ class Player (pygame.sprite.Sprite):
         Artist.get_display().blit(self.player_right_image.image, self.player_right_image.rect)
 
     def jump(self):
-        self.sliding = False
+        self.player_on_snow = False
+        self.player_on_ice = False
+        self.set_sliding(4)
+
         pygame.mixer.music.play()
         self.ySpeed = 10
         self.jumpsRemaining -= 1
@@ -168,5 +173,5 @@ class Player (pygame.sprite.Sprite):
     def get_player_x(self):
         return self.rect.x
 
-    def set_sliding(self, is_sliding):
-        self.sliding = is_sliding
+    def set_sliding(self, speed):
+        self.states.player_x_speed = speed

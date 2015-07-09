@@ -20,11 +20,6 @@ class PlayerNormalState (PlayerState):
         self.player.ySpeed = 0
 
     def update(self):
-        if self.player.sliding:
-            self.player_x_speed = 2
-        else:
-            self.player_x_speed = 4
-
         self.player.basic_movement()
         self.player.gravity()
 
