@@ -8,7 +8,8 @@ class BulletFollowState(BulletState):
         super(BulletFollowState, self).__init__(bullet)
 
     def run(self):
-        pass
+        if self.bullet.u_d:
+            self.bullet.ySpeed = 10
 
     def update(self):
         self.bullet.basic_movement()
