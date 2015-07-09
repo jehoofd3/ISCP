@@ -174,4 +174,5 @@ class Player (pygame.sprite.Sprite):
         return self.rect.x
 
     def set_sliding(self, speed):
-        self.states.player_x_speed = speed
+            self.states.player_x_speed = speed
+

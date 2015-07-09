@@ -83,7 +83,7 @@ class MainMenu(LevelState):
                     quit()
 
     def check_button_hovered(self):
-        #hover play
+        #hover playx`
         if self.main_menu_sprites['play'].rect.collidepoint(self.mouse_pos) and not self.pressed_play:
             self.display.blit(self.left_select_arrow, (self.main_menu_sprites['play'].rect.x - 90, self.main_menu_sprites['play'].rect.y))
             self.display.blit(self.right_select_arrow, (self.main_menu_sprites['play'].rect.x + 155, self.main_menu_sprites['play'].rect.y))
@@ -115,7 +115,7 @@ class MainMenu(LevelState):
                 self.pressed_play = False
                 self.fade_out_done = False
                 self.levelStateManager.states.level = 1
-                self.levelStateManager.states = Level1State(self.levelStateManager, self)
+                self.levelStateManager.states = Level3State(self.levelStateManager, self)
                 self.levelStateManager.states.run()
 
         if self.pressed_play and not self.music_faded:

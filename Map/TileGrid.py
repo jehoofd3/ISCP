@@ -37,7 +37,7 @@ class TileGrid(ImageLoader):
                     elif imageNumber == x:
                         image_type = 'Snow'
 
-                for x in range(156, 171):
+                for x in range(156, 172):
                     if imageNumber == x:
                         image_type = 'Ice'
 

@@ -106,8 +106,7 @@ class Collider(object):
             if not isinstance(enemy, Enemy.Fish.Fish):
                 blocks_hit_list = pygame.sprite.spritecollide(enemy, self.map, False)
                 for block in blocks_hit_list:
-                    for x in range(80, 85):
-                        if block.image_type == x:
+                    if block.image_type == 'Water' or block.image_type == 'Lava':
                             enemy.kill()
 
     def enemy_collision(self):
