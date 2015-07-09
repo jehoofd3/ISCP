@@ -40,8 +40,12 @@ class Level2State(LevelState.LevelState, Camera):
     def run(self):
         self.map.run()
         self.enemy_list = []
+        fish = Fish(580, 600, 110)
+        fish2 = Fish(2570, 600, 400)
         slime = Slime(1736, 10)
         self.enemy_list.append(slime)
+        self.enemy_list.append(fish)
+        self.enemy_list.append(fish2)
 
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)

@@ -26,7 +26,7 @@ class Tank(Enemy):
 
         super(Tank, self).__init__(x, y, range, self.w_l, self.w_r, self.d_l, self.d_r, self.OB, self.LR)
 
-        self.states = [TankNormalState(self)]
+        self.states = [TankShootState(self)]
 
     def update(self):
         super(Tank, self).update()

@@ -31,18 +31,29 @@ class Level3State(LevelState.LevelState, Camera):
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
-        self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         self.map.set_x_start_shift_map(self.player_spawn_x)
         self.background = Background("../Data/Levels/Level3/BackgroundDrie.png", 0, 0)
 
     def run(self):
         self.map.run()
-        del self.enemy_list[:]
+        self.enemy_list = []
+        slime = Slime(1100, 10)
+        tank = Tank(2200, 400, 450)
+        fly = Fly(3000, 50, 300)
+        self.enemy_list.append(slime)
+        self.enemy_list.append(tank)
+        self.enemy_list.append(fly)
+
+        self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
         Camera.update_camera(self, self.player.xSpeed)
         self.player.update()
+        self.enemy_list = self.collider.enemy_list
+
+        for e in self.enemy_list:
+            e.update()
 
         self.collider.update()
 
@@ -54,4 +65,8 @@ class Level3State(LevelState.LevelState, Camera):
     def draw(self):
         self.background.draw()
         self.map.draw()
+
+        for e in self.enemy_list:
+            e.draw()
+
         self.player.draw()

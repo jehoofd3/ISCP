@@ -29,6 +29,9 @@ class PlayerNormalState (PlayerState):
         if pygame.key.get_pressed()[pygame.K_RIGHT] != 0 and not self.player.canGoRight:
             self.player.xSpeed = self.player_x_speed
 
+        if self.player.player_on_ice:
+            self.player.xSpeed = self.player_x_speed
+
         if self.player.collision_up:
             self.player.ySpeed = - 3
 

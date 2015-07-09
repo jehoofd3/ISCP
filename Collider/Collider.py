@@ -59,26 +59,34 @@ class Collider(object):
         blocks_hit_list = pygame.sprite.spritecollide(self.player, self.map, False)
 
         for block in blocks_hit_list:
-            if block.image_type == 114:
+            if block.image_type == 'Exit':
                 self.level_state_manager.next_level()
 
-            for x in range(80, 85):
-                if block.image_type == x:
+            if block.image_type == 'Water' or block.image_type == 'Lava':
                     self.player.kill()
 
     def player_collision_under_map_objects(self):
         blocks_hit_list = pygame.sprite.spritecollide(self.player.player_under_image, self.map, False)
 
         for block in blocks_hit_list:
-            for x in range(117, 134):
-                if x == 118 or x == 119:
-                    continue
-                if block.image_type == x and self.player.xSpeed != 0:
-                    self.player.set_sliding(True)
+            if block.image_type == 'Snow':
+                self.player.player_on_snow = True
+            else:
+                self.player.player_on_snow = False
 
-            for x in range(156, 170):
-                if block.image_type == x and self.player.xSpeed != 0:
-                    self.player.set_sliding(True)
+            if block.image_type == 'Ice':
+                self.player.player_on_ice = True
+            else:
+                self.player.player_on_ice = False
+
+            if self.player.player_on_snow:
+                self.player.set_sliding(2)
+
+            if self.player.player_on_ice:
+                self.player.set_sliding(8)
+
+            if not self.player.player_on_ice and not self.player.player_on_snow:
+                self.player.set_sliding(4)
 
     def player_collision(self):
         for i in range(len(self.player_collision_img)):

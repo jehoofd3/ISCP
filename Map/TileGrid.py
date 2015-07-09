@@ -18,14 +18,36 @@ class TileGrid(ImageLoader):
         file = open(level_path)
         self.map_group.empty()
         self.background_image = pygame.image.load("../Data/Levels/Level1/BackgroundEen.png")
-
         for i in range(self.columns):
             for j in range(self.rows):
+                image_type = ''
                 imageNumber = int(file.next())
+
+                for x in range(80, 83):
+                    if imageNumber == x:
+                        image_type = 'Lava'
+
+                for x in range(83, 86):
+                    if imageNumber == x:
+                        image_type = 'Water'
+
+                for x in range(117, 135):
+                    if x == 118 or x == 119:
+                        continue
+                    elif imageNumber == x:
+                        image_type = 'Snow'
+
+                for x in range(156, 171):
+                    if imageNumber == x:
+                        image_type = 'Ice'
+
+                if imageNumber == 114:
+                    image_type = 'Exit'
+
                 if imageNumber == -1 or imageNumber == 0:
                     pass
                 else:
-                    self.map_group.add(Tile(j * 64, i * 64, super(TileGrid, self).get_image(0, (imageNumber - 1) * 64, imageNumber), imageNumber))
+                    self.map_group.add(Tile(j * 64, i * 64, super(TileGrid, self).get_image(0, (imageNumber - 1) * 64, imageNumber), image_type))
 
     def run(self):
         pass
