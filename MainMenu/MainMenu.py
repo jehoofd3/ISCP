@@ -12,7 +12,6 @@ class MainMenu(LevelState):
     mouse_pos = ''
     option_menu = None
     levelStateManager = None
-    display = Artist.get_display()
     screen_width = Artist.get_screen_width()
     screen_height = Artist.get_screen_height()
     half_screen_width = Artist.get_half_screen_width()
@@ -50,23 +49,23 @@ class MainMenu(LevelState):
         self.mouse_pos = pygame.mouse.get_pos()
 
     def draw(self):
-        self.display.blit(self.background, (0, 0))
+        Artist.draw_textures(self.background, (0, 0))
 
         #-215 is half image width
-        self.display.blit(self.escape, (self.half_screen_width - 215, 100))
+        Artist.draw_textures(self.escape, (self.half_screen_width - 215, 100))
 
-        self.display.blit(self.main_menu_sprites['play'].image, self.main_menu_sprites['play'].rect)
-        self.display.blit(self.main_menu_sprites['options'].image, self.main_menu_sprites['options'].rect)
-        self.display.blit(self.main_menu_sprites['quit'].image, self.main_menu_sprites['quit'].rect)
+        Artist.draw_textures(self.main_menu_sprites['play'].image, self.main_menu_sprites['play'].rect)
+        Artist.draw_textures(self.main_menu_sprites['options'].image, self.main_menu_sprites['options'].rect)
+        Artist.draw_textures(self.main_menu_sprites['quit'].image, self.main_menu_sprites['quit'].rect)
 
         #193 is ground image width
-        self.display.blit(self.ground, (0, self.screen_height - 193))
+        Artist.draw_textures(self.ground, (0, self.screen_height - 193))
 
         self.check_button_clicked()
         self.check_button_hovered()
         self.fade_out()
 
-        self.display.blit(self.black_screen, (0, 0))
+        Artist.draw_textures(self.black_screen, (0, 0))
 
     def check_button_clicked(self):
         for event in pygame.event.get():
@@ -85,18 +84,18 @@ class MainMenu(LevelState):
     def check_button_hovered(self):
         #hover playx`
         if self.main_menu_sprites['play'].rect.collidepoint(self.mouse_pos) and not self.pressed_play:
-            self.display.blit(self.left_select_arrow, (self.main_menu_sprites['play'].rect.x - 90, self.main_menu_sprites['play'].rect.y))
-            self.display.blit(self.right_select_arrow, (self.main_menu_sprites['play'].rect.x + 155, self.main_menu_sprites['play'].rect.y))
+            Artist.draw_textures(self.left_select_arrow, (self.main_menu_sprites['play'].rect.x - 90, self.main_menu_sprites['play'].rect.y))
+            Artist.draw_textures(self.right_select_arrow, (self.main_menu_sprites['play'].rect.x + 155, self.main_menu_sprites['play'].rect.y))
 
         #hover options
         if self.main_menu_sprites['options'].rect.collidepoint(self.mouse_pos) and not self.pressed_play:
-            self.display.blit(self.left_select_arrow, (self.main_menu_sprites['options'].rect.x - 90, self.main_menu_sprites['options'].rect.y))
-            self.display.blit(self.right_select_arrow, (self.main_menu_sprites['options'].rect.x + 155, self.main_menu_sprites['options'].rect.y))
+            Artist.draw_textures(self.left_select_arrow, (self.main_menu_sprites['options'].rect.x - 90, self.main_menu_sprites['options'].rect.y))
+            Artist.draw_textures(self.right_select_arrow, (self.main_menu_sprites['options'].rect.x + 155, self.main_menu_sprites['options'].rect.y))
 
         #hover quit
         if self.main_menu_sprites['quit'].rect.collidepoint(self.mouse_pos) and not self.pressed_play:
-            self.display.blit(self.left_select_arrow, (self.main_menu_sprites['quit'].rect.x - 90, self.main_menu_sprites['quit'].rect.y))
-            self.display.blit(self.right_select_arrow, (self.main_menu_sprites['quit'].rect.x + 155, self.main_menu_sprites['quit'].rect.y))
+            Artist.draw_textures(self.left_select_arrow, (self.main_menu_sprites['quit'].rect.x - 90, self.main_menu_sprites['quit'].rect.y))
+            Artist.draw_textures(self.right_select_arrow, (self.main_menu_sprites['quit'].rect.x + 155, self.main_menu_sprites['quit'].rect.y))
 
     def fade_out(self):
         if self.pressed_play and self.alpha <= 255 and not self.fade_out_done:
@@ -109,13 +108,13 @@ class MainMenu(LevelState):
         elif self.pressed_play:
             self.alpha -= 2
             self.black_screen.set_alpha(self.alpha)
-            self.display.blit(self.lvl1, (0, 0))
+            Artist.draw_textures(self.lvl1, (0, 0))
 
             if self.alpha <= 0:
                 self.pressed_play = False
                 self.fade_out_done = False
                 self.levelStateManager.states.level = 1
-                self.levelStateManager.states = Level3State(self.levelStateManager, self)
+                self.levelStateManager.states = Level4State(self.levelStateManager, self)
                 self.levelStateManager.states.run()
 
         if self.pressed_play and not self.music_faded:

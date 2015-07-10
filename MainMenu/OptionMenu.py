@@ -4,7 +4,6 @@ from LevelStateManager.LevelState import *
 
 class OptionMenu(LevelState):
 
-    display = Artist.get_display()
     screen_width = Artist.get_screen_width()
     screen_height = Artist.get_screen_height()
     half_screen_width = Artist.get_half_screen_width()
@@ -85,33 +84,33 @@ class OptionMenu(LevelState):
                     self.levelStateManager.states = self.mainMenu
 
     def draw(self):
-        self.display.blit(self.background, (0, 0))
+        Artist.draw_textures(self.background, (0, 0))
 
         #-215 is half image width
-        self.display.blit(self.options, (self.half_screen_width - 215, 100))
-        self.display.blit(self.music, (self.half_screen_width - 215, self.half_screen_height - 110))
-        self.display.blit(self.fullscreen, (self.half_screen_width - 215, self.half_screen_height - 50))
+        Artist.draw_textures(self.options, (self.half_screen_width - 215, 100))
+        Artist.draw_textures(self.music, (self.half_screen_width - 215, self.half_screen_height - 110))
+        Artist.draw_textures(self.fullscreen, (self.half_screen_width - 215, self.half_screen_height - 50))
 
-        self.display.blit(self.options_sprites['select_left'].image, self.options_sprites['select_left'].rect)
-        self.display.blit(self.options_sprites['select_right'].image, self.options_sprites['select_right'].rect)
+        Artist.draw_textures(self.options_sprites['select_left'].image, self.options_sprites['select_left'].rect)
+        Artist.draw_textures(self.options_sprites['select_right'].image, self.options_sprites['select_right'].rect)
 
-        self.display.blit(self.options_sprites['click_button'].image, self.options_sprites['click_button'].rect)
-        self.display.blit(self.options_sprites['back'].image, self.options_sprites['back'].rect)
+        Artist.draw_textures(self.options_sprites['click_button'].image, self.options_sprites['click_button'].rect)
+        Artist.draw_textures(self.options_sprites['back'].image, self.options_sprites['back'].rect)
 
         self.bullet_with = self.half_screen_width + 70
 
         for bullet in self.music_bullets:
             if bullet == 1:
-                self.display.blit(self.music_bullet_full_image, (self.bullet_with, self.bullet_height))
+                Artist.draw_textures(self.music_bullet_full_image, (self.bullet_with, self.bullet_height))
             else:
-                self.display.blit(self.music_bullet_empty_image, (self.bullet_with, self.bullet_height))
+                Artist.draw_textures(self.music_bullet_empty_image, (self.bullet_with, self.bullet_height))
 
             #de ruimte tussen de bullets
             self.bullet_with += 30
 
 
         #193 is ground image width
-        self.display.blit(self.ground, (0, self.screen_height - 193))
+        Artist.draw_textures(self.ground, (0, self.screen_height - 193))
 
     def make_sprite(self, button_name, image_location, width, height):
         self.options_sprites[button_name] = pygame.sprite.Sprite()

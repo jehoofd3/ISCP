@@ -5,12 +5,11 @@ from BulletFollowState import *
 
 class Bullet(object):
     states = []
-    l_r, u_d = None, None
+    img = None
 
     def __init__(self, x, y, left_right):
-        self.b_l = pygame.image.load("../Data/Images/Bullet/b_l.png").convert_alpha()
-        self.b_r = pygame.image.load("../Data/Images/Bullet/b_r.png").convert_alpha()
-        self.rect = self.b_l.get_rect()
+        self.img = pygame.image.load("../Data/Images/Bullet/bullet.png").convert_alpha()
+        self.rect = self.img.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.xSpeed = 0
@@ -29,9 +28,9 @@ class Bullet(object):
 
     def draw(self):
         if self.xSpeed > 0:
-            Artist.get_display().blit(self.b_r, self.rect)
+            Artist.rotate_img(self.img, self.rect, 0)
         else:
-            Artist.get_display().blit(self.b_l, self.rect)
+            Artist.rotate_img(self.img, self.rect, 180)
 
     def basic_movement(self):
         self.rect.x += self.xSpeed

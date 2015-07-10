@@ -17,7 +17,6 @@ class TileGrid(ImageLoader):
     def __init__(self, level_path):
         file = open(level_path)
         self.map_group.empty()
-        self.background_image = pygame.image.load("../Data/Levels/Level1/BackgroundEen.png")
         for i in range(self.columns):
             for j in range(self.rows):
                 image_type = ''

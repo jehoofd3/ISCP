@@ -135,12 +135,11 @@ class Player (pygame.sprite.Sprite):
             Artist.get_display().blit(self.lives[i], (x, 50))
             x += 55
 
-        Artist.get_display().blit(self.animation.update(), self.rect)
-        self.states.draw()
-        Artist.get_display().blit(self.player_under_image.image, self.player_under_image.rect)
-        Artist.get_display().blit(self.player_up_image.image, self.player_up_image.rect)
-        Artist.get_display().blit(self.player_left_image.image, self.player_left_image.rect)
-        Artist.get_display().blit(self.player_right_image.image, self.player_right_image.rect)
+        Artist.draw_textures(self.animation.update(), self.rect)
+        Artist.draw_textures(self.player_under_image.image, self.player_under_image.rect)
+        Artist.draw_textures(self.player_up_image.image, self.player_up_image.rect)
+        Artist.draw_textures(self.player_left_image.image, self.player_left_image.rect)
+        Artist.draw_textures(self.player_right_image.image, self.player_right_image.rect)
 
     def jump(self):
         self.player_on_snow = False

@@ -6,9 +6,11 @@ from Snake import *
 class Slime(Enemy):
     w_l, w_r, d_l, d_r = [None, None], [None, None], None, None
     snake_list = []
+    snake_hulp = 0
 
     def __init__(self, x, y):
         self.snake_list = []
+        self.snake_hulp = 0
         self.w_l = []
         self.w_r = []
 

@@ -30,9 +30,17 @@ class Artist:
         pygame.display.set_caption("Escape")
 
     @staticmethod
-    def draw_textures(image, x, y):
+    def draw_textures(image, rect):
         # This pygame method draws an image on the surface.
-        game_display.blit(image, [x, y])
+        game_display.blit(image, rect)
+
+    @staticmethod
+    def rotate_img(image, rect, angle):
+        """rotate an image while keeping its center"""
+        rot_image = pygame.transform.rotate(image, angle)
+        rot_rect = rot_image.get_rect(center=rect.center)
+
+        Artist.draw_textures(rot_image, rect)
 
     @staticmethod
     def get_display():

@@ -80,11 +80,11 @@ class Enemy(object):
             self.kill()
 
     def draw(self):
-        Artist.get_display().blit(self.animation.update(self.xSpeed, self.dead), self.rect)
-        Artist.get_display().blit(self.enemy_under_image.image, self.enemy_under_image.rect)
-        Artist.get_display().blit(self.enemy_up_image.image, self.enemy_up_image.rect)
-        Artist.get_display().blit(self.enemy_left_image.image, self.enemy_left_image.rect)
-        Artist.get_display().blit(self.enemy_right_image.image, self.enemy_right_image.rect)
+        Artist.draw_textures(self.animation.update(self.xSpeed, self.dead), self.rect)
+        Artist.draw_textures(self.enemy_under_image.image, self.enemy_under_image.rect)
+        Artist.draw_textures(self.enemy_up_image.image, self.enemy_up_image.rect)
+        Artist.draw_textures(self.enemy_left_image.image, self.enemy_left_image.rect)
+        Artist.draw_textures(self.enemy_right_image.image, self.enemy_right_image.rect)
 
     def jump(self):
         if self.jumpsRemaining > 0:

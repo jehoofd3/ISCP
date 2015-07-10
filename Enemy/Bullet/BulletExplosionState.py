@@ -10,8 +10,7 @@ class BulletExplosionState(BulletState):
         super(BulletExplosionState, self).__init__(bullet)
 
     def run(self):
-        self.bullet.b_l = pygame.image.load("../Data/Images/Bullet/Smoke/smokeWhite3.png").convert_alpha()
-        self.bullet.b_r = pygame.image.load("../Data/Images/Bullet/Smoke/smokeWhite3.png").convert_alpha()
+        self.bullet.img = pygame.image.load("../Data/Images/Bullet/Smoke/smokeWhite3.png").convert_alpha()
         self.start_time = time.time()
         self.del_time = 2
         self.bullet.active = False

@@ -46,7 +46,5 @@ class TankNormalState(EnemyState):
         if self.enemy.follow:
             self.enemy.states = [TankShootState(self.enemy)]
 
-
-
     def draw(self):
         pass

@@ -6,7 +6,6 @@ class Collider(object):
 
     level_state_manager = None
     main_menu = None
-    snake_hulp = 0
     range = 200
     player_group = pygame.sprite.Group()
     player_collision_img = []
@@ -16,7 +15,6 @@ class Collider(object):
     player_behind = 0
 
     def __init__(self, player, map, enemy_list, level_state_manager, main_menu):
-        self.snake_hulp = 0
         self.player_group = pygame.sprite.Group()
         self.player_collision_img = []
 
@@ -143,13 +141,15 @@ class Collider(object):
                 else:
                     e.left_right = True
 
-            blocks_hit_list = pygame.sprite.spritecollide(e, self.player_group, False)
-            for block in blocks_hit_list:
-                if self.player.ySpeed == 0 and not e.dead and not self.player.dead:
-                    self.player.kill()
-                elif self.player.ySpeed != 0 and not e.dead and not self.player.dead:
+            if pygame.sprite.collide_rect(e, self.player.player_under_image):
+                if not e.dead and not self.player.dead:
                     e.kill()
                     self.player.ySpeed = 5
+
+            blocks_hit_list = pygame.sprite.spritecollide(e, self.player_group, False)
+            for block in blocks_hit_list:
+                if not e.dead and not self.player.dead:
+                    self.player.kill()
 
     def objects_collider(self):
         for e in self.enemy_list:
@@ -179,9 +179,9 @@ class Collider(object):
                             b.u_d = False
 
             if isinstance(e, Enemy.Slime.Slime):
-                if len(e.snake_list) > self.snake_hulp:
-                    self.enemy_list.append(e.get_snake(self.snake_hulp))
-                    self.snake_hulp += 1
+                if len(e.snake_list) > e.snake_hulp:
+                    self.enemy_list.append(e.get_snake(e.snake_hulp))
+                    e.snake_hulp += 1
                     self.update_enemy_collider()
 
             # Als de enemy een snake is wordt er gekeken of hij naar links of rechts moet lopen

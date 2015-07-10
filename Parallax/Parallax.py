@@ -15,4 +15,4 @@ class Parallax(object):
             self.y -= y/4
 
     def draw(self):
-        Artist.get_display().blit(self.image, [self.x, self.y])
+        Artist.draw_textures(self.image, [self.x, self.y])
