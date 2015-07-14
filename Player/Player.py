@@ -62,7 +62,7 @@ class Player (pygame.sprite.Sprite):
         self.rect.y = y
         self.start_x = x
         self.start_y = y
-        self.jump_sound = pygame.mixer.music.load('../Data/Music/Levels/Jump.wav')
+        self.jump_sound = pygame.mixer.Sound('../Data/Music/Levels/Jump.wav')
 
         self.walk_l = []
         self.walk_r = []
@@ -146,7 +146,9 @@ class Player (pygame.sprite.Sprite):
         self.player_on_ice = False
         self.set_sliding(4)
 
-        pygame.mixer.music.play()
+        if not pygame.mixer.get_busy():
+            self.jump_sound.play()
+
         self.ySpeed = 10
         self.jumpsRemaining -= 1
 

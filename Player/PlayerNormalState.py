@@ -39,7 +39,7 @@ class PlayerNormalState (PlayerState):
         if self.player.collision_under:
             self.player.ySpeed = 0
             self.player.rect.bottom = ((self.player.rect.bottom / 64) * 64)
-            self.player.jumpsRemaining = 2
+            self.player.jumpsRemaining = 1
 
         if pygame.key.get_pressed()[pygame.K_UP] and self.player.jumpsRemaining > 0:
             self.player.jump()

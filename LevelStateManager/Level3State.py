@@ -39,10 +39,12 @@ class Level3State(LevelState.LevelState, Camera):
         self.enemy_list = []
         slime = Slime(1100, 10)
         tank = Tank(2200, 400, 450)
-        fly = Fly(3000, 50, 300)
+
+        #range was 300
+        #fly = Fly(3000, 50, 300)
         self.enemy_list.append(slime)
         self.enemy_list.append(tank)
-        self.enemy_list.append(fly)
+        #self.enemy_list.append(fly)
 
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
