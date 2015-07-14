@@ -4,6 +4,7 @@ from TankShootState import *
 from Helpers.Artist import *
 from Bullet.Bullet import *
 from Helpers.Artist import *
+from Player.Player import *
 
 
 class Tank(Enemy):

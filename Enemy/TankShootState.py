@@ -10,7 +10,6 @@ class TankShootState(EnemyState):
         self.shoot_first = True
 
     def run(self):
-        self.enemy.speed /= 2
         self.start_time = time.time()
         self.shoot_time = 2
 

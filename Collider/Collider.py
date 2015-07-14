@@ -6,7 +6,7 @@ class Collider(object):
 
     level_state_manager = None
     main_menu = None
-    range = 200
+    range = 250
     player_group = pygame.sprite.Group()
     player_collision_img = []
     player_hulp = []
@@ -142,7 +142,7 @@ class Collider(object):
                     e.left_right = True
 
             if pygame.sprite.collide_rect(e, self.player.player_under_image):
-                if not e.dead and not self.player.dead:
+                if not e.dead and not self.player.dead and self.player.ySpeed != 0:
                     e.kill()
                     self.player.ySpeed = 5
 
@@ -162,21 +162,11 @@ class Collider(object):
                             b.explode()
 
                         # De player killen en de kogel laten exploderen wanneer de kogel de player raakt
-                        player_hit = pygame.sprite.spritecollide(self.player, e.get_bl(), False)
+                        player_hit = pygame.sprite.spritecollide(b, self.player_group, False)
                         if player_hit:
                             if b.active:
                                 self.player.kill()
                                 b.explode()
-
-                        if b.rect.x >= self.player.rect.x:
-                            b.l_r = True
-                        else:
-                            b.l_r = False
-
-                        if b.rect.y >= self.player.rect.y:
-                            b.u_d = True
-                        else:
-                            b.u_d = False
 
             if isinstance(e, Enemy.Slime.Slime):
                 if len(e.snake_list) > e.snake_hulp:

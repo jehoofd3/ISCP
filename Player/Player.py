@@ -86,22 +86,22 @@ class Player (pygame.sprite.Sprite):
 
         # Player under sprite
         self.player_under_image = pygame.sprite.Sprite()
-        self.player_under_image.image = pygame.image.load("../Data/OB.png").convert_alpha()
+        self.player_under_image.image = pygame.image.load("../Data/Images/Player/OB.png").convert_alpha()
         self.player_under_image.rect = self.player_under_image.image.get_rect()
 
         # Player up sprite
         self.player_up_image = pygame.sprite.Sprite()
-        self.player_up_image.image = pygame.image.load("../Data/OB.png").convert_alpha()
+        self.player_up_image.image = pygame.image.load("../Data/Images/Player/OB.png").convert_alpha()
         self.player_up_image.rect = self.player_up_image.image.get_rect()
 
         # Player left sprite
         self.player_left_image = pygame.sprite.Sprite()
-        self.player_left_image.image = pygame.image.load("../Data/LR.png").convert_alpha()
+        self.player_left_image.image = pygame.image.load("../Data/Images/Player/LR.png").convert_alpha()
         self.player_left_image.rect = self.player_left_image.image.get_rect()
 
         # Player right sprite
         self.player_right_image = pygame.sprite.Sprite()
-        self.player_right_image.image = pygame.image.load("../Data/LR.png").convert_alpha()
+        self.player_right_image.image = pygame.image.load("../Data/Images/Player/LR.png").convert_alpha()
         self.player_right_image.rect = self.player_right_image.image.get_rect()
 
     def run(self):
@@ -132,7 +132,7 @@ class Player (pygame.sprite.Sprite):
     def draw(self):
         x = 0
         for i in range(0, len(self.lives)):
-            Artist.get_display().blit(self.lives[i], (x, 50))
+            Artist.draw_textures(self.lives[i], (x, 50))
             x += 55
 
         Artist.draw_textures(self.animation.update(), self.rect)
@@ -174,4 +174,3 @@ class Player (pygame.sprite.Sprite):
 
     def set_sliding(self, speed):
             self.states.player_x_speed = speed
-

@@ -1,6 +1,6 @@
 import pygame
 
-class Artist:
+class Artist(object):
 
     # Window dimensions
     screen_width = 960
@@ -61,11 +61,3 @@ class Artist:
     @staticmethod
     def get_half_screen_height():
         return Artist.screen_height / 2
-
-    @staticmethod
-    def get_bi():
-        Artist.bi += 1
-        return Artist.bi
-
-
-

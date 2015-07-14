@@ -53,25 +53,21 @@ class Level1State(LevelState.LevelState, Camera):
 
     def run(self):
         self.map.run()
-        fly = Fly(1500, 100, 100)
-        tank = Tank(2600, 50, 380)
-        tank_2 = Tank(500, 600, 200)
-        fish = Fish(1000, 700, 200)
-        self.enemy_list.append(fly)
-        self.enemy_list.append(tank)
-        self.enemy_list.append(fish)
-        self.enemy_list.append(tank_2)
+        self.enemy_list.append(Fly(1500, 100, 100))
+        self.enemy_list.append(Tank(2600, 50, 380))
+        self.enemy_list.append(Fish(1000, 700, 200))
+        self.enemy_list.append(Tank(500, 600, 200))
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
         Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
 
     def update(self):
         Camera.update_camera(self, self.player.xSpeed)
+        self.collider.update()
+
         self.player.update()
         self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
             e.update()
-
-        self.collider.update()
 
         self.background.update(self.player.xSpeed, 0, self.player.rect.x)
         for image in self.image_list:
