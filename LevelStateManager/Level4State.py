@@ -71,10 +71,8 @@ class Level4State(LevelState.LevelState, Camera):
 
         self.next_lvl_list = [None] * len(self.enemy_list)
         for i in range(len(self.enemy_list)):
-            if self.enemy_list[i].dead:
-                self.next_lvl_list[i] = True
-            else:
-                self.next_lvl_list[i] = False
+            self.next_lvl_list[i] = self.enemy_list[i].dead
+
         if all(self.next_lvl_list):
             self.level_state_manager.next_level()
 
