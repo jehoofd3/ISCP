@@ -24,8 +24,10 @@ class Level4State(LevelState.LevelState, Camera):
     main_menu = None
     level_background_music = None
     half_screen_width = Artist.get_half_screen_width()
+    next_lvl_list = []
 
     def __init__(self, level_state_manager, main_menu):
+        self.next_lvl_list = []
         self.enemy_list = []
         self.map = TileGrid("../Data/Levels/Level4/Level4.txt")
         self.main_menu = main_menu
@@ -66,6 +68,15 @@ class Level4State(LevelState.LevelState, Camera):
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.states = self.main_menu
+
+        self.next_lvl_list = [None] * len(self.enemy_list)
+        for i in range(len(self.enemy_list)):
+            if self.enemy_list[i].dead:
+                self.next_lvl_list[i] = True
+            else:
+                self.next_lvl_list[i] = False
+        if all(self.next_lvl_list):
+            self.level_state_manager.next_level()
 
     def draw(self):
         self.background.draw()
