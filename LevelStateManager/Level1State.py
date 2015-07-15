@@ -12,6 +12,7 @@ from Parallax.Background import *
 from Parallax.Image import *
 from MainMenu.MainMenu import *
 from Camera import *
+from Timer import *
 
 class Level1State(LevelState.LevelState, Camera):
     map = None
@@ -32,6 +33,8 @@ class Level1State(LevelState.LevelState, Camera):
     main_menu = None
     image_list = []
 
+    timer = None
+
     half_screen_width = Artist.get_half_screen_width()
 
     def __init__(self, level_state_manager, main_menu):
@@ -51,6 +54,8 @@ class Level1State(LevelState.LevelState, Camera):
         self.image_list.append(Image("../Data/Levels/Level1/cloud1.png", 1200, 300, 0.5))
         self.image_list.append(Image("../Data/Levels/Level1/cloud2.png", 1500, 250, 0.5))
         self.image_list.append(Image("../Data/Levels/Level1/cloud3.png", 2000, 500, 0.5))
+
+        self.timer = Timer()
 
     def run(self):
         self.map.run()
@@ -81,6 +86,8 @@ class Level1State(LevelState.LevelState, Camera):
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.states = self.main_menu
 
+        self.timer.update()
+
     def draw(self):
         self.background.draw()
         for image in self.image_list:
@@ -92,3 +99,4 @@ class Level1State(LevelState.LevelState, Camera):
             e.draw()
 
         self.player.draw()
+        self.timer.draw()
