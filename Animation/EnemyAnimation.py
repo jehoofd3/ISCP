@@ -39,7 +39,6 @@ class EnemyAnimation(object):
 
         self.length_list = len(self.walk_l)
 
-
     def update(self, xSpeed, dead):
         if xSpeed > 0:
             self.right_walk()

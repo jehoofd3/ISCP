@@ -45,8 +45,8 @@ class Level4State(LevelState.LevelState, Camera):
         self.enemy_list.append(Tank(100, 600, 700))
         self.enemy_list.append(Tank(200, 600, 500))
         self.enemy_list.append(Tank(300, 600, 200))
-        self.enemy_list.append(Tank(70, 600, 900))
-        self.enemy_list.append(Tank(100, 400, 900))
+        self.enemy_list.append(Tank(80, 600, 700))
+        self.enemy_list.append(Tank(100, 600, 700))
 
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
 

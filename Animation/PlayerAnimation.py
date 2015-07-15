@@ -19,7 +19,7 @@ class PlayerAnimation:
 
         # texture is de afbeelding. Er moet een default afbeelding mee gegeven worden anders is
         # de var in het eerste frame leeg. Hierdoor krijg je een error
-        self.texture = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
+        self.texture = self.walk_l[0]
 
         # frame_cap zijn de max beelden (frames) die elke seconde berekend worden
         # In de Boot class zetten we het op max 60
@@ -43,7 +43,6 @@ class PlayerAnimation:
         self.right_released = True
 
         self.length_list = len(self.walk_l)
-
 
     def update(self):
         if self.player.xSpeed > 0:

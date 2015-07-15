@@ -62,7 +62,7 @@ class Enemy(object):
         self.enemy_under_image.rect.y = self.rect.y + self.rect.height + 1
 
         # Enemy up
-        self.enemy_up_image.rect.x = self.rect.x
+        self.enemy_up_image.rect.x = self.rect.x + 10
         self.enemy_up_image.rect.y = self.rect.y - 1
 
         # Enemy left
