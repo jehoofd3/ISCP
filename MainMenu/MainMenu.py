@@ -114,7 +114,7 @@ class MainMenu(LevelState):
                 self.pressed_play = False
                 self.fade_out_done = False
                 self.levelStateManager.states.level = 1
-                self.levelStateManager.states = Level1State(self.levelStateManager, self)
+                self.levelStateManager.states = Level4State(self.levelStateManager, self)
                 self.levelStateManager.states.run()
 
         if self.pressed_play and not self.music_faded:

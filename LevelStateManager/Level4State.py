@@ -36,29 +36,17 @@ class Level4State(LevelState.LevelState, Camera):
         self.background_text = pygame.image.load("../Data/Levels/Level4/YouCantWin.png").convert_alpha()
 
     def run(self):
-        tank_x = 100
-        tank_y = 620
-        tank_range = 700
-        self.map.run()
         self.enemy_list = []
-        fly = Fly(150, 150, 0)
-        slime_1 = Slime(64, 100)
-        slime_2 = Slime(64, 400)
-        slime_3 = Slime(832, 150)
-        slime_4 = Slime(832, 400)
-        tank_2 = Tank(tank_x, tank_y, tank_range)
-        tank_3 = Tank(tank_x, tank_y, tank_range)
-        tank_4 = Tank(tank_x, tank_y, tank_range)
-        tank_5 = Tank(tank_x, tank_y, tank_range)
-#        self.enemy_list.append(fly)
-        self.enemy_list.append(slime_1)
-        self.enemy_list.append(slime_2)
-        self.enemy_list.append(slime_3)
-        self.enemy_list.append(slime_4)
-#        self.enemy_list.append(tank_2)
-#        self.enemy_list.append(tank_3)
-#        self.enemy_list.append(tank_4)
-#        self.enemy_list.append(tank_5)
+
+        self.enemy_list.append(Slime(64, 100))
+        self.enemy_list.append(Slime(95, 400))
+        self.enemy_list.append(Slime(832, 150))
+        self.enemy_list.append(Slime(820, 400))
+        self.enemy_list.append(Tank(100, 600, 700))
+        self.enemy_list.append(Tank(200, 600, 500))
+        self.enemy_list.append(Tank(300, 600, 200))
+        self.enemy_list.append(Tank(70, 600, 900))
+        self.enemy_list.append(Tank(100, 400, 900))
 
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
 
