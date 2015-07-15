@@ -22,6 +22,10 @@ class LevelStateManager:
     def update(self):
         self.states.update()
 
+        for event in pygame.event.get(pygame.KEYDOWN):
+            if event.key == pygame.K_e:
+                self.next_level()
+
     def draw(self):
         self.states.draw()
 

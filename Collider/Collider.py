@@ -77,14 +77,18 @@ class Collider(object):
             else:
                 self.player.player_on_ice = False
 
-            if self.player.player_on_snow:
-                self.player.set_sliding(2)
+        if self.player.player_on_snow and self.player.face_direction == 'Right':
+            self.player.set_sliding(2)
+        elif self.player.player_on_snow:
+            self.player.set_sliding(-2)
 
-            if self.player.player_on_ice:
-                self.player.set_sliding(8)
+        if self.player.player_on_ice and self.player.face_direction == 'Right':
+            self.player.set_sliding(8)
+        elif self.player.player_on_ice:
+            self.player.set_sliding(-8)
 
-            if not self.player.player_on_ice and not self.player.player_on_snow:
-                self.player.set_sliding(4)
+        if not self.player.player_on_ice and not self.player.player_on_snow:
+            self.player.set_sliding(4)
 
     def player_collision(self):
         for i in range(len(self.player_collision_img)):
