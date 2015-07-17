@@ -14,7 +14,7 @@ from MainMenu.MainMenu import *
 from Camera import *
 from Timer import *
 
-class Level1State(LevelState.LevelState, Camera):
+class Level1State(LevelState.LevelState):
     map = None
 
     player_x = 0
@@ -33,6 +33,7 @@ class Level1State(LevelState.LevelState, Camera):
     main_menu = None
     image_list = []
 
+    camera = None
     timer = None
 
     half_screen_width = Artist.get_half_screen_width()
@@ -55,8 +56,6 @@ class Level1State(LevelState.LevelState, Camera):
         self.image_list.append(Image("../Data/Levels/Level1/cloud2.png", 1500, 250, 0.5))
         self.image_list.append(Image("../Data/Levels/Level1/cloud3.png", 2000, 500, 0.5))
 
-        self.timer = Timer()
-
     def run(self):
         self.map.run()
         fly = Fly(1500, 100, 100)
@@ -66,12 +65,19 @@ class Level1State(LevelState.LevelState, Camera):
         self.enemy_list.append(tank)
         self.enemy_list.append(fish)
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
-        Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
+
         self.level_background_music = pygame.mixer.music.load('../Data/Music/Level4_2.mp3')
         pygame.mixer.music.play()
 
+        self.camera = Camera(self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
+
+        self.timer = Timer()
+        self.timer.load_best_time(1)
+
     def update(self):
-        Camera.update_camera(self, self.player.xSpeed)
+        self.camera.update_camera(self.player.xSpeed)
+        self.timer.update()
+
         self.player.update()
         self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
@@ -84,9 +90,8 @@ class Level1State(LevelState.LevelState, Camera):
             image.update(self.player.xSpeed, 0, self.player.rect.x)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+            self.level_state_manager.level_state = self
             self.level_state_manager.states = self.main_menu
-
-        self.timer.update()
 
     def draw(self):
         self.background.draw()
@@ -100,3 +105,6 @@ class Level1State(LevelState.LevelState, Camera):
 
         self.player.draw()
         self.timer.draw()
+
+    def reset_best_time(self):
+        self.timer.reset_best_time(1)

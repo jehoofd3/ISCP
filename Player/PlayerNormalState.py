@@ -7,6 +7,7 @@ from Helpers.Artist import *
 class PlayerNormalState (PlayerState):
 
     player_x_speed = 4
+    player_slide_speed = 0
     player = None
 
     def __init__(self, player):
@@ -31,8 +32,8 @@ class PlayerNormalState (PlayerState):
             self.player.xSpeed = self.player_x_speed
             self.player.face_direction = 'Right'
 
-        if self.player.player_on_ice and not self.player.canGoLeft and not self.player.canGoRight:
-            self.player.xSpeed = self.player_x_speed
+        if (self.player.player_on_snow or self.player.player_on_ice) and not self.player.canGoLeft and not self.player.canGoRight:
+            self.player.xSpeed = self.player_slide_speed
 
         if self.player.collision_up:
             self.player.ySpeed = - 3

@@ -37,7 +37,6 @@ class Boot(object):
 
             # Set the frames per seconds.
             clock.tick(60)
-
         pygame.quit()
         quit()
 

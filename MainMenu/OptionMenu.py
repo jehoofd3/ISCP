@@ -47,7 +47,7 @@ class OptionMenu(LevelState):
         self.make_sprite('select_right', "../Data/Images/Menu/MainMenu/SelectRight.png", self.half_screen_width + 230, self.half_screen_height - 115)
 
         self.make_sprite('click_button', "../Data/Images/Menu/Options/Options_ClickButtonEmpty.png", self.half_screen_width + 10, self.half_screen_height - 50)
-        self.make_sprite('back', "../Data/Images/Menu/Options/Options_back.png", self.half_screen_width - 68, self.half_screen_height + 70)
+        self.make_sprite('back', "../Data/Images/Menu/Options/Options_Back.png", self.half_screen_width - 68, self.half_screen_height + 70)
 
     def run(self):
         pass

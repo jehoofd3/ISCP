@@ -6,7 +6,7 @@ from Helpers.Artist import *
 from MainMenu.MainMenu import *
 from Parallax.Background import *
 
-class Level4State(LevelState.LevelState, Camera):
+class Level4State(LevelState.LevelState):
     map = None
 
     player_x = 0
@@ -23,6 +23,10 @@ class Level4State(LevelState.LevelState, Camera):
     background_text = None
     main_menu = None
     level_background_music = None
+
+    camera = None
+    timer = None
+
     half_screen_width = Artist.get_half_screen_width()
     next_lvl_list = []
 
@@ -55,7 +59,12 @@ class Level4State(LevelState.LevelState, Camera):
         self.level_background_music = pygame.mixer.music.load('../Data/Music/Level4_3.mp3')
         pygame.mixer.music.play()
 
+        self.timer = Timer()
+        self.timer.load_best_time(4)
+
     def update(self):
+        self.timer.update()
+
         self.player.update()
         self.enemy_list = self.collider.enemy_list
 
@@ -67,6 +76,7 @@ class Level4State(LevelState.LevelState, Camera):
         self.background.update(0, 0, self.player.xSpeed)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+            self.level_state_manager.level_state = self
             self.level_state_manager.states = self.main_menu
 
         self.next_lvl_list = [None] * len(self.enemy_list)
@@ -74,6 +84,7 @@ class Level4State(LevelState.LevelState, Camera):
             self.next_lvl_list[i] = self.enemy_list[i].dead
 
         if all(self.next_lvl_list):
+            self.timer.save_best_time(4)
             self.level_state_manager.next_level()
 
     def draw(self):
@@ -86,3 +97,7 @@ class Level4State(LevelState.LevelState, Camera):
             e.draw()
 
         self.player.draw()
+        self.timer.draw()
+
+    def reset_best_time(self):
+        self.timer.reset_best_time(4)

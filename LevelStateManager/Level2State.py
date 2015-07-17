@@ -7,7 +7,7 @@ from Parallax.Background import *
 from MainMenu.MainMenu import *
 from Camera import *
 
-class Level2State(LevelState.LevelState, Camera):
+class Level2State(LevelState.LevelState):
     map = None
 
     player_x = 0
@@ -23,6 +23,9 @@ class Level2State(LevelState.LevelState, Camera):
     shift_end = 3290
 
     main_menu = None
+
+    camera = None
+    timer = None
 
     half_screen_width = Artist.get_half_screen_width()
 
@@ -48,10 +51,16 @@ class Level2State(LevelState.LevelState, Camera):
         self.enemy_list.append(fish2)
 
         self.collider = Collider(self.player, self.map.get_group(), self.enemy_list, self.level_state_manager, self.main_menu)
-        Camera.__init__(self, self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
+
+        self.camera = Camera(self.shift_start, self.shift_end, self.map, self.player, self.enemy_list)
+
+        self.timer = Timer()
+        self.timer.load_best_time(2)
 
     def update(self):
-        Camera.update_camera(self, self.player.xSpeed)
+        self.camera.update_camera(self.player.xSpeed)
+        self.timer.update()
+
         self.player.update()
         self.enemy_list = self.collider.enemy_list
         for e in self.enemy_list:
@@ -61,6 +70,7 @@ class Level2State(LevelState.LevelState, Camera):
         self.background.update(0, 0, self.player.xSpeed)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+            self.level_state_manager.level_state = self
             self.level_state_manager.states = self.main_menu
 
     def draw(self):
@@ -71,3 +81,7 @@ class Level2State(LevelState.LevelState, Camera):
             e.draw()
 
         self.player.draw()
+        self.timer.draw()
+
+    def reset_best_time(self):
+        self.timer.reset_best_time(2)

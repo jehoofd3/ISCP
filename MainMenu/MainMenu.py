@@ -21,6 +21,8 @@ class MainMenu(LevelState):
     black_screen.set_alpha(0)
     lvl1 = pygame.image.load("../Data/Images/Menu/MainMenu/Lvl1.png").convert()
 
+    resume = pygame.image.load("../Data/Images/Menu/Options/Options_Resume.png").convert_alpha()
+
     background = pygame.image.load("../Data/Images/Menu/Background.png").convert()
     escape = pygame.image.load("../Data/Images/Menu/MainMenu/Escape.png").convert_alpha()
     ground = pygame.image.load("../Data/Images/Menu/Grass.png").convert_alpha()
@@ -32,6 +34,8 @@ class MainMenu(LevelState):
     alpha = 0
     fade_out_done = False
     music_faded = False
+
+    first_time_pressed_play = True
 
     def __init__(self, levelStateManager):
         self.options_menu = OptionMenu(self, levelStateManager)
@@ -72,7 +76,12 @@ class MainMenu(LevelState):
             # Loop stoppen wanneer het kruisje ingedrukt wordt
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.main_menu_sprites['play'].rect.collidepoint(self.mouse_pos):
-                    self.pressed_play = True
+                    if self.first_time_pressed_play:
+                        self.pressed_play = True
+                        self.first_time_pressed_play = False
+                    else:
+                        self.levelStateManager.states = self.levelStateManager.level_state
+                        self.levelStateManager.level_state = None
 
                 if self.main_menu_sprites['options'].rect.collidepoint(self.mouse_pos):
                     self.levelStateManager.states = self.options_menu
@@ -114,6 +123,7 @@ class MainMenu(LevelState):
                 self.pressed_play = False
                 self.fade_out_done = False
                 self.levelStateManager.states.level = 1
+                self.main_menu_sprites['play'].image = self.resume
                 self.levelStateManager.states = Level1State(self.levelStateManager, self)
                 self.levelStateManager.states.run()
 

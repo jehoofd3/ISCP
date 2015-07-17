@@ -1,15 +1,149 @@
 from Helpers.Artist import *
+import sqlite3
 
 class Timer:
 
     numbers = []
+    numbers_small = []
+    time = []
+    best_time = []
+    can_draw = []
+    MILLISEC_PASSED_EVENT = pygame.USEREVENT + 1
+
+    klok = pygame.image.load("../Data/Images/klok.png").convert_alpha()
+    no_time_line = pygame.image.load("../Data/Images/No_time_streepje.png").convert_alpha()
+
+    timer_start_x = 820
 
     def __init__(self):
-        for x in range(0, 9):
-            self.numbers.append(pygame.image.load("../Data/Images/hud_" + str(x) + ".png").convert_alpha())
+        self.time = [0, 0, 0, 0]
+        self.can_draw = [False, False, False, True]
+        for x in range(0, 10):
+            self.numbers.append(pygame.image.load("../Data/Images/Numbers/hud_" + str(x) + ".png").convert_alpha())
+
+        for x in range(0, 10):
+            self.numbers_small.append(pygame.image.load("../Data/Images/Numbers_small/hud_" + str(x) + ".png").convert_alpha())
+
+        pygame.time.set_timer(self.MILLISEC_PASSED_EVENT, 100)
 
     def update(self):
-        pass
+        for event in pygame.event.get(self.MILLISEC_PASSED_EVENT):
+            self.time[3] += 1
+
+        #zero number four
+        if self.time[3] > 9:
+            self.time[2] += 1
+            self.time[3] = 0
+            self.can_draw[2] = True
+
+        #zero number three
+        if self.time[2] > 9:
+            self.time[1] += 1
+            self.time[2] = 0
+            self.can_draw[1] = True
+
+        #zero number two
+        if self.time[1] > 9:
+            self.time[0] += 1
+            self.time[1] = 0
+            self.can_draw[0] = True
+
+        #zero number one
+        if self.time[0] > 9:
+            self.reset_time()
+
+        if self.time[0] >= 9 and self.time[1] >= 9 and self.time[2] >= 9 and self.time[3] >= 9:
+            self.reset_time()
 
     def draw(self):
-        Artist.draw_textures(self.numbers[0], (700, 60))
+        self.draw_clock()
+        self.draw_timer()
+        self.draw_best_time()
+
+    def draw_clock(self):
+        Artist.draw_textures(self.klok, (770, 50))
+
+    def draw_timer(self):
+        x = self.timer_start_x
+        for i in range(0, 4):
+            if self.can_draw[i]:
+                if i == 3:
+                    x += 6
+                    Artist.draw_textures(self.numbers_small[self.time[i]], (x, 75))
+                    break
+
+                Artist.draw_textures(self.numbers[self.time[i]], (x, 60))
+            x += 30
+
+    def reset_time(self):
+        self.time = [0, 0, 0, 0]
+
+    # Save the best time in the database
+    def save_best_time(self, level):
+        #https://docs.python.org/2/library/sqlite3.html
+        conn = sqlite3.connect('../Data/Database/Escape_Database.db')
+        c = conn.cursor()
+
+        time_temp = self.time[0] * 100 + self.time[1] * 10 + self.time[2] + self.time[3] * 0.1
+        best_time_temp = self.best_time[0] * 100 + self.best_time[1] * 10 + self.best_time[2] + self.best_time[3] * 0.1
+
+        if time_temp < best_time_temp or best_time_temp == 0:
+            c.execute('UPDATE best_time SET hundreds =' + str(self.time[0]) + ', tens =' + str(self.time[1]) + ', ones =' + str(self.time[2]) + ', tenths =' + str(self.time[3]) + ' WHERE Level =' + str(level))
+
+        conn.commit()
+
+        conn.close()
+
+    # Get the best time from database and put it in best_time array
+    def load_best_time(self, level):
+        conn = sqlite3.connect('../Data/Database/Escape_Database.db')
+        c = conn.cursor()
+
+        for row in c.execute('SELECT Hundreds, Tens, Ones, Tenths FROM best_time WHERE Level =' + str(level)):
+            self.best_time = row
+
+        conn.commit()
+
+        conn.close()
+
+    def draw_best_time(self):
+        x = self.timer_start_x
+
+        if self.best_time[0] == 0 and self.best_time[1] == 0 and self.best_time[2] == 0 and self.best_time[3] == 0:
+            Artist.draw_textures(self.no_time_line, (x + 50, 700))
+
+        for i in range(0, 4):
+            if self.best_time[i] == 0:
+                x += 30
+                continue
+
+            if i == 3:
+                x += 6
+                Artist.draw_textures(self.numbers_small[self.best_time[i]], (x, 715))
+                break
+            Artist.draw_textures(self.numbers[self.best_time[i]], (x, 700))
+            x += 30
+
+    def reset_best_time(self, level):
+        conn = sqlite3.connect('../Data/Database/Escape_Database.db')
+        c = conn.cursor()
+
+        c.execute('UPDATE best_time SET Hundreds = 0, Tens = 0, Ones = 0, Tenths = 0')
+
+        conn.commit()
+
+        conn.close()
+
+        self.load_best_time(level)
+
+
+'''
+        # Create table
+        c.execute('CREATE TABLE best_time(Level, Hundreds, Tens, Ones, Tenths)')
+
+        # Insert a row of data
+        c.execute('INSERT INTO best_time VALUES (1, 0, 0, 0, 0)')
+        c.execute('INSERT INTO best_time VALUES (2, 0, 0, 0, 0)')
+        c.execute('INSERT INTO best_time VALUES (3, 0, 0, 0, 0)')
+        c.execute('INSERT INTO best_time VALUES (4, 0, 0, 0, 0)')
+'''
