@@ -136,15 +136,3 @@ class Timer:
         conn.close()
 
         self.load_best_time(level)
-
-
-'''
-        # Create table
-        c.execute('CREATE TABLE best_time(Level, Hundreds, Tens, Ones, Tenths)')
-
-        # Insert a row of data
-        c.execute('INSERT INTO best_time VALUES (1, 0, 0, 0, 0)')
-        c.execute('INSERT INTO best_time VALUES (2, 0, 0, 0, 0)')
-        c.execute('INSERT INTO best_time VALUES (3, 0, 0, 0, 0)')
-        c.execute('INSERT INTO best_time VALUES (4, 0, 0, 0, 0)')
-'''
