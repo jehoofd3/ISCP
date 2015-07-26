@@ -38,6 +38,7 @@ class Artist(object):
     def rotate_img(image, rect, angle):
         """rotate an image while keeping its center"""
         rot_image = pygame.transform.rotate(image, angle)
+        #In left veranderen?!
         rot_rect = rot_image.get_rect(center=rect.center)
 
         Artist.draw_textures(rot_image, rect)

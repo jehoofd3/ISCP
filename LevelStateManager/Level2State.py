@@ -6,6 +6,7 @@ from Helpers.Artist import *
 from Parallax.Background import *
 from MainMenu.MainMenu import *
 from Camera import *
+from Helpers.DatabaseReceiver import *
 
 class Level2State(LevelState.LevelState):
     map = None
@@ -31,14 +32,14 @@ class Level2State(LevelState.LevelState):
 
     def __init__(self, level_state_manager, main_menu):
         self.enemy_list = []
-        self.map = TileGrid("../Data/Levels/Level2/Level2.txt")
+        self.map = TileGrid(DatabaseReceiver.get_level_data("TXT", "Level2", "Level2"))
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
 
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
 
         self.map.set_x_start_shift_map(self.player_spawn_x)
-        self.background = Background("../Data/Levels/Level2/BackgroundTwee.png", 0, 0)
+        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level2", "BackgroundTwee"), 0, 0)
 
     def run(self):
         self.map.run()

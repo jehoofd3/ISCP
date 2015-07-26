@@ -1,4 +1,5 @@
 from Helpers.Artist import *
+from Helpers.DatabaseReceiver import *
 import sqlite3
 
 class Timer:
@@ -10,8 +11,8 @@ class Timer:
     can_draw = []
     MILLISEC_PASSED_EVENT = pygame.USEREVENT + 1
 
-    klok = pygame.image.load("../Data/Images/klok.png").convert_alpha()
-    no_time_line = pygame.image.load("../Data/Images/No_time_streepje.png").convert_alpha()
+    klok = DatabaseReceiver.get_number_img("Klok", "Klok")
+    no_time_line = DatabaseReceiver.get_number_img("No_time", "No_time")
 
     timer_start_x = 820
 
@@ -19,10 +20,10 @@ class Timer:
         self.time = [0, 0, 0, 0]
         self.can_draw = [False, False, False, True]
         for x in range(0, 10):
-            self.numbers.append(pygame.image.load("../Data/Images/Numbers/hud_" + str(x) + ".png").convert_alpha())
+            self.numbers.append(DatabaseReceiver.get_number_img("Big", "hud_" + str(x)))
 
         for x in range(0, 10):
-            self.numbers_small.append(pygame.image.load("../Data/Images/Numbers_small/hud_" + str(x) + ".png").convert_alpha())
+            self.numbers_small.append(DatabaseReceiver.get_number_img("Small", "hud_" + str(x)))
 
         pygame.time.set_timer(self.MILLISEC_PASSED_EVENT, 100)
 

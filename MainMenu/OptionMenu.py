@@ -1,5 +1,6 @@
 import pygame
 from Helpers.Artist import *
+from Helpers.DatabaseReceiver import *
 from LevelStateManager.LevelState import *
 
 class OptionMenu(LevelState):
@@ -9,27 +10,27 @@ class OptionMenu(LevelState):
     half_screen_width = Artist.get_half_screen_width()
     half_screen_height = Artist.get_half_screen_height()
 
-    background = pygame.image.load("../Data/Images/Menu/Background.png").convert()
-    options = pygame.image.load("../Data/Images/Menu/Options/Options_Options.png").convert_alpha()
+    background = DatabaseReceiver.get_menu_img("Background")
+    options = DatabaseReceiver.get_menu_img("Options_Options")
 
     # music
-    music = pygame.image.load("../Data/Images/Menu/Options/Options_Music.png").convert_alpha()
-    music_bullet_empty_image = pygame.image.load("../Data/Images/Menu/Options/Options_BulletEmpty.png").convert_alpha()
-    music_bullet_full_image = pygame.image.load("../Data/Images/Menu/Options/Options_BulletFull.png").convert_alpha()
+    music = DatabaseReceiver.get_menu_img("Options_Music")
+    music_bullet_empty_image = DatabaseReceiver.get_menu_img("Options_BulletEmpty")
+    music_bullet_full_image = DatabaseReceiver.get_menu_img("Options_BulletFull")
     music_bullets = [1, 1, 1, 0, 0, 0]
     current_last_full = 2
     bullet_with = None
     bullet_height = half_screen_height - 97
 
-    fullscreen = pygame.image.load("../Data/Images/Menu/Options/Options_Fullscreen.png").convert_alpha()
-    ground = pygame.image.load("../Data/Images/Menu/Grass.png").convert_alpha()
+    fullscreen = DatabaseReceiver.get_menu_img("Options_Fullscreen")
+    ground = DatabaseReceiver.get_menu_img("Grass")
 
     mainMenu = None
     levelStateManager = None
     fullscreen_on = False
 
-    click_button_empty_image = pygame.image.load('../Data/Images/Menu/Options/Options_ClickButtonEmpty.png').convert_alpha()
-    click_button_full_image = pygame.image.load('../Data/Images/Menu/Options/Options_ClickButtonFull.png').convert_alpha()
+    click_button_empty_image = DatabaseReceiver.get_menu_img("Options_ClickButtonEmpty")
+    click_button_full_image = DatabaseReceiver.get_menu_img("Options_ClickButtonFull")
 
     options_sprites = {'click_button': None, 'quit': None}
     musc_volume_level = 0.4
@@ -43,11 +44,11 @@ class OptionMenu(LevelState):
         self.mainMenu = mainMenu
         self.levelStateManager = levelStateManager
 
-        self.make_sprite('select_left', "../Data/Images/Menu/MainMenu/SelectLeft.png", self.half_screen_width + 5, self.half_screen_height - 115)
-        self.make_sprite('select_right', "../Data/Images/Menu/MainMenu/SelectRight.png", self.half_screen_width + 230, self.half_screen_height - 115)
+        self.make_sprite('select_left', DatabaseReceiver.get_menu_img("SelectLeft"), self.half_screen_width + 5, self.half_screen_height - 115)
+        self.make_sprite('select_right', DatabaseReceiver.get_menu_img("SelectRight"), self.half_screen_width + 230, self.half_screen_height - 115)
 
-        self.make_sprite('click_button', "../Data/Images/Menu/Options/Options_ClickButtonEmpty.png", self.half_screen_width + 10, self.half_screen_height - 50)
-        self.make_sprite('back', "../Data/Images/Menu/Options/Options_Back.png", self.half_screen_width - 68, self.half_screen_height + 70)
+        self.make_sprite('click_button', DatabaseReceiver.get_menu_img("Options_ClickButtonEmpty"), self.half_screen_width + 10, self.half_screen_height - 50)
+        self.make_sprite('back', DatabaseReceiver.get_menu_img("Options_Back"), self.half_screen_width - 68, self.half_screen_height + 70)
 
     def run(self):
         pass
@@ -112,9 +113,9 @@ class OptionMenu(LevelState):
         #193 is ground image width
         Artist.draw_textures(self.ground, (0, self.screen_height - 193))
 
-    def make_sprite(self, button_name, image_location, width, height):
+    def make_sprite(self, button_name, image, width, height):
         self.options_sprites[button_name] = pygame.sprite.Sprite()
-        self.options_sprites[button_name].image = pygame.image.load(image_location).convert_alpha()
+        self.options_sprites[button_name].image = image
         self.options_sprites[button_name].rect = self.options_sprites[button_name].image.get_rect()
         self.options_sprites[button_name].rect.x = width
         self.options_sprites[button_name].rect.y = height

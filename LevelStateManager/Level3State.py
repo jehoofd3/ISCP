@@ -5,6 +5,7 @@ from Collider.Collider import *
 from Helpers.Artist import *
 from MainMenu.MainMenu import *
 from Parallax.Background import *
+from Helpers.DatabaseReceiver import *
 
 class Level3State(LevelState.LevelState):
     map = None
@@ -30,12 +31,12 @@ class Level3State(LevelState.LevelState):
 
     def __init__(self, level_state_manager, main_menu):
         self.enemy_list = []
-        self.map = TileGrid("../Data/Levels/Level3/Level3.txt")
+        self.map = TileGrid(DatabaseReceiver.get_level_data("TXT", "Level3", "Level3"))
         self.main_menu = main_menu
         self.level_state_manager = level_state_manager
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.map.set_x_start_shift_map(self.player_spawn_x)
-        self.background = Background("../Data/Levels/Level3/BackgroundDrie.png", 0, 0)
+        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level3", "BackgroundDrie"), 0, 0)
 
     def run(self):
         self.map.run()

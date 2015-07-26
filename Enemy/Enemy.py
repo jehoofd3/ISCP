@@ -111,5 +111,3 @@ class Enemy(object):
 
         for b in self.bullet_list:
             b.move_with_map(shift_x)
-
-

@@ -1,5 +1,6 @@
 from FishNormalState import *
 from Enemy import *
+from Helpers.DatabaseReceiver import *
 
 
 class Fish(Enemy):
@@ -9,15 +10,15 @@ class Fish(Enemy):
         self.w_l = []
         self.w_r = []
 
-        self.w_l.append(pygame.image.load("../Data/Images/Enemy/Fish/l_0.png").convert_alpha())
-        self.w_l.append(pygame.image.load("../Data/Images/Enemy/Fish/l_1.png").convert_alpha())
-        self.w_r.append(pygame.image.load("../Data/Images/Enemy/Fish/r_0.png").convert_alpha())
-        self.w_r.append(pygame.image.load("../Data/Images/Enemy/Fish/r_1.png").convert_alpha())
-        self.d_l = pygame.image.load("../Data/Images/Enemy/Fish/d_l.png").convert_alpha()
-        self.d_r = pygame.image.load("../Data/Images/Enemy/Fish/d_r.png").convert_alpha()
+        self.w_l.append(DatabaseReceiver.get_enemy_img("Fish", "l_0"))
+        self.w_l.append(DatabaseReceiver.get_enemy_img("Fish", "l_1"))
+        self.w_r.append(DatabaseReceiver.get_enemy_img("Fish", "r_0"))
+        self.w_r.append(DatabaseReceiver.get_enemy_img("Fish", "r_1"))
+        self.d_l = DatabaseReceiver.get_enemy_img("Fish", "d_l")
+        self.d_r = DatabaseReceiver.get_enemy_img("Fish", "d_r")
 
-        self.OB = pygame.image.load("../Data/Images/Enemy/Fish/Fish_OB.png").convert_alpha()
-        self.LR = pygame.image.load("../Data/Images/Enemy/Fish/Fish_LR.png").convert_alpha()
+        self.OB = DatabaseReceiver.get_enemy_img("Fish", "Fish_OB")
+        self.LR = DatabaseReceiver.get_enemy_img("Fish", "Fish_LR")
         super(Fish, self).__init__(x, y, range, self.w_l, self.w_r, self.d_l, self.d_r, self.OB, self.LR)
 
         self.states = [FishNormalState(self)]

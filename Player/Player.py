@@ -1,8 +1,10 @@
 import pygame
 from Helpers.Artist import *
+from Helpers.DatabaseReceiver import *
 from PlayerNormalState import *
 from PlayerDieState import *
 from Animation.PlayerAnimation import *
+from Helpers.DatabaseReceiver import *
 
 class Player (pygame.sprite.Sprite):
     states, walk_l, walk_r = [], [], []
@@ -30,8 +32,8 @@ class Player (pygame.sprite.Sprite):
     is_shifting = False
     sliding = False
 
-    health_image_full = pygame.image.load("../Data/Images/Health.png").convert_alpha()
-    health_image_empty = pygame.image.load("../Data/Images/Health_empty.png").convert_alpha()
+    health_image_full = DatabaseReceiver.get_player_img("Health_Full")
+    health_image_empty = DatabaseReceiver.get_player_img("Health_Empty")
 
     lives = ['', '', '']
 
@@ -56,7 +58,7 @@ class Player (pygame.sprite.Sprite):
                 self.lives[i] = self.health_image_empty
 
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
+        self.image = DatabaseReceiver.get_player_img("stand_r")
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -68,17 +70,17 @@ class Player (pygame.sprite.Sprite):
         self.walk_r = []
 
         for i in range(11):
-            self.walk_l.append(pygame.image.load("../Data/Images/Player/Left/l_" + str(i) + ".png").convert_alpha())
+            self.walk_l.append(DatabaseReceiver.get_player_img("l_" + str(i) + ""))
 
         for i in range(11):
-            self.walk_r.append(pygame.image.load("../Data/Images/Player/Right/r_" + str(i) + ".png").convert_alpha())
+            self.walk_r.append(DatabaseReceiver.get_player_img("r_" + str(i) + ""))
 
-        self.jump_r = pygame.image.load("../Data/Images/Player/jump_r.png").convert_alpha()
-        self.jump_l = pygame.image.load("../Data/Images/Player/jump_l.png").convert_alpha()
-        self.dead_l = pygame.image.load("../Data/Images/Player/dead_l.png").convert_alpha()
-        self.dead_r = pygame.image.load("../Data/Images/Player/dead_r.png").convert_alpha()
-        self.stand_l = pygame.image.load("../Data/Images/Player/stand_l.png").convert_alpha()
-        self.stand_r = pygame.image.load("../Data/Images/Player/stand_r.png").convert_alpha()
+        self.jump_r = DatabaseReceiver.get_player_img("jump_r")
+        self.jump_l = DatabaseReceiver.get_player_img("jump_l")
+        self.dead_l = DatabaseReceiver.get_player_img("dead_l")
+        self.dead_r = DatabaseReceiver.get_player_img("dead_r")
+        self.stand_l = DatabaseReceiver.get_player_img("stand_l")
+        self.stand_r = DatabaseReceiver.get_player_img("stand_r")
 
         self.animation = PlayerAnimation(self)
 
@@ -86,22 +88,22 @@ class Player (pygame.sprite.Sprite):
 
         # Player under sprite
         self.player_under_image = pygame.sprite.Sprite()
-        self.player_under_image.image = pygame.image.load("../Data/Images/Player/OB.png").convert_alpha()
+        self.player_under_image.image = DatabaseReceiver.get_player_img("OB")
         self.player_under_image.rect = self.player_under_image.image.get_rect()
 
         # Player up sprite
         self.player_up_image = pygame.sprite.Sprite()
-        self.player_up_image.image = pygame.image.load("../Data/Images/Player/OB.png").convert_alpha()
+        self.player_up_image.image = DatabaseReceiver.get_player_img("OB")
         self.player_up_image.rect = self.player_up_image.image.get_rect()
 
         # Player left sprite
         self.player_left_image = pygame.sprite.Sprite()
-        self.player_left_image.image = pygame.image.load("../Data/Images/Player/LR.png").convert_alpha()
+        self.player_left_image.image = DatabaseReceiver.get_player_img("LR")
         self.player_left_image.rect = self.player_left_image.image.get_rect()
 
         # Player right sprite
         self.player_right_image = pygame.sprite.Sprite()
-        self.player_right_image.image = pygame.image.load("../Data/Images/Player/LR.png").convert_alpha()
+        self.player_right_image.image = DatabaseReceiver.get_player_img("LR")
         self.player_right_image.rect = self.player_right_image.image.get_rect()
 
     def run(self):

@@ -4,10 +4,11 @@ from Player.Player import *
 from Collider.Collider import *
 from Helpers.Artist import *
 from MainMenu.MainMenu import *
+from Helpers.DatabaseReceiver import *
 
 class EndDemo(LevelState):
 
-    background_image = pygame.image.load("../Data/Images/end_demo.png").convert()
+    background_image = DatabaseReceiver.get_menu_img("End_Demo")
 
     def __init__(self):
         pass
@@ -23,5 +24,4 @@ class EndDemo(LevelState):
 
     def draw(self):
         # Draw the background to the screen.
-        Artist.get_display().blit(self.background_image, [0, 0])
-
+        Artist.draw_textures(self.background_image, [0, 0])

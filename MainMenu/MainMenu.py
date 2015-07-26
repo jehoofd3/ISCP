@@ -1,5 +1,6 @@
 import pygame
 from Helpers.Artist import *
+from Helpers.DatabaseReceiver import *
 from LevelStateManager.Level1State import *
 from LevelStateManager.Level2State import *
 from LevelStateManager.Level3State import *
@@ -17,17 +18,17 @@ class MainMenu(LevelState):
     half_screen_width = Artist.get_half_screen_width()
     half_screen_height = Artist.get_half_screen_height()
 
-    black_screen = pygame.image.load("../Data/Images/Menu/MainMenu/BlackScreen.png").convert()
+    black_screen = DatabaseReceiver.get_menu_img("BlackScreen").convert()
     black_screen.set_alpha(0)
-    lvl1 = pygame.image.load("../Data/Images/Menu/MainMenu/Lvl1.png").convert()
+    lvl1 = DatabaseReceiver.get_menu_img("lvl1")
 
-    resume = pygame.image.load("../Data/Images/Menu/Options/Options_Resume.png").convert_alpha()
+    resume = DatabaseReceiver.get_menu_img("Options_Resume")
 
-    background = pygame.image.load("../Data/Images/Menu/Background.png").convert()
-    escape = pygame.image.load("../Data/Images/Menu/MainMenu/Escape.png").convert_alpha()
-    ground = pygame.image.load("../Data/Images/Menu/Grass.png").convert_alpha()
-    left_select_arrow = pygame.image.load("../Data/Images/Menu/MainMenu/SelectLeft.png").convert_alpha()
-    right_select_arrow = pygame.image.load("../Data/Images/Menu/MainMenu/SelectRight.png").convert_alpha()
+    background = DatabaseReceiver.get_menu_img("Background")
+    escape = DatabaseReceiver.get_menu_img("Escape")
+    ground = DatabaseReceiver.get_menu_img("Grass")
+    left_select_arrow = DatabaseReceiver.get_menu_img("SelectLeft")
+    right_select_arrow = DatabaseReceiver.get_menu_img("SelectRight")
 
     main_menu_sprites = {'play': None, 'options': None, 'quit' : None}
     pressed_play = False
@@ -40,9 +41,9 @@ class MainMenu(LevelState):
     def __init__(self, levelStateManager):
         self.options_menu = OptionMenu(self, levelStateManager)
         self.levelStateManager = levelStateManager
-        self.make_sprite('play', "../Data/Images/Menu/MainMenu/Play.png", self.half_screen_width - 68, self.half_screen_height - 100)
-        self.make_sprite('options', "../Data/Images/Menu/MainMenu/Options.png", self.half_screen_width - 68, self.half_screen_height - 20)
-        self.make_sprite('quit', "../Data/Images/Menu/MainMenu/Quit.png", self.half_screen_width - 68, self.half_screen_height + 70)
+        self.make_sprite('play', DatabaseReceiver.get_menu_img("Play"), self.half_screen_width - 68, self.half_screen_height - 100)
+        self.make_sprite('options', DatabaseReceiver.get_menu_img("Options"), self.half_screen_width - 68, self.half_screen_height - 20)
+        self.make_sprite('quit', DatabaseReceiver.get_menu_img("Quit"), self.half_screen_width - 68, self.half_screen_height + 70)
 
     def run(self):
         pygame.mixer.music.load('../Data/Music/MainMenu/FeatherLight.mp3')
@@ -130,9 +131,9 @@ class MainMenu(LevelState):
         if self.pressed_play and not self.music_faded:
             pygame.mixer.music.fadeout(1000)
 
-    def make_sprite(self, button_name, image_location, width, height):
+    def make_sprite(self, button_name, image, width, height):
         self.main_menu_sprites[button_name] = pygame.sprite.Sprite()
-        self.main_menu_sprites[button_name].image = pygame.image.load(image_location).convert_alpha()
+        self.main_menu_sprites[button_name].image = image
         self.main_menu_sprites[button_name].rect = self.main_menu_sprites[button_name].image.get_rect()
         self.main_menu_sprites[button_name].rect.x = width
         self.main_menu_sprites[button_name].rect.y = height

@@ -4,8 +4,8 @@ from Helpers.Artist import *
 
 class Parallax(object):
 
-    def __init__(self, image_path, x, y):
-        self.image = pygame.image.load(image_path).convert_alpha()
+    def __init__(self, image, x, y):
+        self.image = image
         self.x = x
         self.y = y
 

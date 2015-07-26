@@ -1,5 +1,6 @@
 import pygame
 from Helpers.Artist import *
+from Helpers.DatabaseReceiver import *
 
 class ImageLoader(object):
 
@@ -7,9 +8,10 @@ class ImageLoader(object):
         pass
 
     def get_image(self, x, y, imageNumber):
+        image = DatabaseReceiver.get_map_img(str(imageNumber))
 
-        image = pygame.image.load("../Data/Images/Map/" + str(imageNumber) + ".png").convert_alpha()
+        # Weg?
+        # Artist.get_display().blit(image, (x, y))
 
-        Artist.get_display().blit(image, (x, y))
 
         return image

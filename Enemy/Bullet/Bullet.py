@@ -1,6 +1,7 @@
 from Helpers.Artist import *
 from Enemy.Bullet.BulletExplosionState import *
 from BulletFollowState import *
+from Helpers.DatabaseReceiver import *
 import random
 
 
@@ -9,7 +10,7 @@ class Bullet(object):
     img = None
 
     def __init__(self, x, y, left_right):
-        self.img = pygame.image.load("../Data/Images/Bullet/bullet.png").convert_alpha()
+        self.img = DatabaseReceiver.get_bullet_img("bullet")
         self.rect = self.img.get_rect()
         self.rect.x = x
         self.rect.y = y

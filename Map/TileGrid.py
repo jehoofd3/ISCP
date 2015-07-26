@@ -14,13 +14,15 @@ class TileGrid(ImageLoader):
     x_start_shift_map = 0
     display = Artist.get_display()
 
-    def __init__(self, level_path):
-        file = open(level_path)
+    def __init__(self, level_list):
         self.map_group.empty()
+
+        help = 0
         for i in range(self.columns):
             for j in range(self.rows):
                 image_type = ''
-                imageNumber = int(file.next())
+                imageNumber = level_list[help]
+                help += 1
 
                 for x in range(80, 83):
                     if imageNumber == x:
