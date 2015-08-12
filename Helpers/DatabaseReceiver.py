@@ -72,6 +72,20 @@ class DatabaseReceiver(object):
             return map_list
 
     @staticmethod
+    def save_timer(hunderds, tens, ones, tenths, level):
+        DatabaseReceiver.cur.execute('UPDATE best_time SET hundreds =' + hunderds + ', tens =' + tens + ', ones =' + ones + ', tenths =' + tenths + ' WHERE Level =' + level)
+        DatabaseReceiver.con.commit()
+
+    @staticmethod
+    def load_timer(level):
+        DatabaseReceiver.cur.execute('SELECT Hundreds, Tens, Ones, Tenths FROM best_time WHERE Level =' + level)
+        return DatabaseReceiver.cur.fetchone()
+
+    @staticmethod
+    def reset_timer():
+        DatabaseReceiver.cur.execute('UPDATE best_time SET Hundreds = 0, Tens = 0, Ones = 0, Tenths = 0')
+
+    @staticmethod
     def convert_img(bytecode):
         imgfile = StringIO(bytecode)
         img = Image.open(imgfile)

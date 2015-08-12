@@ -1,6 +1,7 @@
 import pygame
 from Helpers.Artist import *
 from LevelStateManager.LevelStateManager import *
+from Helpers.DatabaseReceiver import *
 
 class Boot(object):
 
@@ -37,6 +38,9 @@ class Boot(object):
 
             # Set the frames per seconds.
             clock.tick(60)
+
+        DatabaseReceiver.con.commit()
+        DatabaseReceiver.con.close()
         pygame.quit()
         quit()
 

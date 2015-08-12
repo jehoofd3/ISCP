@@ -44,8 +44,8 @@ class Level2State(LevelState.LevelState):
     def run(self):
         self.map.run()
         self.enemy_list = []
-        fish = Fish(580, 600, 110)
-        fish2 = Fish(2570, 600, 400)
+        fish = Fish(580, 600, 110, "Lava")
+        fish2 = Fish(2570, 600, 400, "Lava")
         slime = Slime(1736, 10)
         self.enemy_list.append(slime)
         self.enemy_list.append(fish)

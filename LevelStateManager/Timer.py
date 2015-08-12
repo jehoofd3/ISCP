@@ -81,31 +81,16 @@ class Timer:
 
     # Save the best time in the database
     def save_best_time(self, level):
-        #https://docs.python.org/2/library/sqlite3.html
-        conn = sqlite3.connect('../Data/Database/Escape_Database.db')
-        c = conn.cursor()
-
         time_temp = self.time[0] * 100 + self.time[1] * 10 + self.time[2] + self.time[3] * 0.1
         best_time_temp = self.best_time[0] * 100 + self.best_time[1] * 10 + self.best_time[2] + self.best_time[3] * 0.1
 
         if time_temp < best_time_temp or best_time_temp == 0:
-            c.execute('UPDATE best_time SET hundreds =' + str(self.time[0]) + ', tens =' + str(self.time[1]) + ', ones =' + str(self.time[2]) + ', tenths =' + str(self.time[3]) + ' WHERE Level =' + str(level))
-
-        conn.commit()
-
-        conn.close()
+            DatabaseReceiver.save_timer(str(self.time[0]), str(self.time[1]),
+                                        str(self.time[2]), str(self.time[3]), str(level))
 
     # Get the best time from database and put it in best_time array
     def load_best_time(self, level):
-        conn = sqlite3.connect('../Data/Database/Escape_Database.db')
-        c = conn.cursor()
-
-        for row in c.execute('SELECT Hundreds, Tens, Ones, Tenths FROM best_time WHERE Level =' + str(level)):
-            self.best_time = row
-
-        conn.commit()
-
-        conn.close()
+        self.best_time = DatabaseReceiver.load_timer(str(level))
 
     def draw_best_time(self):
         x = self.timer_start_x
@@ -126,13 +111,5 @@ class Timer:
             x += 30
 
     def reset_best_time(self, level):
-        conn = sqlite3.connect('../Data/Database/Escape_Database.db')
-        c = conn.cursor()
-
-        c.execute('UPDATE best_time SET Hundreds = 0, Tens = 0, Ones = 0, Tenths = 0')
-
-        conn.commit()
-
-        conn.close()
-
+        DatabaseReceiver.reset_timer()
         self.load_best_time(level)

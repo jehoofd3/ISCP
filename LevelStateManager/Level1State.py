@@ -63,7 +63,7 @@ class Level1State(LevelState.LevelState):
         fly_1 = Fly(500, 600, 100)
         fly_2 = Fly(1500, 100, 100)
         tank = Tank(2600, 50, 380)
-        fish = Fish(1000, 700, 200)
+        fish = Fish(1000, 700, 200, "Water")
         self.enemy_list.append(fly_1)
         self.enemy_list.append(fly_2)
         self.enemy_list.append(tank)
