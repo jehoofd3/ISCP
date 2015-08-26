@@ -39,7 +39,7 @@ class Level2State(LevelState.LevelState):
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
 
         self.map.set_x_start_shift_map(self.player_spawn_x)
-        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level2", "BackgroundTwee"), 0, 0)
+        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level2", "BackgroundTwee"))
 
     def run(self):
         self.map.run()
@@ -59,7 +59,7 @@ class Level2State(LevelState.LevelState):
         self.timer.load_best_time(2)
 
     def update(self):
-        self.camera.update_camera(self.player.xSpeed)
+        self.camera.update_camera(self.player.x_speed)
         self.timer.update()
 
         self.player.update()
@@ -68,7 +68,7 @@ class Level2State(LevelState.LevelState):
             e.update()
 
         self.collider.update()
-        self.background.update(0, 0, self.player.xSpeed)
+        self.background.update(0, 0, self.player.x_speed)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.level_state = self

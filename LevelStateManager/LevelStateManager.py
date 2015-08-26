@@ -5,7 +5,7 @@ from EndDemo import *
 from Timer import *
 import sys
 
-class LevelStateManager:
+class LevelStateManager(object):
 
     states = None
     level_state = None

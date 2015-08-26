@@ -48,7 +48,7 @@ class Level1State(LevelState.LevelState):
         self.level_state_manager = level_state_manager
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.map.set_x_start_shift_map(self.player_spawn_x)
-        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level1", "BackgroundEen"), 0, 0)
+        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level1", "BackgroundEen"))
 
         self.image_list.append(img.Image(DatabaseReceiver.get_level_data("IMAGE", "Level1", "cloud1"), 200, 300, 0.5))
         self.image_list.append(img.Image(DatabaseReceiver.get_level_data("IMAGE", "Level1", "cloud1"), 500, 200, 0.5))
@@ -79,7 +79,7 @@ class Level1State(LevelState.LevelState):
         self.timer.load_best_time(1)
 
     def update(self):
-        self.camera.update_camera(self.player.xSpeed)
+        self.camera.update_camera(self.player.x_speed)
         self.timer.update()
 
         self.player.update()
@@ -89,9 +89,9 @@ class Level1State(LevelState.LevelState):
 
         self.collider.update()
 
-        self.background.update(self.player.xSpeed, 0, self.player.rect.x)
+        self.background.update(self.player.x_speed, 0, self.player.rect.x)
         for image in self.image_list:
-            image.update(self.player.xSpeed, 0, self.player.rect.x)
+            image.update(self.player.x_speed, 0, self.player.rect.x)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.level_state = self

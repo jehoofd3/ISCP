@@ -26,7 +26,7 @@ class Boot(object):
             # Event handling:
             # Pygame removes all events from the queue.
             # Pygame.quit argument ensures that only the pygame.quit events are removed.
-            for event in pygame.event.get(pygame.QUIT):
+            if pygame.event.get(pygame.QUIT):
                 game_exit = True
 
             # Calls the update and draw method of the current level.

@@ -13,5 +13,4 @@ class ImageLoader(object):
         # Weg?
         # Artist.get_display().blit(image, (x, y))
 
-
         return image

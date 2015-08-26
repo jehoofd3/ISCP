@@ -2,7 +2,7 @@ from Helpers.Artist import *
 from Helpers.DatabaseReceiver import *
 import sqlite3
 
-class Timer:
+class Timer(object):
 
     numbers = []
     numbers_small = []

@@ -146,9 +146,9 @@ class Collider(object):
                     e.left_right = True
 
             if pygame.sprite.collide_rect(e, self.player.player_under_image):
-                if not e.dead and not self.player.dead and self.player.ySpeed != 0:
+                if not e.dead and not self.player.dead and self.player.y_speed != 0:
                     e.kill()
-                    self.player.ySpeed = 5
+                    self.player.y_speed = 5
 
             blocks_hit_list = pygame.sprite.spritecollide(e, self.player_group, False)
             for block in blocks_hit_list:
@@ -158,7 +158,7 @@ class Collider(object):
     def objects_collider(self):
         for e in self.enemy_list:
             if isinstance(e, Enemy.Tank.Tank):
-                for b in e.get_bl():
+                for b in e.get_bullet_list():
                     if b.active:
                         # De kogel laten exploderen wanneer hij collision met de map heeft
                         map_hit = pygame.sprite.spritecollide(b, self.map, False)

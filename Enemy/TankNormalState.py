@@ -5,46 +5,86 @@ from TankShootState import *
 class TankNormalState(EnemyState):
 
     def __init__(self, enemy):
+        # This game is object oriented and the class extends from EnemyState,
+        # so its required to call the super class by using the super() method.
         super(TankNormalState, self).__init__(enemy)
 
-    def run(self):
-        self.right = True
-        self.left = False
+        # This booleans tells if the tank needs to move left or right.
+        self.move_left_right = None
+
+        # This line of code sets the speed back to the original speed.
+        # When the tank changes his state to TankShootState,
+        # the speed changes.
         self.enemy.speed = self.enemy.start_speed
 
+    def run(self):
+        pass
+
     def update(self):
+        # The state called the basic_movement and gravity method,
+        # so it can move on both axis.
         self.enemy.basic_movement()
         self.enemy.gravity()
 
+        # This if statement checks if the x position of the tank is smaller or,
+        # equal than the x value on creation (enemy.stary_x).
         if self.enemy.rect.x <= self.enemy.start_x:
-            self.right = True
-            self.left = False
+            # If this statement is True, change move_left_right to False
+            self.move_left_right = False
 
-        if self.enemy.rect.x > self.enemy.start_x + self.enemy.range:
-            self.right = False
-            self.left = True
+        # It the previous statement is False, this statement checks it the,
+        # x position of the tank is greater or equal than the x value on,
+        # creation plus the range of the tank.
+        elif self.enemy.rect.x >= self.enemy.start_x + self.enemy.range:
+            # If this statement is True, change move_left_right to True.
+            self.move_left_right = True
 
+        # This statement checks if the boolean move_left_right is True.
+        if self.move_left_right:
+            # If its True, lower the x position of the tank with the speed.
+            # This makes the tank move in the left direction.
+            self.enemy.x_speed -= self.enemy.speed
+        else:
+            # If its False, add the speed with the x position of the tank.
+            # This makes the tank move in the right direction.
+            self.enemy.x_speed += self.enemy.speed
 
+        # If the enemy is touching a Tile under him, this code will be execute.
         if self.enemy.block_d:
-            self.enemy.ySpeed = 0
+            # Because there is a Tile under the enemy, his y_speed will be set,
+            # to zero.
+            # The gravity will not work, so he stops falling down.
+            self.enemy.y_speed = 0
+
+            # Sometimes the enemy will float over the map when he touched,
+            # a Tile this is because of some rounding differences.
+            # The bottom (integer) of the enemy will be divided by the height,
+            # of a Tile (64).
+            # Because rect.bottom is an integer, python will automatically,
+            # round the outcome.
+            # When you multiple the outcome by 64 (Tile height),
+            # the rounding differences will be corrected.
+            # See the report for a detailed explanation.
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
-            self.enemy.jumpsRemaining = 1
 
-        if self.enemy.block_l:
-            self.enemy.xSpeed = 0
-            self.enemy.rect.x += 1
+            # Change the value of jumps_remaining so the enemy can jump again
+            self.enemy.jumps_remaining = 1
 
-        if self.enemy.block_r:
-            self.enemy.xSpeed = 0
-            self.enemy.rect.x -= 1
+        # When the tank doesn't touche the ground, its jumps so he doesn't,
+        # kill himself.
+        else:
+            self.enemy.jump()
 
-        if self.left:
-            self.enemy.xSpeed -= self.enemy.speed
-        if self.right:
-            self.enemy.xSpeed += self.enemy.speed
+        # Set the x speed of the tank to zero if he touches a tile on the,
+        # left or right side and let him jump.
+        # This lets the tank jump over tile.
+        if self.enemy.block_l or self.enemy.block_r:
+            self.enemy.x_speed = 0
+            self.enemy.jump()
 
+        # If the boolean follow in the enemy class is True, change the state,
+        # to TankShootState.
+        # This boolean is changed by the collider and lets the tank follow,
+        # the player.
         if self.enemy.follow:
-            self.enemy.states = [TankShootState(self.enemy)]
-
-    def draw(self):
-        pass
+            self.enemy.states = TankShootState(self.enemy)

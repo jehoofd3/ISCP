@@ -39,7 +39,7 @@ class Level4State(LevelState.LevelState):
         self.level_state_manager = level_state_manager
         self.player = Player(self.player_spawn_x, self.player_spawn_y, level_state_manager)
         self.map.set_x_start_shift_map(self.player_spawn_x)
-        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level4", "background1"), 0, 0)
+        self.background = Background(DatabaseReceiver.get_level_data("IMAGE", "Level4", "background1"))
         self.background_text = DatabaseReceiver.get_level_data("IMAGE", "Level4", "YouCantWin")
 
     def run(self):
@@ -74,7 +74,7 @@ class Level4State(LevelState.LevelState):
 
         self.collider.update()
 
-        self.background.update(0, 0, self.player.xSpeed)
+        self.background.update(0, 0, self.player.x_speed)
 
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:
             self.level_state_manager.level_state = self
