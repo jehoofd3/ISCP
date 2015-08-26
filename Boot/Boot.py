@@ -59,3 +59,4 @@ class Boot(object):
 # So that the Boot method is the starting point of the game.
 if __name__ == '__main__':
     Boot().__init__()
+
