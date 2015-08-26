@@ -71,12 +71,6 @@ class PlayerAnimation:
         # The player moves to the left if his x_speed is smaller than zero.
         elif self.player.x_speed < 0:
             # Call the left_walk method.
-            if self.player.x_speed > 0:
-                self.right_walk()
-                self.left_released = False
-                self.right_released = True
-
-        elif self.player.x_speed < 0:
             self.left_walk()
             # And set the left_right boolean True.
             self.left_right = False
@@ -91,10 +85,6 @@ class PlayerAnimation:
         # The player stands still if his x_speed is zero.
         elif self.player.x_speed == 0 and not self.left_right:
             # Call the left_stand method.
-        elif self.player.x_speed == 0 and self.right_released:
-            self.right_stand()
-
-        elif self.player.x_speed == 0 and self.left_released:
             self.left_stand()
 
         # If the player is moving in the air and left_right is True.

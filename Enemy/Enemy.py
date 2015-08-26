@@ -91,9 +91,6 @@ class Enemy(object):
         # This speed variable is a integer and is used to move the enemy every,
         # frame two pixels.
         # It is used for the x_speed and the y_speed.
-        self.x_speed = 0
-        self.ySpeed = 0
-        self.jumpsRemaining = 0
         self.speed = 2
 
         # The start_speed is a integer used by some enemy's.
@@ -226,12 +223,6 @@ class Enemy(object):
         Artist.draw_textures(self.enemy_right_image.image,
                              self.enemy_right_image.rect)
 
-        Artist.draw_textures(self.animation.update(self.x_speed, self.dead), self.rect)
-        Artist.draw_textures(self.enemy_under_image.image, self.enemy_under_image.rect)
-        Artist.draw_textures(self.enemy_up_image.image, self.enemy_up_image.rect)
-        Artist.draw_textures(self.enemy_left_image.image, self.enemy_left_image.rect)
-        Artist.draw_textures(self.enemy_right_image.image, self.enemy_right_image.rect)
-
     # This method lets the enemy jump.
     def jump(self):
         # Because he can only jump one time, the variable jumps_remaining,
@@ -245,9 +236,6 @@ class Enemy(object):
 
     # This method controls the basic movement of the enemy.
     def basic_movement(self):
-        self.rect.x += self.x_speed
-        self.rect.y -= self.ySpeed
-        self.x_speed = 0
 
         # When he moves on the x axis the value of x_speed changes, then that,
         # value is added of extracted with the x position of the enemy,

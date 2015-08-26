@@ -8,7 +8,6 @@ from Helpers.DatabaseReceiver import *
 
 class EndDemo(LevelState):
 
-    # Get the background from the database.
     background_image = DatabaseReceiver.get_menu_img("End_Demo")
 
     def __init__(self):
@@ -18,7 +17,7 @@ class EndDemo(LevelState):
         pass
 
     def update(self):
-        # This is used to quit the game when you pressed space.
+        # This piece of code is used to quit the game when you pressed space.
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             pygame.quit()
             quit()

@@ -122,7 +122,6 @@ class Collider(object):
             # facing left, set the player speed on -2.
             self.player.set_sliding(-2)
 
-
         # If the player is on ice and the player is facing right.
         if self.player.player_on_ice and self.player.face_direction == 'Right':
             # Set the player speed on 8.

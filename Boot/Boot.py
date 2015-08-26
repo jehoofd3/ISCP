@@ -1,7 +1,7 @@
 import pygame
 from Helpers.Artist import *
-from Helpers.DatabaseReceiver import *
 from LevelStateManager.LevelStateManager import *
+from Helpers.DatabaseReceiver import *
 
 
 class Boot(object):
@@ -24,7 +24,7 @@ class Boot(object):
         # Make a new LevelStateManager object.
         # The level state manager is used to switch between the levels.
         # The LevelStateManager starts with the Main Menu state.
-        LevelStateManager = LevelStateManager()
+        lsm = LevelStateManager()
 
         while not game_exit:
             # Event handling:
@@ -41,8 +41,8 @@ class Boot(object):
                 game_exit = True
 
             # Calls the update and draw method of the current level.
-            LevelStateManager.update()
-            LevelStateManager.draw()
+            lsm.update()
+            lsm.draw()
 
             # Render all objects of the game.
             pygame.display.update()

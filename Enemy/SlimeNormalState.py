@@ -23,8 +23,7 @@ class SlimeNormalState(EnemyState):
         # So this line of code lets the slime fall to the ground
         self.enemy.rect.y -= self.enemy.y_speed
         self.enemy.gravity()
-        self.current_time = time.time()
-        self.enemy.x_speed = 5
+
         # The slime doesn't move, but the x_speed need to be higher than,
         # zero to change the animations.
         self.enemy.x_speed = 5

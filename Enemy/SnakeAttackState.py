@@ -45,13 +45,6 @@ class SnakeAttackState(EnemyState):
         # kill himself easily.
         else:
             self.enemy.jump()
-        if self.enemy.block_l:
-            self.enemy.x_speed = 0
-            self.enemy.rect.x += 1
-
-        if self.enemy.block_r:
-            self.enemy.x_speed = 0
-            self.enemy.rect.x -= 1
 
         # Set the x speed of the snake to zero if he touches a tile on the,
         # left or right side and let him jump.

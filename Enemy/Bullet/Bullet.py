@@ -47,8 +47,6 @@ class Bullet(object):
         # This speed variable is a integer and is used to move the,
         # bullet every frame eight pixels.
         # It is used for the x_speed and the y_speed.
-        self.x_speed = 0
-        self.ySpeed = random.randint(1, 6)
         self.speed = 8
 
         # The active boolean is a variable that tells the collider if the,
@@ -85,13 +83,12 @@ class Bullet(object):
             # The bullet calls the method and gives three variables.
             # The image of the bullet, a list with the x, y width and height,
             # (rect) and the angle.
-            if self.x_speed > 0:
-                Artist.rotate_img(self.img, self.rect, self.angle)
-            else:
-                # It the x speed is smaller than zero it is moving to,
-                # the left side.
-                # By adding 180 to the angle, it rotates 180 degree.
-                Artist.rotate_img(self.img, self.rect, self.angle + 180)
+            Artist.rotate_img(self.img, self.rect, self.angle)
+        else:
+            # It the x speed is smaller than zero it is moving to,
+            # the left side.
+            # By adding 180 to the angle, it rotates 180 degree.
+            Artist.rotate_img(self.img, self.rect, self.angle + 180)
 
     # This method controls the basic movement of the bullet.
     def basic_movement(self):
@@ -108,8 +105,6 @@ class Bullet(object):
         # It is important to set the x_speed back to zero, or else the bullet,
         # will never stop,
         # moving on the x axis.
-        self.rect.x += self.x_speed
-        self.rect.y -= self.ySpeed
         self.x_speed = 0
 
     # This method is used to define the gravity.

@@ -55,9 +55,6 @@ class Player(pygame.sprite.Sprite):
     y_speed = 0
 
     # Richard Jongenburger
-    x_speed = 0.0
-    x_speed_standing_still = 0
-    ySpeed = 0
     start_x = 0
     start_y = 0
     is_shifting = False
@@ -70,7 +67,7 @@ class Player(pygame.sprite.Sprite):
     # Richard Jongenburger
     lives = ['', '', '']
 
-    LevelStateManager = None
+    level_state_manager = None
 
     # These variables are used to calculate the collision.
     # It is hard to explain in comments.
@@ -90,12 +87,8 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, level_state_manager):
         # Richard Jongenburger
         self.level_state_manager = level_state_manager
-
-    def __init__(self, x, y, LevelStateManager):
-        self.LevelStateManager = LevelStateManager
-
         for i in range(0, len(self.lives)):
-            if i <= (self.LevelStateManager.player_health - 1):
+            if i <= (self.level_state_manager.player_health - 1):
                 self.lives[i] = self.health_image_full
             else:
                 self.lives[i] = self.health_image_empty
@@ -273,55 +266,30 @@ class Player(pygame.sprite.Sprite):
         if not pygame.mixer.get_busy():
             self.jump_sound.play()
 
-        # If the player jumps, 10 will be added to his y_speed.
         self.y_speed = 10
-
-        # If the player jumps, the variable jumps_remaining is lowered,
-        # by one, so it is zero and the player can't jump again.
         self.jumps_remaining -= 1
 
     def basic_movement(self):
-        # Richard Jongenburger
         if not self.is_shifting:
-            # When he moves on the x axis the value of x_speed changes,
-            # then that value is added of extracted with the x,
-            # position of the player this position is stored,
-            # in the rect list (rect.x).
             self.rect.x += self.x_speed
 
-        # The y position of the player uses the same technique as the x,
-        # position.
         self.rect.y -= self.y_speed
 
-        # It is important to set the x_speed back to zero, or else the enemy,
-        # will never stop moving on the x axis.
         self.x_speed = 0
 
-    # This method is used to define the gravity.
     def gravity(self):
-        # The y_speed of the player will be higher so he falls faster to,
-        # the ground.
         self.y_speed -= 0.4
 
-    # This method is used to kill the player.
     def kill(self):
         if not self.dead:
-            # When this method is called, the player will push,
-            # the PlayerDieState
             self.states = PlayerDieState(self)
-
-            # Richard Jongenburger
             self.level_state_manager.player_health -= 1
-            self.LevelStateManager.player_health -= 1
 
-    # Richard Jongenburger
     def get_player_x_speed(self):
         return self.x_speed
 
-    # Richard Jongenburger
     def get_player_x(self):
         return self.rect.x
 
-    # Richard Jongenburger
     def set_sliding(self, speed):
             self.states.player_slide_speed = speed
