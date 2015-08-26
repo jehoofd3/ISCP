@@ -1,69 +1,123 @@
 from Map.Tile import *
-from Sprite.ImageLoader import *
 from Helpers.Artist import *
+from Helpers.DatabaseReceiver import *
 
-class TileGrid(ImageLoader):
+# This is a class that creates the map. It also give a type to certain images.
+# Every level exists out of a tilegrid where every tile is a Sprite.
+# We use 60 rows and 12 columns of tiles for every level.
+#
+# The tilegrid will create the map based of a txt.
+# We made these txt with our editor made in java.
+# More info in the report.
 
+# Author: Richard Jongenburger
+
+
+class TileGrid():
+    # Make a pygame sprite group.
+    # This group is a container for Sprites.
     map_group = pygame.sprite.Group()
+
     background_image = None
+
+    # This is the number of rows and columns in the map.
     rows = 60
     columns = 12
-    shift_speed = 8.0
 
-    x_start = 0
-    x_start_shift_map = 0
+    # Player's x coordinate.
+    player_x = 0
+
+    # Get the game surface from the Artist class.
     display = Artist.get_display()
 
     def __init__(self, level_list):
+        # Empty the map group.
+        # We do this so that the map_group
+        # will empty when you create a new map.
+        # Otherwise it just adds to the existing map group
+        # and the sprites of the previous level are still in the container.
         self.map_group.empty()
 
-        help = 0
+        # Help variable.
+        counter = 0
         for i in range(self.columns):
             for j in range(self.rows):
+                # Makes sure that the image type
+                # is back to empty at each iteration.
                 image_type = ''
-                imageNumber = level_list[help]
-                help += 1
 
+                # The level_list exist out (60 rows x 12 columns) 720 items.
+                # Each item exist of a number that
+                # corresponds to the names of the images in the database.
+                # Ex: 80.jpg is a image of lava.
+                # Each iteration we get an item
+                # of level_list and put it in image_number
+                image_number = level_list[counter]
+
+                # Add one to counter after each iteration.
+                counter += 1
+
+                # These following statements
+                # are giving some images an image type.
+                #
+                # This gives image number 80, 81, 82 the 'Lava' type.
                 for x in range(80, 83):
-                    if imageNumber == x:
+                    if image_number == x:
                         image_type = 'Lava'
 
                 for x in range(83, 86):
-                    if imageNumber == x:
+                    if image_number == x:
                         image_type = 'Water'
 
                 for x in range(117, 135):
                     if x == 118 or x == 119:
                         continue
-                    elif imageNumber == x:
+                    elif image_number == x:
                         image_type = 'Snow'
 
                 for x in range(156, 172):
-                    if imageNumber == x:
+                    if image_number == x:
                         image_type = 'Ice'
 
-                if imageNumber == 114:
+                if image_number == 114:
                     image_type = 'Exit'
 
-                if imageNumber == -1 or imageNumber == 0:
+                # ImageNumber 1 or 0 means that there isn't a sprite
+                # on that location in the tilegrid.
+                # So we go to the next iteration.
+                if image_number == -1 or image_number == 0:
                     pass
                 else:
-                    self.map_group.add(Tile(j * 64, i * 64, super(TileGrid, self).get_image(0, (imageNumber - 1) * 64, imageNumber), image_type))
+                    # Make a Tile with the specified x, y coordinate,
+                    # the image and the type of the image.
+                    # After that we add it to the map_group container.
+                    self.map_group.add(Tile(j * 64, i * 64, DatabaseReceiver.
+                                            get_map_img(str(image_number)),
+                                            image_type))
 
     def run(self):
         pass
 
+    # Draw every sprite of the tilegrid on the surface.
     def draw(self):
         self.map_group.draw(Artist.get_display())
 
+    # Method to change the x of every tile on the map with
+    # the player's x speed.
+    # So that the map moves along with the player.
     def shift_map(self, player_x_speed):
-        self.x_start_shift_map += player_x_speed
+        # Change the player's x according to the players x_speed.
+        self.player_x += player_x_speed
+
+        # Loop through every tile in the map.
         for sprite in self.map_group:
+            # Change the tiles their x with the player_x_speed.
             sprite.shift_x(player_x_speed)
 
+    # Needed for the collider class.
     @staticmethod
     def get_group():
         return TileGrid.map_group
 
-    def set_x_start_shift_map(self, player_spawn_x):
-        self.x_start_shift_map = player_spawn_x
+    def set_player_x(self, player_spawn_x):
+        self.player_x = player_spawn_x

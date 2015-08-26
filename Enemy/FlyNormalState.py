@@ -42,9 +42,12 @@ class FlyNormalState(EnemyState):
             # This makes the fly move in the left direction.
             self.enemy.x_speed -= self.enemy.speed
         else:
-            # If its False, add the speed with the x position of the fly.
+            #If its False, add the speed with the x position of the fly.
             # This makes the fly move in the right direction.
-            self.enemy.x_speed += self.enemy.speed
+            if self.left:
+                self.enemy.x_speed -= self.enemy.speed
+            if self.right:
+                self.enemy.x_speed += self.enemy.speed
 
         # If the enemy is touching a Tile under him, this code will be execute.
         if self.enemy.block_d:
@@ -63,9 +66,10 @@ class FlyNormalState(EnemyState):
             # the rounding differences will be corrected.
             # See the report for a detailed explanation.
             self.enemy.rect.bottom = ((self.enemy.rect.bottom / 64) * 64)
-
             # Change the value of jumps_remaining so the enemy can jump again
             self.enemy.jumps_remaining = 1
+        if self.enemy.block_l or self.enemy.block_r:
+            self.enemy.x_speed = 0
 
         # When the fly doesn't touche the ground, its jumps so he doesn't,
         # kill himself.

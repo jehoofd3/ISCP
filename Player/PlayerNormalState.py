@@ -44,9 +44,8 @@ class PlayerNormalState(PlayerState):
             self.player.x_speed += self.player.speed
             self.player.face_direction = 'Right'
 
-        # Richard Jongenburger
-        if (self.player.player_on_snow or self.player.player_on_ice) and not \
-                self.player.canGoLeft and not self.player.canGoRight:
+        if (self.player.player_on_snow or self.player.player_on_ice) \
+                and not self.player.canGoLeft and not self.player.canGoRight:
             self.player.x_speed = self.player_slide_speed
 
         # If the player has collision with a tile above him.

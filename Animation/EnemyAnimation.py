@@ -62,9 +62,14 @@ class EnemyAnimation(object):
             self.left_right = False
         else:
             # Call the left_walk method.
-            self.left_walk()
-            # And set the left_right boolean True.
-            self.left_right = True
+            if x_speed > 0:
+                self.right_walk()
+                self.left_released = False
+                self.right_released = True
+            elif x_speed < 0:
+                self.left_walk()
+                # And set the left_right boolean True.
+                self.left_right = True
 
         # If the enemy is dead, call the dead method.
         if dead:

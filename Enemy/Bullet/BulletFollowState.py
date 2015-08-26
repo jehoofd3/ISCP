@@ -23,3 +23,7 @@ class BulletFollowState(BulletState):
             self.bullet.x_speed -= self.bullet.speed
         else:
             self.bullet.x_speed += self.bullet.speed
+
+    def draw(self):
+        pass
+

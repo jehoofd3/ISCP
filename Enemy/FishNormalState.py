@@ -49,6 +49,17 @@ class FishNormalState(EnemyState):
         if self.enemy.rect.x <= self.enemy.start_x:
             # If this statement is True, change move_left_right to False
             self.move_left_right = False
+            self.right = True
+            self.left = False
+
+        if self.enemy.rect.x > self.enemy.start_x + self.enemy.range:
+            self.right = False
+            self.left = True
+
+        if self.left:
+            self.enemy.x_speed -= self.enemy.speed
+        if self.right:
+            self.enemy.x_speed += self.enemy.speed
 
         # It the previous statement is False, this statement checks it the,
         # x position of the fish is,

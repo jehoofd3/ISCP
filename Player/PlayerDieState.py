@@ -36,8 +36,12 @@ class PlayerDieState(PlayerState):
         # Richard Jongenburger crap code
         if self.player.rect.bottom >= 960:
             if self.player.lives[1] == self.player.health_image_empty:
-                self.player.level_state_manager.player_health = 3
-                self.player.level_state_manager.level = 1
-                self.player.level_state_manager.open_level1()
+                self.player.LevelStateManager.player_health = 3
+                self.player.LevelStateManager.level = 1
+                self.player.LevelStateManager.open_level1()
             else:
                 self.player.level_state_manager.reset_level()
+                self.player.LevelStateManager.reset_level()
+
+    def draw(self):
+        pass

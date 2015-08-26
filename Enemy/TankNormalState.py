@@ -81,6 +81,18 @@ class TankNormalState(EnemyState):
         if self.enemy.block_l or self.enemy.block_r:
             self.enemy.x_speed = 0
             self.enemy.jump()
+        if self.enemy.block_l:
+            self.enemy.x_speed = 0
+            self.enemy.rect.x += 1
+
+        if self.enemy.block_r:
+            self.enemy.x_speed = 0
+            self.enemy.rect.x -= 1
+
+        if self.left:
+            self.enemy.x_speed -= self.enemy.speed
+        if self.right:
+            self.enemy.x_speed += self.enemy.speed
 
         # If the boolean follow in the enemy class is True, change the state,
         # to TankShootState.

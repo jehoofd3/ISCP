@@ -55,6 +55,9 @@ class Player(pygame.sprite.Sprite):
     y_speed = 0
 
     # Richard Jongenburger
+    x_speed = 0.0
+    x_speed_standing_still = 0
+    ySpeed = 0
     start_x = 0
     start_y = 0
     is_shifting = False
@@ -67,7 +70,7 @@ class Player(pygame.sprite.Sprite):
     # Richard Jongenburger
     lives = ['', '', '']
 
-    level_state_manager = None
+    LevelStateManager = None
 
     # These variables are used to calculate the collision.
     # It is hard to explain in comments.
@@ -87,8 +90,12 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, level_state_manager):
         # Richard Jongenburger
         self.level_state_manager = level_state_manager
+
+    def __init__(self, x, y, LevelStateManager):
+        self.LevelStateManager = LevelStateManager
+
         for i in range(0, len(self.lives)):
-            if i <= (self.level_state_manager.player_health - 1):
+            if i <= (self.LevelStateManager.player_health - 1):
                 self.lives[i] = self.health_image_full
             else:
                 self.lives[i] = self.health_image_empty
@@ -305,6 +312,7 @@ class Player(pygame.sprite.Sprite):
 
             # Richard Jongenburger
             self.level_state_manager.player_health -= 1
+            self.LevelStateManager.player_health -= 1
 
     # Richard Jongenburger
     def get_player_x_speed(self):

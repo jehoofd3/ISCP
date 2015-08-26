@@ -57,6 +57,13 @@ class TankShootState(EnemyState):
         # kill himself easily.
         else:
             self.enemy.jump()
+        if self.enemy.block_l:
+            self.enemy.x_speed = 0
+            self.enemy.rect.x += 1
+
+        if self.enemy.block_r:
+            self.enemy.x_speed = 0
+            self.enemy.rect.x -= 1
 
         # When the variable left_right is True, add the speed to the value of,
         # the tank's x position.
@@ -100,6 +107,7 @@ class TankShootState(EnemyState):
     def shoot(self):
         # When the x speed of the tank is less than 0, than the bullet,
         # will fly to the left direction.
+        # zorgen dat de bullet aan het einde van de loop afgeschoten wordt
         if self.enemy.x_speed < 0:
             self.enemy.add_bullet(self.enemy.rect.x, self.enemy.rect.y, True)
 
