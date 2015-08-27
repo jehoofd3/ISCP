@@ -167,7 +167,8 @@ class Enemy(object):
         # Call the update method of the current state.
         self.states.update()
 
-        # Richard Jongenburger
+        # Update the start_x with the shift_x every frame.
+        # So we keep track how much the x is changed since the creation.
         self.start_x -= self.shift_x
 
         # These two line of code are changing the image used for the colission.
@@ -280,12 +281,12 @@ class Enemy(object):
     # the enemies move with the payer speed.
     # Read in the camera class how the camera works.
     def move_with_map(self, shift_x):
-        #
+        # Set the global shift_x variable to the local shift_x variable.
         self.shift_x = shift_x
 
-        # Move the x of the enemies minues the shift_x variable.
+        # Move the x of the enemies minus the shift_x variable.
         self.rect.x -= shift_x
 
-        # Let all the bullets move as the player moves aswell.
+        # Let all the bullets move as the player moves as well.
         for b in self.bullet_list:
             b.move_with_map(shift_x)

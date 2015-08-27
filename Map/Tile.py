@@ -7,17 +7,17 @@ class Tile(pygame.sprite.Sprite):
 
     def __init__(self, x, y, image, image_type):
 
-        # To initialize pygame's Sprite class.
+        # To initialize the Sprite class of pygame.
         pygame.sprite.Sprite.__init__(self)
 
-        # Set the image.
+        # Set the image of the tile.
         self.image = image
 
         # Get a rectangle object of the image.
-        # It consist of (left, right, width, height).
+        # It consist of x, y, width, height variables.
         #
         # The rectangle that is returned by
-        # using get_rect will always be (0, 0, image_width, image_height).
+        # using get_rect will always be 0, 0, image_width, image_height.
         self.rect = self.image.get_rect()
 
         # Set the x and y coordinate of the tile.
@@ -29,6 +29,8 @@ class Tile(pygame.sprite.Sprite):
 
     # Move the x coordinate of the tile.
     # The x_speed is the number of units it should move.
+    # We do it minus the x_speed, because when the player moves to the right,
+    # the tiles needs to move to the left.
     def shift_x(self, x_speed):
         self.rect.x -= x_speed
 

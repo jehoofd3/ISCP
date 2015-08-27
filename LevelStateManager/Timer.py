@@ -7,13 +7,23 @@ import sqlite3
 
 class Timer:
 
+    # Array with images of the numbers.
     numbers = []
+
+    # Array with the images of the small numbers.
     numbers_small = []
+
+    # Array that represents the time.
     time = []
+
+    # Array that represents the best time.
     best_time = []
+
+    # Array with boolean values to test if the numbers can be drawn.
+    # They can't be drawn when the number is zero.
     can_draw = []
 
-    # Event id. This
+    # Event id.
     MILLISEC_PASSED_EVENT = pygame.USEREVENT + 1
 
     # Get images from database.
@@ -49,6 +59,7 @@ class Timer:
         # The first number is the event id. Every event in pygame has an id.
         # Because we want to make our own event,
         # we have to define an id ourself.
+        #
         # Pygame's documatation said the following :
         # It is best to use the value between
         # pygame.USEREVENT and pygame.NUMEVENTS.
@@ -115,7 +126,7 @@ class Timer:
             # Reset the time. So the time will reset when its over 999.
             self.reset_time()
 
-    # Reset the time.
+    # Reset all the numbers to zero.
     def reset_time(self):
         self.time[0] = 0
         self.time[1] = 0
@@ -128,7 +139,7 @@ class Timer:
         self.draw_timer()
         self.draw_best_time()
 
-    # This is the gray clock.
+    # Draw the gray clock.
     def draw_clock(self):
         Artist.draw_textures(self.clock, (770, 50))
 
@@ -200,12 +211,17 @@ class Timer:
                 x += 6
 
                 # Draw the last number.
-                Artist.draw_textures(self.numbers_small[self.best_time[i]],
-                                     (x, 715))
+                # Only when the number isn't zero.
+                # So we don't see the numbers before it.
+                if self.best_time[i] != 0:
+                    Artist.draw_textures(self.numbers_small[self.best_time[i]],
+                                         (x, 715))
                 break
 
             # Draw the first three numbers.
-            Artist.draw_textures(self.numbers[self.best_time[i]], (x, 700))
+            # Only when the number isn't zero too.
+            if self.best_time[i] != 0:
+                Artist.draw_textures(self.numbers[self.best_time[i]], (x, 700))
 
             # Set the space between the images.
             x += 30

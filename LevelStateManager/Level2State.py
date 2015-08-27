@@ -70,7 +70,7 @@ class Level2State(LevelState.LevelState):
 
         # Make the enemy objects and add every enemy to the enemy_list.
         # Every enemy takes a x and y coordinate as argument.(Spawn point)
-        # And the range it can walk on the x as.
+        # And the range it can walk on the x axis.
         # The fish takes a third argument.
         # You got two choices: 'Water' or 'Lava'.
         # According to the fish you want.

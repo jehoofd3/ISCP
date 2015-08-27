@@ -44,7 +44,7 @@ class Camera:
         if self.shift_start < self.map.player_x < self.shift_end:
             self.player.is_shifting = True
 
-            # Move all the tiles with the players x speed.
+            # Move all the tiles with the player's x speed.
             self.map.shift_map(player_x_speed)
 
             # Move all the enemies with the player's x speed.

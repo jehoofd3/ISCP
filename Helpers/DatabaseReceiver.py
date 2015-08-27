@@ -117,21 +117,28 @@ class DatabaseReceiver(object):
                 map_list[i] = int(end_string[i])
             return map_list
 
-    # Richard Jongenburger
+    # Save the time from the timer class in the database.
+    # We have one table with five columns.
+    # The column names are: hundreds , tens, ones, tenths and the level.
+    # We use the level column for the id.
     @staticmethod
-    def save_timer(hunderds, tens, ones, tenths, level):
-        DatabaseReceiver.cur.execute('UPDATE best_time SET hundreds =' + hunderds + ', tens =' + tens + ', ones =' + ones + ', tenths =' + tenths + ' WHERE Level =' + level)
+    def save_timer(hundreds, tens, ones, tenths, level):
+        # Update the time in the database with the variables.
+        DatabaseReceiver.cur.execute('UPDATE best_time SET hundreds =' + hundreds + ', tens =' + tens + ', ones =' + ones + ', tenths =' + tenths + ' WHERE Level =' + level)
         DatabaseReceiver.con.commit()
 
-    # Richard Jongenburger
+    # Load the time from the database.
     @staticmethod
     def load_timer(level):
+        # We use the SELECT query to get the time from the database.
         DatabaseReceiver.cur.execute('SELECT Hundreds, Tens, Ones, Tenths FROM best_time WHERE Level =' + level)
+        # Return the output from the database.
         return DatabaseReceiver.cur.fetchone()
 
-    # Richard Jongenburger
+    # Reset the time from the timer in the database.
     @staticmethod
     def reset_timer():
+        # Use the UPDATE query to set every variable to zero.
         DatabaseReceiver.cur.execute('UPDATE best_time SET Hundreds = 0, Tens = 0, Ones = 0, Tenths = 0')
 
     # This method is used by the other methods in this class.

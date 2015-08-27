@@ -3,6 +3,8 @@ from Helpers.Artist import *
 from LevelStateManager.LevelStateManager import *
 from Helpers.DatabaseReceiver import *
 
+# Author: Richard Jongenburger.
+
 
 class Boot(object):
 
@@ -34,7 +36,7 @@ class Boot(object):
             # when you call pyagme.event.get() method.
             # The pygame.quit argument ensures that only the
             # pygame.quit events are removed.
-            # The pygame.QUIT event means when you close the
+            # The pygame.QUIT event means that you close the
             # game window by clicking on the red cross.
             # So when there is a quit event. Exit the game loop.
             for event in pygame.event.get(pygame.QUIT):
@@ -50,6 +52,7 @@ class Boot(object):
             # Set the frames per seconds.
             clock.tick(60)
 
+        # Jeroen
         DatabaseReceiver.con.commit()
         DatabaseReceiver.con.close()
 
@@ -57,8 +60,9 @@ class Boot(object):
         pygame.quit()
         quit()
 
-# This makes the Boot method, the Main method.
+# This makes the Boot method like a Main method.
 # So that the Boot method is the starting point of the game.
 if __name__ == '__main__':
+    # Call the constructor of this class.
     Boot().__init__()
 

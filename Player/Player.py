@@ -32,8 +32,8 @@ class Player(pygame.sprite.Sprite):
 
     # These two booleans represent if the player can move to the left
     # and to ther right. It's used by the collider.
-    canGoRight = False
-    canGoLeft = False
+    can_go_right = False
+    can_go_left = False
 
     # These booleans are to determine if there is collision above the player
     # and under the player.
@@ -57,18 +57,18 @@ class Player(pygame.sprite.Sprite):
     # x axis.
     x_speed = 0
 
-    # Richard Jongenburger
-    x_speed_standing_still = 0
-
+    # This variable is used to let the player move on the y axis.
     y_speed = 0
 
-    # Richard Jongenburger
+    # Here comes the player's spawn point when we create the player.
     start_x = 0
     start_y = 0
-    is_shifting = False
-    sliding = False
 
-    # Richard Jongenburger
+    # Variable that represent if the map is shifting or not.
+    # It's used to make the camera work.
+    is_shifting = False
+
+    # Get the health images from the database.
     health_image_full = DatabaseReceiver.get_player_img("Health_Full")
     health_image_empty = DatabaseReceiver.get_player_img("Health_Empty")
 
@@ -85,10 +85,11 @@ class Player(pygame.sprite.Sprite):
     player_left_image = None
     player_right_image = None
 
-    # Richard Jongenburger
+    # Variable to hold the jump sound file.
     jump_sound = None
 
-    # Richard Jongenburger
+    # Variable that represents if the player collides with a snow or ice tile.
+    # It's set in the Collider class.
     player_on_snow = False
     player_on_ice = False
 
@@ -97,8 +98,15 @@ class Player(pygame.sprite.Sprite):
 
         # Loop through the lives array.
         for i in range(0, len(self.lives)):
+            # These statements are used to fill the lives array with
+            # full or empty live images. It's filled by using the player_health
+            # variable in LevelStateManager class.
             # First we do the player's health int variable minus one.
-            # We do this because the player's he
+            # We do this because the player's health variable in the
+            # LevelStateManager class start from 1.
+            # And the array here start from 0.
+            # So the array will be filled with health_image_full images
+            # until the value of player_health - 1 is reached.
             if i <= (self.level_state_manager.player_health - 1):
                 self.lives[i] = self.health_image_full
             else:
@@ -247,8 +255,12 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self):
         x = 0
+
+        # Draw the lives.
         for i in range(0, len(self.lives)):
             Artist.draw_textures(self.lives[i], (x, 50))
+
+            # Set the space between the lives.
             x += 55
 
         # This method draws the player.
@@ -291,11 +303,17 @@ class Player(pygame.sprite.Sprite):
         self.jumps_remaining -= 1
 
     def basic_movement(self):
+        # If the camera isn't shifting, we use the x axis on the player.
+        # And we add the player's x with the player's x_speed every frame.
+        # So the player can move.
         if not self.is_shifting:
             self.rect.x += self.x_speed
 
+        # Increase the player's y with the y_speed every frame.
+        # So the player can move on the y axis.
         self.rect.y -= self.y_speed
 
+        # Set the x_speed back to zero after we added the x_speed.
         self.x_speed = 0
 
     def gravity(self):

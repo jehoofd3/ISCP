@@ -8,7 +8,7 @@ from Helpers.DatabaseReceiver import *
 #
 # The tilegrid will create the map based of a txt.
 # We made these txt with our editor made in java.
-# More info in the report.
+# More info in our report.
 
 # Author: Richard Jongenburger
 
@@ -36,22 +36,26 @@ class TileGrid():
         # will empty when you create a new map.
         # Otherwise it just adds to the existing map group
         # and the sprites of the previous level are still in the container.
+        # So it's used to ensure that only the tiles of one level is in the
+        # container.
         self.map_group.empty()
 
-        # Help variable.
         counter = 0
+        # Loop through every row and column.
         for i in range(self.columns):
             for j in range(self.rows):
                 # Makes sure that the image type
                 # is back to empty at each iteration.
                 image_type = ''
 
-                # The level_list exist out (60 rows x 12 columns) 720 items.
+                # The level_list exist out of (60 rows x 12 columns) 720 items.
                 # Each item exist of a number that
                 # corresponds to the names of the images in the database.
+                # If the number is one or zero, it means that there
+                # isn't a tile with an image on that place.
                 # Ex: 80.jpg is a image of lava.
                 # Each iteration we get an item
-                # of level_list and put it in image_number
+                # of level_list and put it in image_number.
                 image_number = level_list[counter]
 
                 # Add one to counter after each iteration.
@@ -90,6 +94,8 @@ class TileGrid():
                 else:
                     # Make a Tile with the specified x, y coordinate,
                     # the image and the type of the image.
+                    # We do the j and i times 64, because our tiles exist of
+                    # 64 x 64 pixels.
                     # After that we add it to the map_group container.
                     self.map_group.add(Tile(j * 64, i * 64, DatabaseReceiver.
                                             get_map_img(str(image_number)),
@@ -119,5 +125,7 @@ class TileGrid():
     def get_group():
         return TileGrid.map_group
 
+    # This method is used to set the player_x variable to
+    # the player_spawn_x variable when a new level is created.
     def set_player_x(self, player_spawn_x):
         self.player_x = player_spawn_x

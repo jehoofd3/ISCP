@@ -118,6 +118,6 @@ class Bullet(object):
         # This line of code pushes the BulletExplosionState.
         self.states = BulletExplosionState(self)
 
-    # Richard Jongenburger crap code
+    # Move the bullets x coordinate with the shift_x variable.
     def move_with_map(self, shift_x):
         self.rect.x -= shift_x

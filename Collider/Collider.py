@@ -9,15 +9,19 @@ from Helpers.Artist import *
 # Those images have a shape of a bar.
 # We let those 4 images move along with the player.
 # (We do all of this in the player class)
-# In this class we check with each image to which tiles it has collision.
-# And restrict the player's movement accordingly.
+# In this class we check with each image to which tiles it has collision with.
+# And we restrict the player's movement accordingly.
 
 class Collider(object):
 
+    # Make a reference to the LevelStateManager.
+    # This is used to open the next level when the player collides with the
+    # exit sign.
     level_state_manager = None
-    main_menu = None
+
     range = 250
-    player_group = pygame.sprite.Group()
+
+    player_group = None
     player_collision_img = []
 
     # Temporary variable to hold boolean values for the collision.
@@ -26,7 +30,7 @@ class Collider(object):
     # Under collision, Up collision, Left collision, Right collision.
     is_collision_temp = [False, False, False, False]
 
-    # The constructor takes the player, map, enemy_list and
+    # The constructor needs the player, map, enemy_list and
     # the level_state_manager.
     def __init__(self, player, map, enemy_list, level_state_manager):
         # Make a container to hold the player sprite.
@@ -43,21 +47,29 @@ class Collider(object):
         # Add the player to the player_group container.
         self.player_group.add(player)
 
-        # Adding the four collision images to a list.
+        # Adding the four collision images to the player_collision_img array.
         self.player_collision_img.append(self.player.player_under_image)
         self.player_collision_img.append(self.player.player_up_image)
         self.player_collision_img.append(self.player.player_left_image)
         self.player_collision_img.append(self.player.player_right_image)
 
-        # Update the player collider.
+        # Update the enemy collider.
         self.update_enemy_collider()
 
     def update(self):
-        # Call all the necessary methods of this class.
+        # Method to check if there is collision between
+        # the player and the tiles.
         self.player_collision_map_objects()
+
+        # Check if there is collision with the player_under_image and the
+        # tiles.
         self.player_collision_under_map_objects()
+
+        # Method to set the collision boolean value.
+        # (collision_up, collision_down, can_go_left and can_go_right)
         self.player_collision()
 
+        # jeroen
         self.enemy_collision_map_objects()
         self.enemy_collision()
 
@@ -68,20 +80,24 @@ class Collider(object):
         # to the left when the player's x coordinate is 0.
         # So the player can't go out of the map.
         if self.player.rect.x <= 0:
-            self.player.canGoLeft = False
+            self.player.can_go_left = False
 
-        # Make sure that the player can't go to the right.
-        # when the player's x coordinate is bigger then the screen width.
+        # Make sure that the player can't go to the right,
+        # when the player's x coordinate is bigger then the screen width
+        # minus the player's width (64).
         if self.player.rect.x >= Artist.get_screen_width() - 64:
-            self.player.canGoRight = False
+            self.player.can_go_right = False
 
     # Collision between the player and all the tiles of the map.
     def player_collision_map_objects(self):
         # This pygame methods first checks
         # which tiles with the player collides.
         # Then he returns a list of tiles that collides with the player.
-        blocks_hit_list = pygame.sprite.spritecollide\
-            (self.player, self.map, False)
+        # The first arguments needs a sprite, the second argument needs a
+        # sprite group. The third argument makes sure that the tiles it
+        # collides with, won't be removed from the map list.
+        blocks_hit_list = pygame.sprite.spritecollide(
+            self.player, self.map, False)
 
         # Loop through every tile object that collides with the player.
         for block in blocks_hit_list:
@@ -99,16 +115,20 @@ class Collider(object):
         # This pygame methods first checks which tiles
         # with that player under image collides.
         # Then he returns a list of tiles that collides with the player.
-        blocks_hit_list = pygame.sprite.spritecollide\
-            (self.player.player_under_image, self.map, False)
+        # The first arguments needs a sprite, the second argument needs a
+        # sprite group. The third argument makes sure that the tiles it
+        # collides with, won't be removed from the map list.
+        blocks_hit_list = pygame.sprite.spritecollide(
+            self.player.player_under_image, self.map, False)
 
         # Loop through every tile object that
-        # collides with the player under image.
+        # collides with the player_under_image.
         for block in blocks_hit_list:
             # Set player_on_snow to true
-            # when there is collision with the an ice image.
+            # when there is collision with an snow image.
             if block.image_type == 'Snow':
                 self.player.player_on_snow = True
+            # Set it to false when there isn't collision between them.
             else:
                 self.player.player_on_snow = False
 
@@ -116,6 +136,7 @@ class Collider(object):
             # when there is collision with the an ice image.
             if block.image_type == 'Ice':
                 self.player.player_on_ice = True
+            # Set it to false when there isn't collision between them.
             else:
                 self.player.player_on_ice = False
 
@@ -139,18 +160,21 @@ class Collider(object):
             self.player.set_sliding(-8)
 
         # If the player is not on snow or ice, set the player speed on 4.
-        # 4 is normal speed.
+        # 4 is the normal speed.
         if not self.player.player_on_ice and not self.player.player_on_snow:
             self.player.set_sliding(4)
 
     def player_collision(self):
-        # Loop through every image in player_collision_img.
+        # Loop through every image in player_collision_img array.
         for i in range(len(self.player_collision_img)):
-            # This pygame methods first checks
-            # which tiles collides with each image.
+            # This pygame methods first checks which tiles collides with
+            # each image.
             # Then he returns a list of tiles that collides with the image.
-            blocks_hit_list = pygame.sprite.spritecollide\
-                (self.player_collision_img[i], self.map, False)
+            # The first arguments needs a sprite, the second argument needs a
+            # sprite group. The third argument makes sure that the tiles it
+            # collides with, won't be removed from the map list.
+            blocks_hit_list = pygame.sprite.spritecollide(
+                self.player_collision_img[i], self.map, False)
 
             # If the list isn't empty, set the boolean
             # to true. So we know there is collision with that image.
@@ -161,11 +185,13 @@ class Collider(object):
             else:
                 self.is_collision_temp[i] = False
 
-        # Set the boolean values that's are calculated in teh for loop.
+        # Set the boolean values that's are calculated in the for loop.
         self.player.collision_under = self.is_collision_temp[0]
         self.player.collision_up = self.is_collision_temp[1]
-        self.player.canGoLeft = self.is_collision_temp[2]
-        self.player.canGoRight = self.is_collision_temp[3]
+
+        # We need the opposite of the boolean values so we use the not keyword.
+        self.player.can_go_left = not self.is_collision_temp[2]
+        self.player.can_go_right = not self.is_collision_temp[3]
 
     def enemy_collision_map_objects(self):
         for enemy in self.enemy_list:

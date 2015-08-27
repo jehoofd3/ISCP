@@ -30,14 +30,24 @@ class PlayerDieState(PlayerState):
         self.player.basic_movement()
         self.player.gravity()
 
-        # Kan als het goed is weg.
-       # self.player.collision_under = False
-
-        # Richard Jongenburger crap code
+        # If the player's bottom (y coordinate) is bigger then 960.
+        # So it's down on the screen.
+        # Let the player die. And open or reset a level.
         if self.player.rect.bottom >= 960:
+            # If the player don't have lives anymore.
+            # Open level 1.
             if self.player.lives[1] == self.player.health_image_empty:
+                # Set the player's health back to 3.
                 self.player.level_state_manager.player_health = 3
+
+                # Set the level to 1.
                 self.player.level_state_manager.level = 1
+
+                # Open level 1.
                 self.player.level_state_manager.open_level1()
+
+            # If the do have lives left,
+            # after the player died.
+            # reset the level.
             else:
                 self.player.level_state_manager.reset_level()
