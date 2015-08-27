@@ -4,7 +4,7 @@ from Helpers.DatabaseReceiver import *
 
 # This is a class that creates the map. It also give a type to certain images.
 # Every level exists out of a tilegrid where every tile is a Sprite.
-# We use 60 rows and 12 columns of tiles for every level.
+# We use 60 columns and 12 rows of tiles for every level.
 #
 # The tilegrid will create the map based of a txt.
 # We made these txt with our editor made in java.
@@ -21,8 +21,8 @@ class TileGrid():
     background_image = None
 
     # This is the number of rows and columns in the map.
-    rows = 60
-    columns = 12
+    rows = 12
+    columns = 60
 
     # Player's x coordinate.
     player_x = 0
@@ -42,13 +42,13 @@ class TileGrid():
 
         counter = 0
         # Loop through every row and column.
-        for i in range(self.columns):
-            for j in range(self.rows):
+        for i in range(self.rows):
+            for j in range(self.columns):
                 # Makes sure that the image type
                 # is back to empty at each iteration.
                 image_type = ''
 
-                # The level_list exist out of (60 rows x 12 columns) 720 items.
+                # The level_list exist out of (12 columns x 60 rows) 720 items.
                 # Each item exist of a number that
                 # corresponds to the names of the images in the database.
                 # If the number is one or zero, it means that there
