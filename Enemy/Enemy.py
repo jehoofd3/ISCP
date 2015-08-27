@@ -38,7 +38,10 @@ class Enemy(object):
     # list so they can be updated and drawn.
     bullet_list = []
 
-    # Richard Jongenburger
+    # This is a variable that's needed to keep track on how much
+    # X the enemies have moves since their spawn.
+    # So everytime the enemies move, this variable will increase.
+    # This is used by the camera.
     shift_x = 0
 
     # This method is called when an enemy is made.
@@ -270,10 +273,19 @@ class Enemy(object):
         # When this method is called, the enemy will push its DieState
         self.states = EnemyDieState(self)
 
-    # Richard Jongenburger
+    # This method is needed for the camera.
+    # It takes the shift_x as an argument.
+    # That's the number of units the enemies will shift on the X as.
+    # It makes it so when the player moves,
+    # the enemies move with the payer speed.
+    # Read in the camera class how the camera works.
     def move_with_map(self, shift_x):
+        #
         self.shift_x = shift_x
+
+        # Move the x of the enemies minues the shift_x variable.
         self.rect.x -= shift_x
 
+        # Let all the bullets move as the player moves aswell.
         for b in self.bullet_list:
             b.move_with_map(shift_x)

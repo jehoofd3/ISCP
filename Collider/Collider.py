@@ -26,14 +26,21 @@ class Collider(object):
     # Under collision, Up collision, Left collision, Right collision.
     is_collision_temp = [False, False, False, False]
 
+    # The constructor takes the player, map, enemy_list and
+    # the level_state_manager.
     def __init__(self, player, map, enemy_list, level_state_manager):
+        # Make a container to hold the player sprite.
         self.player_group = pygame.sprite.Group()
+
+        # Hold the 4 collider images.
         self.player_collision_img = []
 
         self.player = player
         self.map = map
         self.enemy_list = enemy_list
         self.level_state_manager = level_state_manager
+
+        # Add the player to the player_group container.
         self.player_group.add(player)
 
         # Adding the four collision images to a list.
@@ -41,8 +48,8 @@ class Collider(object):
         self.player_collision_img.append(self.player.player_up_image)
         self.player_collision_img.append(self.player.player_left_image)
         self.player_collision_img.append(self.player.player_right_image)
-        self.player_hulp = [None, None, None, None]
 
+        # Update the player collider.
         self.update_enemy_collider()
 
     def update(self):
@@ -154,7 +161,7 @@ class Collider(object):
             else:
                 self.is_collision_temp[i] = False
 
-        # Set the boolean values.
+        # Set the boolean values that's are calculated in teh for loop.
         self.player.collision_under = self.is_collision_temp[0]
         self.player.collision_up = self.is_collision_temp[1]
         self.player.canGoLeft = self.is_collision_temp[2]

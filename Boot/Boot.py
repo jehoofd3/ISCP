@@ -52,6 +52,8 @@ class Boot(object):
 
         DatabaseReceiver.con.commit()
         DatabaseReceiver.con.close()
+
+        # Quit the game when the endless loop ends.
         pygame.quit()
         quit()
 

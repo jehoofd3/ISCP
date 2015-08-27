@@ -30,14 +30,22 @@ class Player(pygame.sprite.Sprite):
     # an can be set by the collider or the player himself.
     dead = None
 
-    # Richard Jongenburger
+    # These two booleans represent if the player can move to the left
+    # and to ther right. It's used by the collider.
     canGoRight = False
     canGoLeft = False
+
+    # These booleans are to determine if there is collision above the player
+    # and under the player.
     collision_under = False
     collision_up = False
 
-    # Richard Jongenburger
+    # Variable used to place object in the middle of the screen.
     half_screen_width = Artist.get_half_screen_width()
+
+    # Variable with a string that can has 2 values: 'Left' or 'Right'.
+    # It is the direction the player is facing.
+    # It's used in the collider for the sliding on snow or ice.
     face_direction = 'Right'
 
     # The jumps_remaining variable is an integer and controls the player's,
@@ -64,7 +72,7 @@ class Player(pygame.sprite.Sprite):
     health_image_full = DatabaseReceiver.get_player_img("Health_Full")
     health_image_empty = DatabaseReceiver.get_player_img("Health_Empty")
 
-    # Richard Jongenburger
+    # This array represents the lives the player has.
     lives = ['', '', '']
 
     level_state_manager = None
@@ -85,15 +93,18 @@ class Player(pygame.sprite.Sprite):
     player_on_ice = False
 
     def __init__(self, x, y, level_state_manager):
-        # Richard Jongenburger
         self.level_state_manager = level_state_manager
+
+        # Loop through the lives array.
         for i in range(0, len(self.lives)):
+            # First we do the player's health int variable minus one.
+            # We do this because the player's he
             if i <= (self.level_state_manager.player_health - 1):
                 self.lives[i] = self.health_image_full
             else:
                 self.lives[i] = self.health_image_empty
 
-        # Richard Jongenburger ik weet niet wat dit doet, heb jij dit gemaakt?
+        # Initialize the sprite class. (pygame library)
         pygame.sprite.Sprite.__init__(self)
 
         # self.rect is a list of four ints x, y, width and height.
@@ -117,7 +128,9 @@ class Player(pygame.sprite.Sprite):
         self.start_x = x
         self.start_y = y
 
-        # Richard Jongenburger
+        # Call the sound method from the pygame.mixer class.
+        # It needs the file of the mp3 or wav.
+        # We put it in the jump_sound variable.
         self.jump_sound = pygame.mixer.Sound('../Data/Music/Levels/Jump.wav')
 
         # The speed integer is used to calculate the speed of the player,
@@ -258,11 +271,19 @@ class Player(pygame.sprite.Sprite):
                              self.player_right_image.rect)
 
     def jump(self):
-        # Richard Jongenburger
+        # Set the player_snow and player_on_ice to false when te player jumps.
+        # Because the player is in the air.
         self.player_on_snow = False
         self.player_on_ice = False
+
+        # Set the speed back to 4. Four is the normal speed.
         self.set_sliding(4)
 
+        # This fixes the bug that you get double jump sounds when you die.
+        # Because when you die you get a jump sound and when you jump
+        # you get a jump sound.
+        # pygame.mixer.get_busy() checks if the mixer is busy.
+        # If not, play the jump sound.
         if not pygame.mixer.get_busy():
             self.jump_sound.play()
 
@@ -291,5 +312,8 @@ class Player(pygame.sprite.Sprite):
     def get_player_x(self):
         return self.rect.x
 
+    # Set the speed on which the player should be sliding.
+    # It's used when the player is standing on snow or ice
+    # to make a sliding effect.
     def set_sliding(self, speed):
             self.states.player_slide_speed = speed
