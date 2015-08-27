@@ -60,7 +60,7 @@ class Level3State(LevelState.LevelState):
         # jeroen
         self.background = Background(
             DatabaseReceiver.get_level_data(
-                "IMAGE", "Level3", "BackgroundDrie"), 0, 0)
+                "IMAGE", "Level3", "BackgroundDrie"))
 
     def run(self):
         self.map.run()

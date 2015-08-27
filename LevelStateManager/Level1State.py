@@ -70,7 +70,7 @@ class Level1State(LevelState.LevelState):
         # jeroen
         self.background = Background(
             DatabaseReceiver.get_level_data(
-                "IMAGE", "Level1", "BackgroundEen"), 0, 0)
+                "IMAGE", "Level1", "BackgroundEen"))
 
         self.cloud_images.append(img.Image(
             DatabaseReceiver.get_level_data(

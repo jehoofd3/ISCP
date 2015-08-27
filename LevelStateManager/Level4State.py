@@ -55,7 +55,7 @@ class Level4State(LevelState.LevelState):
         # Jeroen
         self.background = Background(
             DatabaseReceiver.get_level_data(
-                "IMAGE", "Level4", "background1"), 0, 0)
+                "IMAGE", "Level4", "background1"))
 
         # Jeroen
         self.background_text = DatabaseReceiver.get_level_data(
