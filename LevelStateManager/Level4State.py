@@ -7,7 +7,7 @@ from MainMenu.MainMenu import *
 from Parallax.Background import *
 from Helpers.DatabaseReceiver import *
 
-# Author: Richard Jongenburger.
+# Author: Richard Jongenburger
 
 
 class Level4State(LevelState.LevelState):
