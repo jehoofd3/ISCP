@@ -1,7 +1,7 @@
 class EnemyAnimation(object):
 
     # This constructor needs al the images of an enemy.
-    # walk_l and walk_r are lists containing the images for,
+    # walk_l and walk_r are lists containing the images for
     # the walk animation.
     # The dead_l and dead_r are the images for the dead animations.
     def __init__(self, walk_l, walk_r, dead_l, dead_r):
@@ -19,18 +19,18 @@ class EnemyAnimation(object):
         # (because it sends an 'empty' image)
         self.texture = self.walk_l[0]
 
-        # The frame_cap variable is an integer used to calculate,
+        # The frame_cap variable is an integer used to calculate
         # the image.
-        # It define the maximal amount of frames that are calculated,
+        # It define the maximal amount of frames that are calculated
         # every second.
         # We cap the max frames in the Boot class (clock.tick(60)).
         self.frame_cap = 60
 
-        # This variable tells the update function after how many frames,
+        # This variable tells the update function after how many frames
         # he needs to change the image.
-        # In modern game engines its used to show all the images in,
+        # In modern game engines its used to show all the images in
         # 1 second (60 frames).
-        # So the tex_switch divide the frame_cap by the length of,
+        # So the tex_switch divide the frame_cap by the length of
         # the list of images.
         # If there are two images in walk_l, the update function
         # changes the image after 30 frames (0.5 seconds).
@@ -39,7 +39,8 @@ class EnemyAnimation(object):
         # This variable counts the amount of frames.
         self.frame_count = 0
 
-        # The left_right boolean checks the moving direction of the enemy.
+        # The left_right boolean checks the moving direction
+        # of the enemy.
         # It is used to send the dead image.
         self.left_right = None
 
@@ -79,7 +80,7 @@ class EnemyAnimation(object):
     def right_walk(self):
         # This for loop loops trough the walk_r list.
         for i in range(self.length_list):
-            # If the current amount of frames divided by tex_switch,
+            # If the current amount of frames divided by tex_switch
             # is equal to the number of image in walk_r.
             if self.frame_count / self.tex_switch == i:
                 # Change texture to the image in walk_r
@@ -88,7 +89,7 @@ class EnemyAnimation(object):
     def left_walk(self):
         # This for loop loops trough the walk_l list.
         for i in range(self.length_list):
-            # If the current amount of frames divided by tex_switch,
+            # If the current amount of frames divided by tex_switch
             # is equal to the number of image in walk_l.
             if self.frame_count / self.tex_switch == i:
                 # Change texture to the image in walk_l.

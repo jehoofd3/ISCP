@@ -35,14 +35,18 @@ class Level4State(LevelState.LevelState):
     def __init__(self, level_state_manager, main_menu):
         self.next_lvl_list = []
         self.enemy_list = []
-        # jeroen
+
+        # The map variable is a TileGrid object.
+        # The map contains an multidimensional array of tiles.
+        # This creates the map
         self.map = TileGrid(DatabaseReceiver.get_level_data
                             ("TXT", "Level4", "Level4"))
         self.main_menu = main_menu
         self.LevelStateManager = level_state_manager
 
         # Create a player object with the x and y
-        # value in which the player should spawn and the LevelStateManager.
+        # value in which the player should spawn and the
+        # LevelStateManager.
         self.player = Player(self.player_spawn_x,
                              self.player_spawn_y,
                              level_state_manager)
@@ -52,12 +56,16 @@ class Level4State(LevelState.LevelState):
         # that the map knows the x coordinate of the spawn point.
         self.map.set_player_x(self.player_spawn_x)
 
-        # Jeroen
+        # This variable creates the background of the level.
+        # It uses the DatabaseReceiver to get the image from,
+        # the database.
         self.background = Background(
             DatabaseReceiver.get_level_data(
                 "IMAGE", "Level4", "background1"))
 
-        # Jeroen
+        # This variable creates the background of the level.
+        # It uses the DatabaseReceiver to get the image from,
+        # the database.
         self.background_text = DatabaseReceiver.get_level_data(
             "IMAGE", "Level4", "YouCantWin")
 
@@ -65,12 +73,13 @@ class Level4State(LevelState.LevelState):
         self.enemy_list = []
 
         # Make the enemy objects and add every enemy to the enemy_list.
-        # Every enemy takes a x and y coordinate as argument.(Spawn point)
+        # Every enemy takes a x and y coordinate as argument.
+        # (Spawn point)
         # And the range it can walk on the x axis.
         # The fish takes a third argument.
         # You got two choices: 'Water' or 'Lava'.
         # According to the fish you want.
-        self.enemy_list.append(Slime(64, 100))
+        self.enemy_list.append(Slime(80, 100))
         self.enemy_list.append(Slime(95, 400))
         self.enemy_list.append(Slime(832, 150))
         self.enemy_list.append(Slime(820, 400))
@@ -82,7 +91,8 @@ class Level4State(LevelState.LevelState):
 
         # Add a collider for the enemies and the player.
         # It takes the player, map group(tiles),
-        # an array with all the enemy objects, Reference to LevelStateManager
+        # an array with all the enemy objects, Reference to
+        # LevelStateManager
         # as arguments.
         self.collider = Collider(self.player, self.map.get_group(),
                                  self.enemy_list, self.LevelStateManager)
@@ -104,8 +114,6 @@ class Level4State(LevelState.LevelState):
         self.timer.load_best_time(1)
 
     def update(self):
-        # Update the camera with the player's x speed.
-        self.camera.update_camera(self.player.x_speed)
         self.timer.update()
 
         self.player.update()
@@ -118,10 +126,6 @@ class Level4State(LevelState.LevelState):
         self.collider.update()
 
         self.background.update(self.player.x_speed, 0, self.player.rect.x)
-
-        # Update the clouds.
-        for image in self.cloud_images:
-            image.update(self.player.x_speed, 0, self.player.rect.x)
 
         # Opens the MainMenu when you press on the escape key.
         if pygame.key.get_pressed()[pygame.K_ESCAPE]:

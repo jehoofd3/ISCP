@@ -13,7 +13,7 @@ from Helpers.DatabaseReceiver import *
 # Author: Richard Jongenburger
 
 
-class TileGrid():
+class TileGrid(object):
     # Make a pygame sprite group.
     # This group is a container for Sprites.
     map_group = pygame.sprite.Group()
@@ -35,8 +35,10 @@ class TileGrid():
         # We do this so that the map_group
         # will empty when you create a new map.
         # Otherwise it just adds to the existing map group
-        # and the sprites of the previous level are still in the container.
-        # So it's used to ensure that only the tiles of one level is in the
+        # and the sprites of the previous level are still in
+        # the container.
+        # So it's used to ensure that only the tiles of one level
+        # is in the
         # container.
         self.map_group.empty()
 
@@ -48,9 +50,11 @@ class TileGrid():
                 # is back to empty at each iteration.
                 image_type = ''
 
-                # The level_list exist out of (12 columns x 60 rows) 720 items.
+                # The level_list exist out of (12 columns x 60 rows)
+                # 720 items.
                 # Each item exist of a number that
-                # corresponds to the names of the images in the database.
+                # corresponds to the names of the images in
+                # the database.
                 # If the number is one or zero, it means that there
                 # isn't a tile with an image on that place.
                 # Ex: 80.jpg is a image of lava.
@@ -94,8 +98,8 @@ class TileGrid():
                 else:
                     # Make a Tile with the specified x, y coordinate,
                     # the image and the type of the image.
-                    # We do the j and i times 64, because our tiles exist of
-                    # 64 x 64 pixels.
+                    # We do the j and i times 64, because our tiles
+                    # exist of 64 x 64 pixels.
                     # After that we add it to the map_group container.
                     self.map_group.add(Tile(j * 64, i * 64, DatabaseReceiver.
                                             get_map_img(str(image_number)),

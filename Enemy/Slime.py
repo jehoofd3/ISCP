@@ -12,8 +12,8 @@ class Slime(Enemy):
     # He needs a list to store them.
     snake_list = []
 
-    # This variable is used by the collider to check if the slime has shoot,
-    # a new snake.
+    # This variable is used by the collider to check if the slime has
+    # shoot a new snake.
     # If he shoots one, this number add up.
     snake_hulp = 0
 
@@ -24,31 +24,32 @@ class Slime(Enemy):
         self.w_l = []
         self.w_r = []
 
-        # This variables are images and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variables are images and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.OB = DatabaseReceiver.get_enemy_img("Slime", "Slime_OB")
         self.LR = DatabaseReceiver.get_enemy_img("Slime", "Slime_LR")
 
-        # These methods are stored in the DatabaseReceiver class, all the,
-        # images are stored in the database.
-        # These methods get them from the database and add them to the,
-        # image lists.
+        # These methods are stored in the DatabaseReceiver class,
+        # all the images are stored in the database.
+        # These methods get them from the database and add them to
+        # the image lists.
         self.w_l.append(DatabaseReceiver.get_enemy_img("Slime", "slime_0"))
         self.w_l.append(DatabaseReceiver.get_enemy_img("Slime", "slime_1"))
         self.w_r.append(DatabaseReceiver.get_enemy_img("Slime", "slime_0"))
         self.w_r.append(DatabaseReceiver.get_enemy_img("Slime", "slime_1"))
         self.d_l = DatabaseReceiver.get_enemy_img("Slime", "slime_d")
+        self.d_r = DatabaseReceiver.get_enemy_img("Slime", "slime_d")
 
-        # This game is object oriented and the class extends from Enemy,
+        # This game is object oriented and the class extends from Enemy
         # so its required
         # to call the super class by using the super() method.
         super(Slime, self).__init__(x, y, 0, self.w_l, self.w_r, self.d_l,
                                     self.d_r, self.OB, self.LR)
 
-        # When the fly is created this line of code changes the states object,
-        # in enemy into SlimeNormalState.
+        # When the fly is created this line of code changes the states
+        # object in enemy into SlimeNormalState.
         self.states = SlimeNormalState(self)
 
     # This method adds a snake to the snake_list.
@@ -58,6 +59,7 @@ class Slime(Enemy):
         self.snake_list.append(Snake(x, y, 0))
 
     # This method returns a snake back to its caller.
-    # With variable index, the caller can get a specific index of the list.
+    # With variable index, the caller can get a specific index
+    # of the list.
     def get_snake(self, index):
         return self.snake_list[index]

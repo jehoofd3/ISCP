@@ -7,11 +7,13 @@ from LevelStateManager.LevelState import *
 
 
 class OptionMenu(LevelState):
-    # We need a mouse position variable to know whether we clicked on a sprite.
+    # We need a mouse position variable to know whether we
+    # clicked on a sprite.
     mouse_pos = ''
 
     # Save the main menu reference.
-    # So we don't create a new MainMenu object everytime we open the main menu.
+    # So we don't create a new MainMenu object everytime we open the
+    # main menu.
     main_menu = None
 
     # Create a reference to the LevelStateManager
@@ -209,7 +211,8 @@ class OptionMenu(LevelState):
                 # with the check_box sprite.
                 if self.options_sprites['check_box'].rect.collidepoint(
                         self.mouse_pos):
-                    # If the window isn't fullscreen, make it fullscreen.
+                    # If the window isn't fullscreen, make it
+                    # fullscreen.
                     if not self.fullscreen_on:
                         self.fullscreen_on = True
                         # Sets the check box checked.
@@ -231,7 +234,8 @@ class OptionMenu(LevelState):
                         pygame.display.set_mode((self.screen_width,
                                                  self.screen_height))
 
-                # Check if the back button collides with the mouse position.
+                # Check if the back button collides with the mouse
+                # position.
                 # Switch the current state in levelStateManger
                 # back to the mainMenu state.
                 if self.options_sprites['back'].rect.collidepoint(

@@ -8,14 +8,16 @@ import sys
 # Author: Richard Jongenburger
 
 
-class LevelStateManager:
+class LevelStateManager(object):
     # Explanation of the LevelStateManager:
     # This class controls and keeps track of the current level state.
     # The main purpose of this class
     # is to call the run method when a new state is created.
-    # And to call the update and draw method every frame of the current level.
+    # And to call the update and draw method every frame of the
+    # current level.
     #
-    # There are the following states: MainMenu, OptionsMenu, Level1State,
+    # There are the following states: MainMenu, OptionsMenu,
+    # Level1State,
     # Level2State, Level3State, Level4State, EndDemo.
     # The states variable holds the current state.
     #
@@ -40,11 +42,13 @@ class LevelStateManager:
     player_health = 3
 
     # Variable for the current jump sound volume.
-    # So we can set that according to the music level from the option menu.
+    # So we can set that according to the music level from the
+    # option menu.
     jump_sound_volume = 0
 
     # Variable to test whether you can save the best time.
-    # It's needed cause you can't save it when you skip the level by pressing E
+    # It's needed cause you can't save it when you skip the level
+    # by pressing E
     # on your keyboard.
     can_save_best_time = True
 
@@ -103,7 +107,8 @@ class LevelStateManager:
             self.states.timer.save_best_time(self.level)
         else:
             # Set the can_save_best_time variable
-            # back to True. So if you can't save the best time this level,
+            # back to True. So if you can't save the best time
+            # this level,
             # you can save the best time the next level.
             self.can_save_best_time = True
         # Increase the level.
@@ -148,6 +153,7 @@ class LevelStateManager:
     def set_jump_sound(self, volume):
         self.jump_sound_volume = volume
 
-        # If the current state isn't EndDemo, set the jump sound volume level.
+        # If the current state isn't EndDemo, set the jump sound
+        # volume level.
         if not isinstance(self.states, EndDemo):
             self.states.player.jump_sound.set_volume(volume)

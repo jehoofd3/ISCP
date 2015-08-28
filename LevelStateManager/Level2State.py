@@ -42,14 +42,17 @@ class Level2State(LevelState.LevelState):
     def __init__(self, level_state_manager, main_menu):
         self.enemy_list = []
 
-        # jeroen
+        # The map variable is a TileGrid object.
+        # The map contains an multidimensional array of tiles.
+        # This creates the map
         self.map = TileGrid(DatabaseReceiver.get_level_data
                             ("TXT", "Level2", "Level2"))
         self.main_menu = main_menu
         self.LevelStateManager = level_state_manager
 
         # Create a player object with the x and y
-        # value in which the player should spawn and the LevelStateManager.
+        # value in which the player should spawn and the
+        # LevelStateManager.
         self.player = Player(self.player_spawn_x,
                              self.player_spawn_y,
                              level_state_manager)
@@ -59,7 +62,9 @@ class Level2State(LevelState.LevelState):
         # that the map knows the x coordinate of the spawn point.
         self.map.set_player_x(self.player_spawn_x)
 
-        # jeroen
+        # This variable creates the background of the level.
+        # It uses the DatabaseReceiver to get the image from,
+        # the database.
         self.background = Background(
             DatabaseReceiver.get_level_data(
                 "IMAGE", "Level2", "BackgroundTwee"))
@@ -69,7 +74,8 @@ class Level2State(LevelState.LevelState):
         self.enemy_list = []
 
         # Make the enemy objects and add every enemy to the enemy_list.
-        # Every enemy takes a x and y coordinate as argument.(Spawn point)
+        # Every enemy takes a x and y coordinate as argument.
+        # (Spawn point)
         # And the range it can walk on the x axis.
         # The fish takes a third argument.
         # You got two choices: 'Water' or 'Lava'.
@@ -80,7 +86,8 @@ class Level2State(LevelState.LevelState):
 
         # Add a collider for the enemies and the player.
         # It takes the player, map group(tiles),
-        # an array with all the enemy objects, Reference to LevelStateManager
+        # an array with all the enemy objects, Reference to
+        # LevelStateManager
         # as arguments.
         self.collider = Collider(self.player, self.map.get_group(),
                                  self.enemy_list, self.LevelStateManager)

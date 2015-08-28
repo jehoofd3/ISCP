@@ -7,7 +7,8 @@ from MainMenu.MainMenu import *
 from Helpers.DatabaseReceiver import *
 
 # This is the credits screen of the game.
-# We made it as a level so it's easy to swtich to from the LevelStateManager.
+# We made it as a level so it's easy to swtich to from the
+# LevelStateManager.
 
 # Author: Richard Jongenburger
 
@@ -25,7 +26,8 @@ class EndDemo(LevelState):
         pass
 
     def update(self):
-        # This piece of code is used to quit the game when you pressed space.
+        # This piece of code is used to quit the game when you
+        # pressed space.
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             pygame.quit()
             quit()

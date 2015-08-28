@@ -65,4 +65,3 @@ class Boot(object):
 if __name__ == '__main__':
     # Call the constructor of this class.
     Boot().__init__()
-

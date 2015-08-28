@@ -9,9 +9,6 @@ class Artist(object):
     screen_width = 960
     screen_height = 768
 
-    # jeroen
-    bi = 0
-
     global game_display
 
     # Makes a window with the specified width and height.
@@ -20,8 +17,8 @@ class Artist(object):
     def __init__(self):
         pass
 
-    # We used static methods in this class, because most of these methods
-    # are heavily used by multiple classes.
+    # We used static methods in this class, because most of these
+    # methods are heavily used by multiple classes.
 
     @staticmethod
     def begin_session():
@@ -41,13 +38,12 @@ class Artist(object):
         # The x, y, width and height.
         game_display.blit(image, rect)
 
-
-    #jeroen
+    # This method is almost the same as draw_textures.
+    # It only uses the angle integer to change the angle.
+    # It rotate the image while keeping its center.
     @staticmethod
     def rotate_img(image, rect, angle):
-        """rotate an image while keeping its center"""
         rot_image = pygame.transform.rotate(image, angle)
-        #In left veranderen?!
         rot_rect = rot_image.get_rect(center=rect.center)
 
         Artist.draw_textures(rot_image, rect)

@@ -12,7 +12,7 @@
 # More info in the report.
 
 
-class Camera:
+class Camera(object):
 
     player = None
     map = None
@@ -36,7 +36,8 @@ class Camera:
     def update_camera(self, player_x_speed):
         # Set the player's x coordinate in the map class
         # when the player isn't shifting.
-        # (So set it when the player is before shift_start or after shift_end)
+        # (So set it when the player is before shift
+        # start or after shift_end)
         if not self.player.is_shifting:
             self.map.player_x += player_x_speed
 

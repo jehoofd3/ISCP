@@ -25,18 +25,18 @@ class PlayerAnimation:
         # (because it sends an 'empty' image)
         self.texture = self.walk_l[0]
 
-        # The frame_cap variable is an integer used to calculate,
+        # The frame_cap variable is an integer used to calculate
         # the image.
-        # It define the maximal amount of frames that are calculated,
+        # It define the maximal amount of frames that are calculated
         # every second.
         # We cap the max frames in the Boot class (clock.tick(60)).
         self.frame_cap = 60
 
-        # This variable tells the update function after how many frames,
+        # This variable tells the update function after how many frames
         # he needs to change the image.
-        # In modern game engines its used to show all the images in,
+        # In modern game engines its used to show all the images in
         # 1 second (60 frames).
-        # So the tex_switch divide the frame_cap by the length of,
+        # So the tex_switch divide the frame_cap by the length of
         # the list of images.
         # If there are eleven images in walk_l, the update function
         # changes the image after 5 frames (0.05 seconds).
@@ -45,7 +45,8 @@ class PlayerAnimation:
         # This variable counts the amount of frames.
         self.frame_count = 0
 
-        # The left_right boolean checks the moving direction of the enemy.
+        # The left_right boolean checks the moving direction
+        # of the enemy.
         # It is used to send the dead image.
         self.left_right = None
 
@@ -61,14 +62,16 @@ class PlayerAnimation:
             self.frame_count = 0
 
         # If the player is moving in the right direction.
-        # The player moves to the right if his x_speed is greater than zero.
+        # The player moves to the right if his x_speed
+        # is greater than zero.
         if self.player.x_speed > 0:
             # Call the right_walk method.
             self.right_walk()
             # And set the left_right boolean False
             self.left_right = True
         # If the player is moving in the left direction.
-        # The player moves to the left if his x_speed is smaller than zero.
+        # The player moves to the left if his x_speed
+        # is smaller than zero.
         elif self.player.x_speed < 0:
             # Call the left_walk method.
             self.left_walk()
@@ -88,13 +91,15 @@ class PlayerAnimation:
             self.left_stand()
 
         # If the player is moving in the air and left_right is True.
-        # The player moves in the air if his y_speed is not equal to zero.
+        # The player moves in the air if his y_speed is
+        # not equal to zero.
         if self.player.y_speed != 0 and self.left_right:
             # Call the right_jump method.
             self.right_jump()
 
         # If the player is moving in the air and left_right is False.
-        # The player moves in the air if his y_speed is not equal to zero.
+        # The player moves in the air if his y_speed is not
+        # equal to zero.
         elif self.player.y_speed != 0 and not self.left_right:
             # Call the left_jump method.
             self.left_jump()
@@ -114,7 +119,7 @@ class PlayerAnimation:
     def right_walk(self):
         # This for loop loops trough the walk_r list.
         for i in range(self.length_list):
-            # If the current amount of frames divided by tex_switch,
+            # If the current amount of frames divided by tex_switch
             # is equal to the number of image in walk_r.
             if self.frame_count / self.tex_switch == i:
                 # Change texture to the image in walk_r.
@@ -123,7 +128,7 @@ class PlayerAnimation:
     def left_walk(self):
         # This for loop loops trough the walk_l list.
         for i in range(self.length_list):
-            # If the current amount of frames divided by tex_switch,
+            # If the current amount of frames divided by tex_switch
             # is equal to the number of image in walk_l.
             if self.frame_count / self.tex_switch == i:
                 # Change texture to the image in walk_l

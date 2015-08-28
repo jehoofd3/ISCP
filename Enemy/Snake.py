@@ -18,15 +18,16 @@ class Snake(Enemy):
         self.w_l = []
         self.w_r = []
 
-        # This variables are images and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
+        # This variables are images and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.OB = DatabaseReceiver.get_enemy_img("Snake", "Snake_OB")
         self.LR = DatabaseReceiver.get_enemy_img("Snake", "Snake_LR")
 
-        # These methods are stored in the DatabaseReceiver class, all the,
-        # images are stored in the database.
-        # These methods get them from the database and add them to the,
+        # These methods are stored in the DatabaseReceiver class,
+        # all the images are stored in the database.
+        # These methods get them from the database and add them to the
         # image lists.
         self.w_l.append(DatabaseReceiver.get_enemy_img("Snake", "l_0"))
         self.w_l.append(DatabaseReceiver.get_enemy_img("Snake", "l_1"))
@@ -35,12 +36,12 @@ class Snake(Enemy):
         self.d_l = DatabaseReceiver.get_enemy_img("Snake", "d_l")
         self.d_r = DatabaseReceiver.get_enemy_img("Snake", "d_r")
 
-        # This game is object oriented and the class extends from Enemy,
+        # This game is object oriented and the class extends from Enemy
         # so its required
         # to call the super class by using the super() method.
         super(Snake, self).__init__(x, y, range, self.w_l, self.w_r,
                                     self.d_l, self.d_r, self.OB, self.LR)
 
-        # When the snake is created this line of code changes the states,
+        # When the snake is created this line of code changes the states
         # object in enemy into SnakeAttackState.
         self.states = SnakeAttackState(self)

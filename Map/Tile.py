@@ -29,8 +29,8 @@ class Tile(pygame.sprite.Sprite):
 
     # Move the x coordinate of the tile.
     # The x_speed is the number of units it should move.
-    # We do it minus the x_speed, because when the player moves to the right,
-    # the tiles needs to move to the left.
+    # We do it minus the x_speed, because when the player moves to the
+    # right he tiles needs to move to the left.
     def shift_x(self, x_speed):
         self.rect.x -= x_speed
 

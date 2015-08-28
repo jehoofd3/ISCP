@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 
 # This abstract class is needed for the state machine.
 class PlayerState(object):
-    # This module provides the infrastructure for defining,
+    # This module provides the infrastructure for defining
     # abstract base classes (ABCs).
     __metaclass__ = ABCMeta
 
@@ -13,14 +13,14 @@ class PlayerState(object):
         self.player = player
         self.run()
 
-    # This line of code is a decorator indicating,
+    # This line of code is a decorator indicating
     # abstract methods.
     # The states overload this method.
     @abstractmethod
     def run(self):
         pass
 
-    # This line of code is a decorator indicating,
+    # This line of code is a decorator indicating
     # abstract methods.
     # The states overload this method.
     @abstractmethod

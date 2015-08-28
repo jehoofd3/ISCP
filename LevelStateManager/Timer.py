@@ -38,7 +38,8 @@ class Timer:
         # Every number should be zero at the start of the level.
         self.time = [0, 0, 0, 0]
 
-        # This array is to determine if the number can be drawn on the surface.
+        # This array is to determine if the number can be drawn on the
+        # surface.
         # Because we only want to draw the number
         # if it is > 0. To make it look better.
         self.can_draw = [False, False, False, True]
@@ -55,8 +56,10 @@ class Timer:
             self.numbers_small.append(DatabaseReceiver.get_number_img
                                       ("Small", "hud_" + str(x)))
 
-        # Set a timer by using the set_timer method from the pygame library.
-        # The first number is the event id. Every event in pygame has an id.
+        # Set a timer by using the set_timer method from the
+        # pygame library.
+        # The first number is the event id. Every event in
+        # pygame has an id.
         # Because we want to make our own event,
         # we have to define an id ourself.
         #
@@ -74,7 +77,8 @@ class Timer:
         # Get all the pygame events by using pygame.event.get().
 
         for event in pygame.event.get():
-            # Check with event.type if it is our event we made in the init.
+            # Check with event.type if it is our event we made in
+            # the init.
             # (pygame.USEREVENT + 1)
             if event.type == self.MILLISEC_PASSED_EVENT + 1:
                 # Increase the 4th number with 1.
@@ -91,7 +95,8 @@ class Timer:
             # Set the 4th number back to zero.
             self.time[3] = 0
 
-            # And now that the 3th number is higher than zero, we can draw it.
+            # And now that the 3th number is higher than zero,
+            # we can draw it.
             self.can_draw[2] = True
 
         # Thirth number:
@@ -104,7 +109,8 @@ class Timer:
             # Set the 3th number back to zero.
             self.time[2] = 0
 
-            # And now that the 3th number is higher than zero, we can draw it.
+            # And now that the 3th number is higher than zero,
+            # we can draw it.
             self.can_draw[1] = True
 
         # Second number:
@@ -117,7 +123,8 @@ class Timer:
             # Set the 2nd number back to zero.
             self.time[1] = 0
 
-            # And now that the 3th number is higher than zero, we can draw it.
+            # And now that the 3th number is higher than zero,
+            # we can draw it.
             self.can_draw[0] = True
 
         # First number:
@@ -150,7 +157,8 @@ class Timer:
         for i in range(0, 4):
             if self.can_draw[i]:
                 # If it's the last number (tenths),
-                # it should be drawn with less space and the y value higher.
+                # it should be drawn with less space and the y value
+                # higher.
                 if i == 3:
                     # Set the space between the 3th and 4th number.
                     x += 6
@@ -171,7 +179,8 @@ class Timer:
         # Multiple every number times what they represent.
         # The first number belongs to the 'hundreds',
         # so we do it times 100 etc.
-        # We need to calculate the current time and the current best time.
+        # We need to calculate the current time and the current
+        # best time.
         time_temp = self.time[0] * 100 + self.time[1] * 10 + self.time[2] + (
             self.time[3] * 0.1)
         best_time_temp = self.best_time[0] * 100 + self.best_time[1] * 10 + (
@@ -182,7 +191,8 @@ class Timer:
         # So you actually are faster then the current.
         #
         # Also put it in the database when the best_time is zero.
-        # So it also saves when it's the first time you completed the level.
+        # So it also saves when it's the first time you completed
+        # the level.
         if time_temp < best_time_temp or best_time_temp == 0:
             # Save the time in the database.
             DatabaseReceiver.save_timer(str(self.time[0]), str(self.time[1]),

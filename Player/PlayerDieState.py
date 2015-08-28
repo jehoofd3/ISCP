@@ -6,8 +6,8 @@ from Helpers.Artist import *
 class PlayerDieState(PlayerState):
 
     def __init__(self, player):
-        # This game is object oriented and the class extends from EnemyState,
-        # so its required
+        # This game is object oriented and the class extends from
+        # PlayerState so its required
         # to call the super class by using the super() method.
         super(PlayerDieState, self).__init__(player)
 

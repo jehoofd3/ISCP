@@ -12,7 +12,8 @@ from Player.Player import *
 
 
 class MainMenu(LevelState):
-    # We need a mouse position variable to know whether we clicked on a sprite.
+    # We need a mouse position variable to know whether we clicked on
+    # a sprite.
     mouse_pos = ''
 
     # Save the option menu reference.
@@ -45,7 +46,8 @@ class MainMenu(LevelState):
     black_screen = DatabaseReceiver.get_menu_img("BlackScreen").convert()
     lvl1 = DatabaseReceiver.get_menu_img("lvl1")
 
-    # Sets the alpha of the image at zero. So that the image is transparent.
+    # Sets the alpha of the image at zero. So that the image is
+    # transparent.
     black_screen.set_alpha(0)
 
     # Makes an array for all the main menu sprites.
@@ -120,7 +122,8 @@ class MainMenu(LevelState):
         # Method to check if the user is hovering over the sprites.
         self.check_button_hovered()
 
-        # Used to fade-out and fade-in when you click on the player sprite.
+        # Used to fade-out and fade-in when you click on the player
+        # sprite.
         self.fade_out()
 
         # Draw the black screen. This is needed for the fade-out.
@@ -139,7 +142,8 @@ class MainMenu(LevelState):
             # So if it is a MOUSEBUTTONDOWN event,
             # it knows you clicked with the left mouse button.
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # To test if the mouse position collide with the play sprite.
+                # To test if the mouse position collide with the play
+                # sprite.
                 # So it knows if the play button is clicked
                 #  and not some other object.
                 if self.main_menu_sprites['play'].rect.collidepoint(
@@ -147,14 +151,15 @@ class MainMenu(LevelState):
                     # Check if it is the first time you pressed play.
                     # If it is, set the variables accordingly.
                     # These statements are necessary to open a
-                    # different MainMenu when you click the play sprite for
-                    # a second time.
+                    # different MainMenu when you click the play sprite
+                    # for a second time.
                     # This second MainMenu contains a resume button
-                    # and you resume the game instead of starting the game.
+                    # and you resume the game instead of starting
+                    # the game.
                     if self.first_time_pressed_play:
                         self.pressed_play = True
                         self.first_time_pressed_play = False
-                    # If you pressed the play sprite for the second time,
+                    # If you pressed the play sprite for the second time
                     # resume the game instead of starting the game.
                     else:
                         self.level_state_manager.states = \
@@ -183,8 +188,9 @@ class MainMenu(LevelState):
         # So that the hovers don't work if the player pressed play.
         # If we hover on any of the player, option or quit sprite,
         # we draw select arrows around them.
-        # The images are drawn with the draw_textures method in the artist
-        # class. It needs the image, x and y.
+        # The images are drawn with the draw_textures method in the
+        # artist class.
+        # It needs the image, x and y.
 
         # hover play
         if self.main_menu_sprites['play'].rect.collidepoint(
@@ -225,7 +231,8 @@ class MainMenu(LevelState):
         # That value can range from 0 up to 255.
         # The image is transparent when the alpha value is 0,
         # and fully visible when the alpha value is 255.
-        # When the player pressed play and the alpha value is smaller then 255.
+        # When the player pressed play and the alpha value is
+        # smaller then 255.
         # We up the alpha with 3.
         if self.pressed_play and self.alpha <= 255 and not self.fade_out_done:
             self.alpha += 3
@@ -236,7 +243,8 @@ class MainMenu(LevelState):
                 self.fade_out_done = True
 
         # When the player pressed play and the fade out is done,
-        # up the alpha with -3 and draw an image of the spawn point of level 1.
+        # up the alpha with -3 and draw an image of the spawn
+        # point of level 1.
         elif self.pressed_play and self.fade_out_done:
             self.alpha -= 3
             self.black_screen.set_alpha(self.alpha)
@@ -258,7 +266,8 @@ class MainMenu(LevelState):
                 self.level_state_manager.set_jump_sound(
                     self.options_menu.music_volume_level)
 
-        # Fade out the music when you pressed play and the music isn't faded.
+        # Fade out the music when you pressed play and the music
+        # isn't faded.
         if self.pressed_play and not self.music_faded:
             pygame.mixer.music.fadeout(1000)
 

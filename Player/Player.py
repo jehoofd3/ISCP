@@ -6,6 +6,7 @@ from PlayerDieState import *
 from Animation.PlayerAnimation import *
 from Helpers.DatabaseReceiver import *
 
+
 class Player(pygame.sprite.Sprite):
     # The states variable is a object to store the states of the player.
     # The walk_l and walk_r lists are used to store images.
@@ -20,14 +21,14 @@ class Player(pygame.sprite.Sprite):
     dead_l, dead_r, jump_l = None, None, None
     jump_r, stand_l, stand_r = None, None, None
 
-    # The four booleans block_u, block_d, block_r and block_l indicates if the,
-    # player is colliding with other objects.
+    # The four booleans block_u, block_d, block_r and block_l indicates
+    # if the player is colliding with other objects.
     # These variables are set true or false by the collider.
     # The player uses it to see if it can move a particular position.
     block_u, block_d, block_r, block_l = None, None, None, None
 
-    # The dead boolean is False if the player is alive and True if it is dead,
-    # an can be set by the collider or the player himself.
+    # The dead boolean is False if the player is alive and True if it is
+    # dead an can be set by the collider or the player himself.
     dead = None
 
     # These two booleans represent if the player can move to the left
@@ -35,8 +36,8 @@ class Player(pygame.sprite.Sprite):
     can_go_right = False
     can_go_left = False
 
-    # These booleans are to determine if there is collision above the player
-    # and under the player.
+    # These booleans are to determine if there is collision above the
+    # player and under the player.
     collision_under = False
     collision_up = False
 
@@ -48,12 +49,12 @@ class Player(pygame.sprite.Sprite):
     # It's used in the collider for the sliding on snow or ice.
     face_direction = 'Right'
 
-    # The jumps_remaining variable is an integer and controls the player's,
-    # jumps.
+    # The jumps_remaining variable is an integer and controls the
+    # player's jumps.
     # He can only jump one time.
     jumps_remaining = 0
 
-    # This variable is an integer and used to let the player move on the,
+    # This variable is an integer and used to let the player move on the
     # x axis.
     x_speed = 0
 
@@ -88,7 +89,8 @@ class Player(pygame.sprite.Sprite):
     # Variable to hold the jump sound file.
     jump_sound = None
 
-    # Variable that represents if the player collides with a snow or ice tile.
+    # Variable that represents if the player collides with a snow
+    # or ice tile.
     # It's set in the Collider class.
     player_on_snow = False
     player_on_ice = False
@@ -99,8 +101,8 @@ class Player(pygame.sprite.Sprite):
         # Loop through the lives array.
         for i in range(0, len(self.lives)):
             # These statements are used to fill the lives array with
-            # full or empty live images. It's filled by using the player_health
-            # variable in LevelStateManager class.
+            # full or empty live images. It's filled by using the
+            # player_health variable in LevelStateManager class.
             # First we do the player's health int variable minus one.
             # We do this because the player's health variable in the
             # LevelStateManager class start from 1.
@@ -116,22 +118,24 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         # self.rect is a list of four ints x, y, width and height.
-        # The draw method in Artist needs this data to draw the image properly.
-        # The get_rect() method on the image only places the width and height,
-        # in the rect variable.
+        # The draw method in Artist needs this data to draw
+        # the image properly.
+        # The get_rect() method on the image only places the width and
+        # height in the rect variable.
         self.rect = DatabaseReceiver.get_player_img("stand_r").get_rect()
 
         # The rect.x variable is a method to change the x variable in rect.
-        # Because the image doesn't have a x and y in the beginning, it has to,
-        # be changed in this way.
+        # Because the image doesn't have a x and y in the beginning,
+        # it has to be changed in this way.
         self.rect.x = x
 
-        # The rect.y variable is a method to change the y variable in rect.
-        # Because the image doesn't have a x and y in the beginning, it has to,
-        # be changed in this way.
+        # The rect.y variable is a method to change the y variable
+        # in rect.
+        # Because the image doesn't have a x and y in the beginning,
+        # it has to be changed in this way.
         self.rect.y = y
 
-        # The start_x and start_y are integers used to set the player,
+        # The start_x and start_y are integers used to set the player
         # back to his original position after he died.
         self.start_x = x
         self.start_y = y
@@ -141,7 +145,7 @@ class Player(pygame.sprite.Sprite):
         # We put it in the jump_sound variable.
         self.jump_sound = pygame.mixer.Sound('../Data/Music/Levels/Jump.wav')
 
-        # The speed integer is used to calculate the speed of the player,
+        # The speed integer is used to calculate the speed of the player
         # on the x axis.
         self.speed = 4
 
@@ -175,38 +179,38 @@ class Player(pygame.sprite.Sprite):
         # It is used to calculate the animation.
         self.animation = PlayerAnimation(self)
 
-        # When the player is created this line of code changes the states,
-        # object into PlayerNormalState.
+        # When the player is created this line of code changes the
+        # states object into PlayerNormalState.
         self.states = PlayerNormalState(self)
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_under_image = pygame.sprite.Sprite()
         self.player_under_image.image = DatabaseReceiver.get_player_img("OB")
         self.player_under_image.rect = self.player_under_image.image.get_rect()
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_up_image = pygame.sprite.Sprite()
         self.player_up_image.image = DatabaseReceiver.get_player_img("OB")
         self.player_up_image.rect = self.player_up_image.image.get_rect()
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_left_image = pygame.sprite.Sprite()
         self.player_left_image.image = DatabaseReceiver.get_player_img("LR")
         self.player_left_image.rect = self.player_left_image.image.get_rect()
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_right_image = pygame.sprite.Sprite()
         self.player_right_image.image = DatabaseReceiver.get_player_img("LR")
         self.player_right_image.rect = self.player_right_image.image.get_rect()
@@ -219,36 +223,36 @@ class Player(pygame.sprite.Sprite):
         # This line of code calls the update method in the state.
         self.states.update()
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_under_image.rect.x = self.rect.x + 10
         self.player_under_image.rect.y = self.rect.y + 94
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_up_image.rect.x = self.rect.x + 10
         self.player_up_image.rect.y = self.rect.y - 1
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_left_image.rect.x = self.rect.x - 1
         self.player_left_image.rect.y = self.rect.y + 12
 
-        # This variable is an image and it is used for the collision with,
-        # other objects.
-        # This technique is hard to explain without images so how exactly,
-        # works is described in our report.
+        # This variable is an image and it is used for the collision
+        # with other objects.
+        # This technique is hard to explain without images so how
+        # exactly works is described in our report.
         self.player_right_image.rect.x = self.rect.x + 70
         self.player_right_image.rect.y = self.rect.y + 12
 
-        # The height of the game is 960 pixels, if the player falls down,
-        # from the map.
+        # The height of the game is 960 pixels, if the player falls
+        # down from the map.
         # This statement kills him.
         if self.rect.bottom >= 960:
             self.kill()
@@ -265,8 +269,8 @@ class Player(pygame.sprite.Sprite):
 
         # This method draws the player.
         # It needs an image and a list of integers.
-        # The list of integers is the rect variable, this list holds the x, y,
-        # width and height of the player.
+        # The list of integers is the rect variable, this list holds
+        # the x, y, width and height of the player.
         # The image is calculated by the PlayerAnimation class,
         # what it does is explained there.
         Artist.draw_textures(self.animation.update(), self.rect)
@@ -283,7 +287,8 @@ class Player(pygame.sprite.Sprite):
                              self.player_right_image.rect)
 
     def jump(self):
-        # Set the player_snow and player_on_ice to false when te player jumps.
+        # Set the player_snow and player_on_ice to false when te
+        # player jumps.
         # Because the player is in the air.
         self.player_on_snow = False
         self.player_on_ice = False
@@ -291,7 +296,8 @@ class Player(pygame.sprite.Sprite):
         # Set the speed back to 4. Four is the normal speed.
         self.set_sliding(4)
 
-        # This fixes the bug that you get double jump sounds when you die.
+        # This fixes the bug that you get double jump sounds when
+        # you die.
         # Because when you die you get a jump sound and when you jump
         # you get a jump sound.
         # pygame.mixer.get_busy() checks if the mixer is busy.
@@ -304,7 +310,8 @@ class Player(pygame.sprite.Sprite):
 
     def basic_movement(self):
         # If the camera isn't shifting, we use the x axis on the player.
-        # And we add the player's x with the player's x_speed every frame.
+        # And we add the player's x with the player's x_speed
+        # every frame.
         # So the player can move.
         if not self.is_shifting:
             self.rect.x += self.x_speed
