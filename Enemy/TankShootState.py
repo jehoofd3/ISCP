@@ -1,5 +1,5 @@
 from EnemyState import *
-from TankNormalState import *
+import TankNormalState as tns
 import time
 
 
@@ -99,7 +99,7 @@ class TankShootState(EnemyState):
         # This boolean is changed by the collider and lets the tank
         # unfollow the player.
         if not self.enemy.follow:
-            self.enemy.states = TankNormalState(self.enemy)
+            self.enemy.states = tns.TankNormalState(self.enemy)
 
     # This method is used in this class to shoot a bullet.
     def shoot(self):

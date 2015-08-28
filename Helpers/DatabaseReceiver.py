@@ -26,8 +26,8 @@ class DatabaseReceiver(object):
 
     @staticmethod
     def get_player_img(id):
-        DatabaseReceiver.cur.execute\
-            ("SELECT Image FROM player_images WHERE ID ='" + id + "'")
+        DatabaseReceiver.cur.execute(
+            "SELECT Image FROM player_images WHERE ID ='" + id + "'")
 
         return DatabaseReceiver.convert_img(DatabaseReceiver.cur.fetchone()[0])
 
@@ -43,8 +43,8 @@ class DatabaseReceiver(object):
 
     @staticmethod
     def get_enemy_img(enemy, id):
-        DatabaseReceiver.cur.execute\
-            ("SELECT Image FROM enemy_images WHERE Enemy ='"
+        DatabaseReceiver.cur.execute(
+            "SELECT Image FROM enemy_images WHERE Enemy ='"
              + enemy + "' AND ID='" + id + "'")
 
         return DatabaseReceiver.convert_img(DatabaseReceiver.cur.fetchone()[0])
@@ -110,8 +110,8 @@ class DatabaseReceiver(object):
     # Then this method returns the image to its caller.
     @staticmethod
     def get_number_img(size, id):
-        DatabaseReceiver.cur.execute\
-            ("SELECT Image FROM number_images WHERE Size='"
+        DatabaseReceiver.cur.execute(
+            "SELECT Image FROM number_images WHERE Size='"
              + size + "' AND ID='" + id + "'")
 
         return DatabaseReceiver.convert_img(DatabaseReceiver.cur.fetchone()[0])
@@ -137,8 +137,8 @@ class DatabaseReceiver(object):
 
     @staticmethod
     def get_level_data(data, level, id):
-        DatabaseReceiver.cur.execute\
-            ("SELECT Data FROM level_data WHERE Level='"
+        DatabaseReceiver.cur.execute(
+            "SELECT Data FROM level_data WHERE Level='"
              + level + "' AND ID='" + id + "'")
 
         if data == "IMAGE":
@@ -167,8 +167,8 @@ class DatabaseReceiver(object):
     @staticmethod
     def save_timer(hundreds, tens, ones, tenths, level):
         # Update the time in the database with the variables.
-        DatabaseReceiver.cur.execute\
-            ('UPDATE best_time SET hundreds ='
+        DatabaseReceiver.cur.execute(
+            'UPDATE best_time SET hundreds ='
              + hundreds + ', tens =' + tens + ', ones =' + ones + ', tenths ='
              + tenths + ' WHERE Level =' + level)
         DatabaseReceiver.con.commit()
@@ -177,8 +177,8 @@ class DatabaseReceiver(object):
     @staticmethod
     def load_timer(level):
         # We use the SELECT query to get the time from the database.
-        DatabaseReceiver.cur.execute\
-            ('SELECT Hundreds, Tens, Ones, Tenths FROM best_time WHERE Level ='
+        DatabaseReceiver.cur.execute(
+            'SELECT Hundreds, Tens, Ones, Tenths FROM best_time WHERE Level ='
              + level)
         # Return the output from the database.
         return DatabaseReceiver.cur.fetchone()
@@ -187,8 +187,8 @@ class DatabaseReceiver(object):
     @staticmethod
     def reset_timer():
         # Use the UPDATE query to set every variable to zero.
-        DatabaseReceiver.cur.execute\
-            ('UPDATE best_time SET Hundreds = 0, Tens = 0, Ones = 0, '
+        DatabaseReceiver.cur.execute(
+            'UPDATE best_time SET Hundreds = 0, Tens = 0, Ones = 0, '
              'Tenths = 0')
 
     # This method is used by the other methods in this class.
