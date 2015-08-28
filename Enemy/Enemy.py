@@ -208,8 +208,13 @@ class Enemy(object):
         # Sometimes the enemy can't reach places because there is a
         # block in his way.
         # This statement lets him jump, so he can continue his way.
-        if self.block_l or self.block_r:
+        if self.block_l:
             self.jump()
+            self.rect.x += 3
+
+        if self.block_r:
+            self.jump()
+            self.rect.x -= 3
 
         # The height of the game is 960 pixels, if the enemy falls down
         # from the map.
