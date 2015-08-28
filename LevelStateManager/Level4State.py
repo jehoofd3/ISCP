@@ -132,6 +132,18 @@ class Level4State(LevelState.LevelState):
             self.LevelStateManager.level_state = self
             self.LevelStateManager.states = self.main_menu
 
+        # Create a empty list with the size of the enemy_list
+        self.next_lvl_list = [None] * len(self.enemy_list)
+        for i in range(len(self.enemy_list)):
+            # Add the dead booleans in the next_lvl_list.
+            self.next_lvl_list[i] = self.enemy_list[i].dead
+
+        # If there is no True in the list.
+        # That means that there are no enemies aline.
+        if all(self.next_lvl_list):
+            self.timer.save_best_time(4)
+            self.level_state_manager.next_level()
+
     def draw(self):
         self.background.draw()
         self.map.draw()
