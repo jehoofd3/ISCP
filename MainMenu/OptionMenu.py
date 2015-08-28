@@ -240,7 +240,7 @@ class OptionMenu(LevelState):
                 # back to the mainMenu state.
                 if self.options_sprites['back'].rect.collidepoint(
                         self.mouse_pos):
-                    self.LevelStateManager.states = self.mainMenu
+                    self.level_state_manager.states = self.mainMenu
 
     # Method that makes a pygame sprite and put that sprite in an array.
     def make_sprite(self, button_name, image, x, y):

@@ -42,7 +42,7 @@ class Level4State(LevelState.LevelState):
         self.map = TileGrid(DatabaseReceiver.get_level_data
                             ("TXT", "Level4", "Level4"))
         self.main_menu = main_menu
-        self.LevelStateManager = level_state_manager
+        self.level_state_manager = level_state_manager
 
         # Create a player object with the x and y
         # value in which the player should spawn and the
@@ -95,7 +95,7 @@ class Level4State(LevelState.LevelState):
         # LevelStateManager
         # as arguments.
         self.collider = Collider(self.player, self.map.get_group(),
-                                 self.enemy_list, self.LevelStateManager)
+                                 self.enemy_list, self.level_state_manager)
 
         # Load the background music.
         # The pygame.mixer.music.load
@@ -110,8 +110,8 @@ class Level4State(LevelState.LevelState):
         # Create a timer for this level.
         self.timer = Timer()
 
-        # Load the best time of level 1.
-        self.timer.load_best_time(1)
+        # Load the best time of level 4.
+        self.timer.load_best_time(4)
 
     def update(self):
         self.timer.update()

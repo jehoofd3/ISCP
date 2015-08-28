@@ -156,4 +156,5 @@ class LevelStateManager(object):
         # If the current state isn't EndDemo, set the jump sound
         # volume level.
         if not isinstance(self.states, EndDemo):
-            self.states.player.jump_sound.set_volume(volume)
+            if self.states.player != 0:
+                self.states.player.jump_sound.set_volume(volume)

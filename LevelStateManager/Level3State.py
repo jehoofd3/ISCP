@@ -97,10 +97,12 @@ class Level3State(LevelState.LevelState):
         # Create a timer for this level.
         self.timer = Timer()
 
-        # Load the best time of level 1.
+        # Load the best time of level 3.
         self.timer.load_best_time(3)
 
     def update(self):
+        self.timer.update()
+
         # Update the camera with the player's x speed.
         self.camera.update_camera(self.player.x_speed)
         self.timer.update()
@@ -118,11 +120,6 @@ class Level3State(LevelState.LevelState):
         self.camera = Camera(self.shift_start, self.shift_end,
                              self.map, self.player, self.enemy_list)
 
-        # Create a timer for this level.
-        self.timer = Timer()
-
-        # Load the best time of level 1.
-        self.timer.load_best_time(1)
 
     def draw(self):
         self.background.draw()

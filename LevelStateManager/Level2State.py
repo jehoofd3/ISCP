@@ -99,8 +99,8 @@ class Level2State(LevelState.LevelState):
         # Create a timer for this level.
         self.timer = Timer()
 
-        # Load the best time of level 1.
-        self.timer.load_best_time(1)
+        # Load the best time of level 2.
+        self.timer.load_best_time(2)
 
     def update(self):
         # Update the camera with the player's x speed.
